@@ -1,0 +1,21 @@
+﻿# --- Web & API ---
+fastapi
+uvicorn[standard]
+pydantic
+jinja2
+gherkin-official
+
+# --- AI & NLP ---
+spacy
+transformers
+ultralytics
+torch
+
+# --- Computer Vision & OCR ---
+opencv-python
+pytesseract
+
+# --- Automation & Tools ---
+playwright
+python-dotenv
+loguru

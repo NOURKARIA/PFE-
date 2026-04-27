@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  ai-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.example
+    volumes:
+      - ./reports:/app/reports
+      - ./trained_models:/app/trained_models

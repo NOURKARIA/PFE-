@@ -1,0 +1,83 @@
+{
+  "execution_id": "a10423e8-8356-4051-a096-38952a76d250",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-04-24T23:47:42.981642",
+  "finished_at": "2026-04-24T23:49:03.454095",
+  "duration": 80.472453,
+  "steps": [
+    {
+      "step_text": "When I type 'nour.karia@horizon.tn' into the 'e-mail ou num\u00e9ro de mobile' field",
+      "action": "input",
+      "selector": "text='e-mail ou num\u00e9ro de mobile'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "nour.karia@horizon.tn",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [948.7236938476562, 206.90562438964844]",
+      "duration": 68.82095432281494,
+      "screenshot_path": "reports\\screenshots\\step_20260424_234903_When_I_type__nour_karia_horizon_tn__into_the__e-mail_ou_num_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "When I type 'nour.karia@horizon.tn' into the 'e-mail ou num\u00e9ro de mobile' field",
+          "action": "input",
+          "target": "text='e-mail ou num\u00e9ro de mobile'",
+          "value": "nour.karia@horizon.tn",
+          "selector": "text='e-mail ou num\u00e9ro de mobile'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "When I type 'nour.karia@horizon.tn' into the 'e-mail ou num\u00e9ro de mobile' field",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "nour.karia@horizon.tn"
+              ],
+              "target": "e-mail ou num\u00e9ro de mobile",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='e-mail ou num\u00e9ro de mobile'",
+              "text=e-mail ou num\u00e9ro de mobile"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [948.7236938476562, 206.90562438964844]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.6707590818405151,
+            "box": [
+              680.154296875,
+              176.932373046875,
+              1217.2930908203125,
+              236.87887573242188
+            ],
+            "center": [
+              948.7236938476562,
+              206.90562438964844
+            ],
+            "text": "Email or mobile number\nnourkarlag@horizon-tech.in",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 80.472453,
+    "plan_a_steps": 0,
+    "plan_b_steps": 1
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260424_234903_When_I_type__nour_karia_horizon_tn__into_the__e-mail_ou_num_.png"
+  ],
+  "metadata": null
+}

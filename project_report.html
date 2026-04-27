@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra-Detailed Project Report: IA Test Agent</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2, h3 { color: #333; }
+        .section { margin-bottom: 30px; }
+        .file { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 4px solid #007acc; }
+        .workflow { background: #e8f4fd; padding: 15px; border-radius: 5px; }
+        .deliverable { background: #d4edda; padding: 10px; margin: 10px 0; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        code { background: #f8f8f8; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Ultra-Detailed Project Report: IA Test Agent</h1>
+    <p>This report provides an in-depth analysis of the IA Test Agent project, including its workflow, implemented files, contents, and current deliverables.</p>
+
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>The IA Test Agent is an AI-driven test automation platform that combines Natural Language Processing (NLP), Computer Vision, and Playwright browser automation. It translates Gherkin-style test steps into executable browser actions, detects UI elements from screenshots, and performs retries and vision fallback for robust execution.</p>
+    </div>
+
+    <div class="section">
+        <h2>Detailed Workflow</h2>
+        <div class="workflow">
+            <h3>1. Input Processing (NLP Parsing)</h3>
+            <ul>
+                <li>User submits Gherkin text via API endpoint <code>/api/ia/parse-gherkin</code>.</li>
+                <li><code>app/services/nlp_service.py</code> parses the text with <code>app/utils/gherkin_parser.py</code> and extracts scenarios and steps.</li>
+                <li><code>nlp/entity_extractor.py</code> extracts values and identifiers, while <code>nlp/intent_classifier.py</code> classifies step intent.</li>
+                <li>Mapped actions are built into structured payloads for execution.</li>
+            </ul>
+
+            <h3>2. Semantic Mapping</h3>
+            <ul>
+                <li><code>app/services/mapping_service.py</code> maps NLP intents to Playwright methods such as <code>click</code>, <code>input</code>, <code>navigate</code>, and <code>assert</code>.</li>
+                <li>Current logic generates text selectors from the detected target text and stores metadata for debugging.</li>
+            </ul>
+
+            <h3>3. UI Element Detection (Vision)</h3>
+            <ul>
+                <li>User provides an image URL or local path via <code>/api/ia/detect-ui</code>.</li>
+                <li><code>app/services/vision_service.py</code> uses YOLOv8 to detect UI elements and returns bounding boxes, labels, confidence scores, and center coordinates.</li>
+                <li>Detected UI patches are also processed with OCR, and text similarity is used to match targets.</li>
+            </ul>
+
+            <h3>4. Test Generation</h3>
+            <ul>
+                <li><code>app/services/generator_service.py</code> converts mapped NLP actions into Playwright operations.</li>
+                <li>It supports navigation, click, input, wait, select, and assertion actions based on available selectors or coordinates.</li>
+            </ul>
+
+            <h3>5. Test Execution</h3>
+            <ul>
+                <li><code>app/services/executor_service.py</code> manages Playwright sessions, dialog handling, and page lifecycle.</li>
+                <li>Endpoint <code>/api/ia/execute-test</code> executes single Gherkin steps and returns detailed result payloads.</li>
+                <li>Execution includes retry logic, a vision fallback path, and screenshot capture for each executed step.</li>
+            </ul>
+
+            <h3>6. Reporting</h3>
+            <ul>
+                <li>HTML report template is present at <code>app/templates/report.html.j2</code>.</li>
+                <li><code>app/services/report_service.py</code> and the related reporting API are currently placeholders awaiting integration.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Implemented Files and Contents</h2>
+
+        <h3>Core Application</h3>
+        <div class="file">
+            <strong>app/main.py</strong><br>
+            FastAPI application entry point. Includes routers for NLP parsing, UI detection, and test execution. Provides health check endpoint.
+        </div>
+        <div class="file">
+            <strong>app/config.py</strong><br>
+            Configuration file (currently empty, may contain settings in future).
+        </div>
+
+        <h3>API Endpoints</h3>
+        <div class="file">
+            <strong>app/api/nlp_parsing.py</strong><br>
+            Handles Gherkin parsing requests. Supports both single and bulk processing. Uses NLP service for text analysis.
+        </div>
+        <div class="file">
+            <strong>app/api/ql_detection.py</strong><br>
+            UI element detection API. Downloads images from URLs and returns detected UI elements from vision service.
+        </div>
+        <div class="file">
+            <strong>app/api/test_execution.py</strong><br>
+            Test execution endpoint. Manages Playwright sessions and executes individual Gherkin steps.
+        </div>
+        <div class="file">
+            <strong>app/api/health.py</strong><br>
+            Health check endpoint at <code>/health</code>.
+        </div>
+        <div class="file">
+            <strong>app/api/reporting.py</strong><br>
+            Placeholder for a report generation API.
+        </div>
+        <div class="file">
+            <strong>app/api/segmentation.py</strong><br>
+            Placeholder for segmentation API functionality.
+        </div>
+        <div class="file">
+            <strong>app/api/semantic_mapping.py</strong><br>
+            Placeholder for semantic mapping API functionality.
+        </div>
+        <div class="file">
+            <strong>app/api/test_generation.py</strong><br>
+            Placeholder for test generation API functionality.
+        </div>
+
+        <h3>Services</h3>
+        <div class="file">
+            <strong>app/services/nlp_service.py</strong><br>
+            Core NLP processing service. Parses Gherkin, extracts entities, classifies intents, and maps to actions.
+        </div>
+        <div class="file">
+            <strong>app/services/vision_service.py</strong><br>
+            Computer vision service using YOLOv8 for UI element detection and OCR matching.
+        </div>
+        <div class="file">
+            <strong>app/services/executor_service.py</strong><br>
+            Playwright-based test execution service. Manages browser sessions, retries, dialog handling, and screenshots.
+        </div>
+        <div class="file">
+            <strong>app/services/generator_service.py</strong><br>
+            Converts NLP action payloads to Playwright browser operations.
+        </div>
+        <div class="file">
+            <strong>app/services/mapping_service.py</strong><br>
+            Maps NLP intents to Playwright methods and builds selectors.
+        </div>
+        <div class="file">
+            <strong>app/services/report_service.py</strong><br>
+            Placeholder for report generation and result aggregation.
+        </div>
+        <div class="file">
+            <strong>app/services/segmentation_service.py</strong><br>
+            Placeholder for image segmentation and UI analysis.
+        </div>
+
+        <h3>Models</h3>
+        <div class="file">
+            <strong>app/models/embedding_loader.py</strong><br>
+            Loads and manages text embeddings for NLP tasks.
+        </div>
+        <div class="file">
+            <strong>app/models/qa_model.py</strong><br>
+            Question-answering model for test scenario understanding.
+        </div>
+        <div class="file">
+            <strong>app/models/yolo_model.py</strong><br>
+            YOLO model wrapper for UI detection.
+        </div>
+
+        <h3>NLP Components</h3>
+        <div class="file">
+            <strong>nlp/entity_extractor.py</strong><br>
+            Uses spaCy for named entity recognition in Gherkin steps. Extracts values, identifiers, and element types.
+        </div>
+        <div class="file">
+            <strong>nlp/intent_classifier.py</strong><br>
+            Zero-shot intent classification using HuggingFace BART. Categorizes steps as navigation, click, type, or verification.
+        </div>
+
+        <h3>Schemas</h3>
+        <div class="file">
+            <strong>app/schemas/gherkin_schema.py</strong><br>
+            Pydantic models for Gherkin parsing requests and responses.
+        </div>
+        <div class="file">
+            <strong>app/schemas/report_schemas.py</strong><br>
+            Data models for test reports and results.
+        </div>
+        <div class="file">
+            <strong>app/schemas/test_schemas.py</strong><br>
+            Schemas for test steps, actions, and execution results.
+        </div>
+        <div class="file">
+            <strong>app/schemas/ui_schemas.py</strong><br>
+            Models for UI detection requests and responses.
+        </div>
+
+        <h3>Utilities</h3>
+        <div class="file">
+            <strong>app/utils/gherkin_parser.py</strong><br>
+            Parses Gherkin syntax into structured data.
+        </div>
+        <div class="file">
+            <strong>app/utils/image_processing.py</strong><br>
+            Image manipulation functions for UI analysis.
+        </div>
+        <div class="file">
+            <strong>app/utils/logging_config.py</strong><br>
+            Logging configuration for the application.
+        </div>
+        <div class="file">
+            <strong>app/utils/screenshot.py</strong><br>
+            Screenshot capture utilities.
+        </div>
+        <div class="file">
+            <strong>app/utils/text_similarity.py</strong><br>
+            Text similarity calculations for element matching.
+        </div>
+
+        <h3>Templates</h3>
+        <div class="file">
+            <strong>app/templates/playwright_test.js</strong><br>
+            Template for generating Playwright test scripts.
+        </div>
+        <div class="file">
+            <strong>app/templates/report.html.j2</strong><br>
+            Jinja2 template for HTML test reports.
+        </div>
+
+        <h3>Notebooks</h3>
+        <div class="file">
+            <strong>notebooks/01_exploration_gherkin_nlp.ipynb</strong><br>
+            Exploration of Gherkin parsing and NLP techniques.
+        </div>
+        <div class="file">
+            <strong>notebooks/02_entrainement_intention.ipynb</strong><br>
+            Training notebook for intent classification.
+        </div>
+        <div class="file">
+            <strong>notebooks/03_yolo_ul_detection.ipynb</strong><br>
+            YOLO training and UI detection exploration.
+        </div>
+        <div class="file">
+            <strong>notebooks/04_mapping_semantique.ipynb</strong><br>
+            Semantic mapping between NLP and actions.
+        </div>
+        <div class="file">
+            <strong>notebooks/05_generation_playwright.ipynb</strong><br>
+            Playwright test generation from scenarios.
+        </div>
+
+        <h3>Tests</h3>
+        <div class="file">
+            <strong>tests/test_nlp_service.py</strong><br>
+            Unit tests for NLP service functionality.
+        </div>
+        <div class="file">
+            <strong>tests/test_vision_service.py</strong><br>
+            Tests for vision and UI detection services.
+        </div>
+        <div class="file">
+            <strong>tests/test_executor_service.py</strong><br>
+            Tests for test execution service.
+        </div>
+        <div class="file">
+            <strong>tests/test_generator_service.py</strong><br>
+            Tests for test generation logic.
+        </div>
+        <div class="file">
+            <strong>tests/test_mapping_service.py</strong><br>
+            Tests for semantic mapping functionality.
+        </div>
+
+        <h3>Configuration Files</h3>
+        <div class="file">
+            <strong>requirements.txt</strong><br>
+            Python dependencies including FastAPI, spaCy, transformers, ultralytics, Playwright, etc.
+        </div>
+        <div class="file">
+            <strong>Dockerfile</strong><br>
+            Docker configuration for containerizing the application.
+        </div>
+        <div class="file">
+            <strong>docker-compose.yml</strong><br>
+            Docker Compose setup for multi-container deployment.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Project Task Board</h2>
+        <p>The tasks shown in your attachments map directly to the project modules and design phases. The following list captures what has been implemented and what remains to be completed.</p>
+        <div class="workflow">
+            <h3>Completed Tasks</h3>
+            <ul>
+                <li>Project structure created with <code>app/</code>, <code>app/api/</code>, <code>app/services/</code>, <code>app/schemas/</code>, and <code>app/utils/</code>.</li>
+                <li>FastAPI setup with <code>app/main.py</code>, health endpoint, and API routing.</li>
+                <li>Implemented NLP parsing pipeline for Gherkin step extraction and intent classification.</li>
+                <li>Implemented vision detection using YOLOv8 and OCR-assisted matching.</li>
+                <li>Created generator service to execute Playwright actions from NLP payloads.</li>
+                <li>Implemented executor service with retry logic, dialog handling, vision fallback, and screenshot capture.</li>
+                <li>Provided a report template for future HTML report generation.</li>
+            </ul>
+
+            <h3>Pending Tasks</h3>
+            <ul>
+                <li>Implement placeholder API modules for reporting, semantic mapping, segmentation, and test generation.</li>
+                <li>Complete <code>app/services/report_service.py</code> for HTML and JSON report generation.</li>
+                <li>Improve selector generation and vision/text matching to reduce execution failures.</li>
+                <li>Validate full end-to-end Gherkin scenarios and expand regression coverage.</li>
+                <li>Add production-grade configuration, error handling, and security.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Ready Deliverables</h2>
+        <div class="deliverable">
+            <strong>FastAPI Web Application</strong><br>
+            Complete REST API with endpoints for NLP parsing, UI detection, and test execution.
+        </div>
+        <div class="deliverable">
+            <strong>Trained NLP Models</strong><br>
+            <ul>
+                <li>Entity extractor model (entity_extractor.pt)</li>
+                <li>Intent classifier model (intention_classifier.pt)</li>
+            </ul>
+        </div>
+        <div class="deliverable">
+            <strong>Trained Vision Model</strong><br>
+            YOLOv8 model for UI element detection (yolov8_ui_elements.pt).
+        </div>
+        <div class="deliverable">
+            <strong>Comprehensive Test Suite</strong><br>
+            Unit tests for all major services and components.
+        </div>
+        <div class="deliverable">
+            <strong>Containerization Setup</strong><br>
+            Dockerfile and docker-compose.yml for easy deployment.
+        </div>
+        <div class="deliverable">
+            <strong>Report Template</strong><br>
+            Jinja2 HTML report template exists, while report service integration is pending.
+        </div>
+        <div class="deliverable">
+            <strong>Exploratory Notebooks</strong><br>
+            Jupyter notebooks documenting the development process and experiments.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Architecture and Dependencies</h2>
+        <p>The system is built with:</p>
+        <ul>
+            <li><strong>Backend:</strong> FastAPI with Pydantic for API development</li>
+            <li><strong>NLP:</strong> spaCy for entity extraction, HuggingFace transformers for intent classification</li>
+            <li><strong>Vision:</strong> Ultralytics YOLOv8 for object detection, OpenCV for image processing</li>
+            <li><strong>Automation:</strong> Playwright for browser automation</li>
+            <li><strong>Reporting:</strong> Jinja2 templates for HTML generation</li>
+            <li><strong>Testing:</strong> pytest for unit testing</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Current Status and Next Steps</h2>
+        <p>The project now has an active foundation with working NLP parsing, vision detection, and Playwright execution workflows. The next priorities are completing reporting, semantic mapping APIs, and full end-to-end scenario validation.</p>
+        <ul>
+            <li>Finish report service implementation and reporting API endpoints.</li>
+            <li>Strengthen UI selector generation using vision and OCR matching.</li>
+            <li>Complete placeholder API modules for full feature coverage.</li>
+            <li>Expand regression tests and scenario coverage.</li>
+            <li>Add production-ready configuration, security, and error handling.</li>
+        </ul>
+    </div>
+</body>
+</html>

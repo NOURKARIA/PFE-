@@ -1,0 +1,337 @@
+{
+  "execution_id": "9668b2f5-0e9e-462a-a733-c959bb459436",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-05-02T15:32:06.840999",
+  "finished_at": "2026-05-02T15:34:53.600278",
+  "duration": 166.759279,
+  "steps": [
+    {
+      "step_text": "I click the \"Allow all cookies\" button",
+      "action": "click",
+      "selector": "text='\"allow all cookies\" button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "Allow all cookies",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [946.2298583984375, 509.44476318359375]",
+      "duration": 42.35217905044556,
+      "screenshot_path": "reports\\screenshots\\step_20260502_153254_I_click_the__Allow_all_cookies__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"Allow all cookies\" button",
+          "action": "click",
+          "target": "text='\"allow all cookies\" button'",
+          "value": "Allow all cookies",
+          "selector": "text='\"allow all cookies\" button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"Allow all cookies\" button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "Allow all cookies"
+              ],
+              "target": "\"allow all cookies\" button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='\"allow all cookies\" button'",
+              "text=\"allow all cookies\" button",
+              "button:has-text('\"allow all cookies\"')",
+              "[role='button']:has-text('\"allow all cookies\"')",
+              "xpath=//button[contains(normalize-space(.), '\"allow all cookies\"')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [946.2298583984375, 509.44476318359375]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              677.3323974609375,
+              488.440673828125,
+              1215.1273193359375,
+              530.4488525390625
+            ],
+            "center": [
+              946.2298583984375,
+              509.44476318359375
+            ],
+            "text": "Create new account _\nCreate new account\n\u2014",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"email\" field with \"nour.karia@h\"",
+      "action": "input",
+      "selector": "text='nour.karia@h'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "email",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 28.61190915107727,
+      "screenshot_path": "reports\\screenshots\\step_20260502_153323_I_fill_the__email__field_with__nour_karia_h_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"email\" field with \"nour.karia@h\"",
+          "action": "input",
+          "target": "text='nour.karia@h'",
+          "value": "email",
+          "selector": "text='nour.karia@h'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"email\" field with \"nour.karia@h\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "email"
+              ],
+              "target": "nour.karia@h",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='nour.karia@h'",
+              "text=nour.karia@h"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"pass\" field with \"tourbillon 1234\"",
+      "action": "input",
+      "selector": "text='tourbillon 1234'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "pass",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 27.837835550308228,
+      "screenshot_path": "reports\\screenshots\\step_20260502_153351_I_fill_the__pass__field_with__tourbillon_1234_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"pass\" field with \"tourbillon 1234\"",
+          "action": "input",
+          "target": "text='tourbillon 1234'",
+          "value": "pass",
+          "selector": "text='tourbillon 1234'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"pass\" field with \"tourbillon 1234\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "pass"
+              ],
+              "target": "tourbillon 1234",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='tourbillon 1234'",
+              "text=tourbillon 1234"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    },
+    {
+      "step_text": "I click the \"login\" button",
+      "action": "click",
+      "selector": "text='\"login\" button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "login",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 33.35386657714844,
+      "screenshot_path": "reports\\screenshots\\step_20260502_153425_I_click_the__login__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"login\" button",
+          "action": "click",
+          "target": "text='\"login\" button'",
+          "value": "login",
+          "selector": "text='\"login\" button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"login\" button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "login"
+              ],
+              "target": "\"login\" button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='\"login\" button'",
+              "text=\"login\" button",
+              "button:has-text('\"login\"')",
+              "[role='button']:has-text('\"login\"')",
+              "xpath=//button[contains(normalize-space(.), '\"login\"')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+      "action": "assert",
+      "selector": "text='The email address you entered isn'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "The email address you entered isn",
+      "status": "passed",
+      "message": "Assertion fallback succeeded by locating visible element via vision",
+      "duration": 28.286634922027588,
+      "screenshot_path": "reports\\screenshots\\step_20260502_153453_I_should_see_the_error_message__The_email_address_you_entere.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+          "action": "assert",
+          "target": "text='The email address you entered isn'",
+          "value": "The email address you entered isn",
+          "selector": "text='The email address you entered isn'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see the error message \"The email address you entered isn't connected to an account\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "The email address you entered isn"
+              ],
+              "target": "The email address you entered isn",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='The email address you entered isn'",
+              "text=The email address you entered isn",
+              "input[placeholder*='The email address you entered isn']",
+              "input[name*='The email address you entered isn']",
+              "input[id*='The email address you entered isn']",
+              "xpath=//label[contains(normalize-space(.), 'The email address you entered isn')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion fallback succeeded by locating visible element via vision",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "Assertion failed for all selector candidates"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 5,
+    "failed_steps": 0,
+    "duration": 166.759279,
+    "plan_a_steps": 0,
+    "plan_b_steps": 5
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_153254_I_click_the__Allow_all_cookies__button.png",
+    "reports\\screenshots\\step_20260502_153323_I_fill_the__email__field_with__nour_karia_h_.png",
+    "reports\\screenshots\\step_20260502_153351_I_fill_the__pass__field_with__tourbillon_1234_.png",
+    "reports\\screenshots\\step_20260502_153425_I_click_the__login__button.png",
+    "reports\\screenshots\\step_20260502_153453_I_should_see_the_error_message__The_email_address_you_entere.png"
+  ],
+  "metadata": null
+}

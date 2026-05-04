@@ -134,6 +134,31 @@ class GeneratorService:
             return {"status": "error", "message": "No selector or coordinates found for select"}
 
         elif action in ["assert", "expect_visible"]:
+            expected_text = value or self._clean_identifier(target)
+            if expected_text:
+                if not selector or str(selector).startswith("text="):
+                    try:
+                        body_text = await self.page.locator("body").inner_text(timeout=5000)
+                        normalized_body = body_text.replace("’", "'")
+                        normalized_expected = expected_text.replace("’", "'")
+                        if normalized_expected in normalized_body:
+                            return {"status": "success", "message": f"Assertion passed in page text for '{expected_text}'", "selector_used": "body"}
+                    except Exception:
+                        pass
+
+                text_variants = list(dict.fromkeys([
+                    expected_text,
+                    expected_text.replace("'", "’"),
+                    expected_text.replace("’", "'"),
+                ]))
+                for text_variant in text_variants:
+                    try:
+                        locator = self.page.get_by_text(text_variant, exact=False).first()
+                        await locator.wait_for(state="visible", timeout=5000)
+                        return {"status": "success", "message": f"Assertion passed for visible text '{text_variant}'", "selector_used": f"get_by_text({text_variant!r})"}
+                    except Exception:
+                        continue
+
             if not selectors_to_try:
                 return {"status": "error", "message": "No selector provided for assertion"}
             for candidate in selectors_to_try:

@@ -9,8 +9,11 @@ class NLPService:
     async def process_feature(self, gherkin_text: str) -> GherkinParseResponse:
         try:
             logger.info("NLPService: Starting pipeline...")
+            # Validate input early: empty or whitespace-only input should be considered invalid
+            if not gherkin_text or not gherkin_text.strip():
+                return GherkinParseResponse(status="error", feature_name="Invalid Gherkin")
+
             parsed_data = parse_gherkin_text(gherkin_text)
-            
             if not parsed_data:
                 return GherkinParseResponse(status="error", feature_name="Invalid Gherkin")
 

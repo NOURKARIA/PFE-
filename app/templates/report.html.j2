@@ -69,8 +69,8 @@
         <header>
             <h1>Test Execution Report</h1>
             <div class="header-meta">
-                <div class="meta-item"><div class="meta-label">Feature</div><div class="meta-value">{{ feature_name }}</div></div>
-                <div class="meta-item"><div class="meta-label">Scenario</div><div class="meta-value">{{ scenario_name }}</div></div>
+                <div class="meta-item"><div class="meta-label">Feature</div><div class="meta-value">{{ feature_name or 'Untitled Feature' }}</div></div>
+                <div class="meta-item"><div class="meta-label">Scenario</div><div class="meta-value">{{ scenario_name or 'Unnamed Scenario' }}</div></div>
                 <div class="meta-item"><div class="meta-label">Execution ID</div><div class="meta-value">{{ execution_id }}</div></div>
                 <div class="meta-item"><div class="meta-label">Status</div><div class="meta-value"><span class="status-badge {{ status }}">{{ status | upper }}</span></div></div>
                 <div class="meta-item"><div class="meta-label">Started At</div><div class="meta-value">{{ started_at | strftime('%Y-%m-%d %H:%M:%S') }}</div></div>
@@ -120,7 +120,7 @@
                             {% if step.screenshot_path %}
                                 <div class="step-screenshot">
                                     <div class="screenshot-label">Screenshot</div>
-                                    <img src="{{ step.screenshot_path }}" alt="Step screenshot">
+                                    <img src="../screenshots/{{ step.screenshot_path | basename }}" alt="Step screenshot">
                                 </div>
                             {% endif %}
                         </div>

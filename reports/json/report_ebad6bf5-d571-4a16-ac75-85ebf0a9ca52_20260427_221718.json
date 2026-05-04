@@ -1,0 +1,66 @@
+{
+  "execution_id": "ebad6bf5-d571-4a16-ac75-85ebf0a9ca52",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-04-27T22:17:10.626537",
+  "finished_at": "2026-04-27T22:17:18.729696",
+  "duration": 8.103159,
+  "steps": [
+    {
+      "step_text": "When I type 'test automation' into the 'Search Wikipedia' field",
+      "action": "input",
+      "selector": "text='Search Wikipedia'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "test automation",
+      "status": "passed",
+      "message": "Typed 'test automation' into text='Search Wikipedia'",
+      "duration": 0.8647046089172363,
+      "screenshot_path": "reports\\screenshots\\step_20260427_221718_When_I_type__test_automation__into_the__Search_Wikipedia__fi.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "When I type 'test automation' into the 'Search Wikipedia' field",
+          "action": "input",
+          "target": "text='Search Wikipedia'",
+          "value": "test automation",
+          "selector": "text='Search Wikipedia'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "When I type 'test automation' into the 'Search Wikipedia' field",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "test automation"
+              ],
+              "target": "Search Wikipedia",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='Search Wikipedia'",
+              "text=Search Wikipedia"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'test automation' into text='Search Wikipedia'",
+          "selector_used": "text='Search Wikipedia'",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 8.103159,
+    "plan_a_steps": 1,
+    "plan_b_steps": 0
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260427_221718_When_I_type__test_automation__into_the__Search_Wikipedia__fi.png"
+  ],
+  "metadata": null
+}

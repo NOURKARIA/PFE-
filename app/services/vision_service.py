@@ -69,6 +69,7 @@ class VisionService:
         include_ocr: bool = False,
         target_text: Optional[str] = None,
         min_confidence: float = 0.25,
+        dom_elements: Optional[List[Dict]] = None,
     ):
         if not self.model.available:
             return []
@@ -82,16 +83,29 @@ class VisionService:
                     detections.append(element)
         
         # ---  REFINEMENT  ---
-        detections = self.refine_yolo_labels(detections) 
+        detections = self.refine_yolo_labels(detections)
+
+        # If DOM information is provided, build DOM detections and merge to improve labels/ocr
+        if dom_elements:
+            dom_dets = [self._build_dom_element(n) for n in dom_elements]
+            detections = self._merge_with_dom(detections, dom_dets)
+
         detections = self._merge_overlapping_elements(detections)
         return self._sort_elements(detections)
 
-    def detect_and_read(self, screenshot_path: str, target_text: str = None, min_confidence: float = 0.25):
+    def detect_and_read(
+        self,
+        screenshot_path: str,
+        target_text: str = None,
+        min_confidence: float = 0.25,
+        dom_elements: Optional[List[Dict]] = None,
+    ):
         return self.detect_ui_elements(
             screenshot_path=screenshot_path,
             include_ocr=True,
             target_text=target_text,
             min_confidence=min_confidence,
+            dom_elements=dom_elements,
         )
     def _merge_overlapping_elements(self, elements: List[Dict], iou_threshold: float = 0.2) -> List[Dict]:
         if not elements: return []
@@ -134,6 +148,81 @@ class VisionService:
             elements = remaining
             
         return keep
+
+    def _map_dom_tag_to_label(self, tag: str) -> str:
+        if not tag:
+            return "element"
+        t = str(tag).lower()
+        if t in ("button", "btn") or "button" in t:
+            return "button"
+        if t in ("input", "textarea") or any(k in t for k in ["input", "textarea", "field", "textbox"]):
+            return "input_field"
+        if t in ("a", "link") or "link" in t:
+            return "link"
+        if "select" in t or "dropdown" in t or "option" in t:
+            return "dropdown"
+        if "checkbox" in t or "check" in t:
+            return "checkbox"
+        return "element"
+
+    def _build_dom_element(self, dom_node: Dict) -> Dict:
+        # Expect dom_node to contain x,y,width,height in page pixels
+        x = dom_node.get("x") or dom_node.get("left") or 0
+        y = dom_node.get("y") or dom_node.get("top") or 0
+        w = dom_node.get("width") or dom_node.get("w") or 0
+        h = dom_node.get("height") or dom_node.get("h") or 0
+        try:
+            x = float(x)
+            y = float(y)
+            w = float(w)
+            h = float(h)
+        except Exception:
+            x, y, w, h = 0.0, 0.0, 0.0, 0.0
+
+        coords = [x, y, x + w, y + h]
+        label = self._map_dom_tag_to_label(dom_node.get("role") or dom_node.get("tag") or "")
+        text = (dom_node.get("text") or dom_node.get("aria_label") or "").strip() or None
+
+        return {
+            "label": label,
+            "confidence": 0.99,
+            "box": coords,
+            "center": [(coords[0] + coords[2]) / 2, (coords[1] + coords[3]) / 2],
+            "text": text,
+            "is_match": None,
+            "strategy": "dom",
+        }
+
+    def _merge_with_dom(self, detections: List[Dict], dom_dets: List[Dict], iou_threshold: float = 0.1) -> List[Dict]:
+        # For each DOM detection, try to find a matching vision detection and merge info.
+        merged = detections.copy()
+
+        for dom in dom_dets:
+            best_idx = None
+            best_iou = 0.0
+            for idx, det in enumerate(merged):
+                iou = self._calculate_iou(dom["box"], det["box"])
+                if iou > best_iou:
+                    best_iou = iou
+                    best_idx = idx
+
+            if best_idx is not None and best_iou >= iou_threshold:
+                det = merged[best_idx]
+                # Prefer DOM label and text when available
+                if dom.get("label") and dom.get("label") != "element":
+                    det["label"] = dom["label"]
+                if dom.get("text") and not det.get("text"):
+                    det["text"] = dom["text"]
+                # Boost confidence if DOM supports it
+                det["confidence"] = max(det.get("confidence", 0.0), dom.get("confidence", 0.0))
+                # Merge strategy
+                det["strategy"] = ",".join(filter(None, [det.get("strategy"), "dom"]))
+                merged[best_idx] = det
+            else:
+                # No matching vision detection: add DOM-only detection
+                merged.append(dom)
+
+        return merged
 
     def _calculate_iou(self, boxA, boxB):
         # Logic sghira bech ta7seb el overlap bin 2 boxes

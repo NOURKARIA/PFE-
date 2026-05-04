@@ -76,7 +76,7 @@ def test_semantic_mapping_endpoint_returns_selector_candidates_metadata():
     assert response.status_code == 200
     payload = response.json()
     assert payload["playwright_method"] == "click"
-    assert payload["selector"] == "text='login button'"
+    assert payload["selector"] == "button[name='login']"
     assert payload["value"] is None
 
 

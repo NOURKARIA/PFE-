@@ -2,6 +2,7 @@ import asyncio
 import sys
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api import health, ql_detection, reporting, segmentation, semantic_mapping, test_execution, test_generation
 from app.api.nlp_parsing import router as nlp_router
 from app.config import settings
@@ -11,6 +12,14 @@ if sys.platform == 'win32':
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 app = FastAPI(title=settings.app_name, version=settings.app_version)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup_event():

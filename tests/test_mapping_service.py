@@ -12,7 +12,8 @@ def test_map_click_intent_to_playwright_action():
     )
 
     assert action.playwright_method == "click"
-    assert action.selector == "text='login button'"
+    assert action.selector == "button[name='login']"
+    assert "text='login'" in action.metadata["selector_candidates"]
     assert action.value is None
 
 

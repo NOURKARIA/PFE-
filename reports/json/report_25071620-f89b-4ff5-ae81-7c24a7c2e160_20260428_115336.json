@@ -1,0 +1,176 @@
+{
+  "execution_id": "25071620-f89b-4ff5-ae81-7c24a7c2e160",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-04-28T11:51:15.102477",
+  "finished_at": "2026-04-28T11:53:36.757140",
+  "duration": 141.654663,
+  "steps": [
+    {
+      "step_text": "I type \"Artificial Intelligence\" in the search field",
+      "action": "input",
+      "selector": "text='search field'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "Artificial Intelligence",
+      "status": "passed",
+      "message": "Typed 'Artificial Intelligence' into input[name*='search']",
+      "duration": 91.02066969871521,
+      "screenshot_path": "reports\\screenshots\\step_20260428_115253_I_type__Artificial_Intelligence__in_the_search_field.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I type \"Artificial Intelligence\" in the search field",
+          "action": "input",
+          "target": "text='search field'",
+          "value": "Artificial Intelligence",
+          "selector": "text='search field'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I type \"Artificial Intelligence\" in the search field",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "Artificial Intelligence"
+              ],
+              "target": "search field",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='search field'",
+              "text=search field",
+              "input[placeholder*='search']",
+              "input[name*='search']",
+              "input[id*='search']",
+              "xpath=//label[contains(normalize-space(.), 'search')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'Artificial Intelligence' into input[name*='search']",
+          "selector_used": "input[name*='search']",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I click the search button",
+      "action": "click",
+      "selector": "text='search button'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked selector button:has-text('search')",
+      "duration": 12.548027753829956,
+      "screenshot_path": "reports\\screenshots\\step_20260428_115304_I_click_the_search_button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the search button",
+          "action": "click",
+          "target": "text='search button'",
+          "value": null,
+          "selector": "text='search button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the search button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "search button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='search button'",
+              "text=search button",
+              "button:has-text('search')",
+              "[role='button']:has-text('search')",
+              "xpath=//button[contains(normalize-space(.), 'search')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked selector button:has-text('search')",
+          "selector_used": "button:has-text('search')",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I should see \"Intelligence\"",
+      "action": "assert",
+      "selector": "text='Intelligence'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "Intelligence",
+      "status": "passed",
+      "message": "Assertion fallback succeeded by locating visible element via vision",
+      "duration": 30.352034330368042,
+      "screenshot_path": "reports\\screenshots\\step_20260428_115336_I_should_see__Intelligence_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see \"Intelligence\"",
+          "action": "assert",
+          "target": "text='Intelligence'",
+          "value": "Intelligence",
+          "selector": "text='Intelligence'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see \"Intelligence\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "Intelligence"
+              ],
+              "target": "Intelligence",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='Intelligence'",
+              "text=Intelligence"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion fallback succeeded by locating visible element via vision",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.507946252822876,
+            "box": [
+              260.99468994140625,
+              215.1605224609375,
+              604.6845092773438,
+              259.7344970703125
+            ],
+            "center": [
+              432.839599609375,
+              237.447509765625
+            ],
+            "text": "Artificial intelligence",
+            "is_match": true,
+            "strategy": "yolo+opencv+ocr"
+          },
+          "original_error": "Assertion failed for all selector candidates"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 3,
+    "passed_steps": 3,
+    "failed_steps": 0,
+    "duration": 141.654663,
+    "plan_a_steps": 2,
+    "plan_b_steps": 1
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260428_115253_I_type__Artificial_Intelligence__in_the_search_field.png",
+    "reports\\screenshots\\step_20260428_115304_I_click_the_search_button.png",
+    "reports\\screenshots\\step_20260428_115336_I_should_see__Intelligence_.png"
+  ],
+  "metadata": null
+}

@@ -1,0 +1,210 @@
+{
+  "execution_id": "34dc4e0e-623b-4b3c-adad-0ed2040c3eae",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-05-01T23:52:35.491639",
+  "finished_at": "2026-05-01T23:57:32.112630",
+  "duration": 296.620991,
+  "steps": [
+    {
+      "step_text": "I type \"OpenAI\" into the search field",
+      "action": "input",
+      "selector": "text='search field'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "OpenAI",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [989.3209228515625, 696.1415405273438]",
+      "duration": 196.6299169063568,
+      "screenshot_path": "reports\\screenshots\\step_20260501_235554_I_type__OpenAI__into_the_search_field.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I type \"OpenAI\" into the search field",
+          "action": "input",
+          "target": "text='search field'",
+          "value": "OpenAI",
+          "selector": "text='search field'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I type \"OpenAI\" into the search field",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "OpenAI"
+              ],
+              "target": "search field",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='search field'",
+              "text=search field",
+              "input[placeholder*='search']",
+              "input[name*='search']",
+              "input[id*='search']",
+              "xpath=//label[contains(normalize-space(.), 'search')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [989.3209228515625, 696.1415405273438]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              902.5426025390625,
+              674.0748901367188,
+              1076.0992431640625,
+              718.2081909179688
+            ],
+            "center": [
+              989.3209228515625,
+              696.1415405273438
+            ],
+            "text": "Googie oar Je as",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    },
+    {
+      "step_text": "I click the Google Search button",
+      "action": "click",
+      "selector": "text='google search button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [89.8592300415039, 27.657904624938965]",
+      "duration": 56.91829228401184,
+      "screenshot_path": "reports\\screenshots\\step_20260501_235653_I_click_the_Google_Search_button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the Google Search button",
+          "action": "click",
+          "target": "text='google search button'",
+          "value": null,
+          "selector": "text='google search button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the Google Search button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "google search button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='google search button'",
+              "text=google search button",
+              "button:has-text('google search')",
+              "[role='button']:has-text('google search')",
+              "xpath=//button[contains(normalize-space(.), 'google search')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [89.8592300415039, 27.657904624938965]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              7.126556396484375,
+              2.571256637573242,
+              172.59190368652344,
+              52.74455261230469
+            ],
+            "center": [
+              89.8592300415039,
+              27.657904624938965
+            ],
+            "text": "Google Search",
+            "is_match": true,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I should see \"OpenAI\"",
+      "action": "assert",
+      "selector": "text='OpenAI'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "OpenAI",
+      "status": "passed",
+      "message": "Assertion fallback succeeded by locating visible element via vision",
+      "duration": 38.40168595314026,
+      "screenshot_path": "reports\\screenshots\\step_20260501_235731_I_should_see__OpenAI_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see \"OpenAI\"",
+          "action": "assert",
+          "target": "text='OpenAI'",
+          "value": "OpenAI",
+          "selector": "text='OpenAI'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see \"OpenAI\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "OpenAI"
+              ],
+              "target": "OpenAI",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='OpenAI'",
+              "text=OpenAI"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion fallback succeeded by locating visible element via vision",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "dropdown",
+            "confidence": 0.99,
+            "box": [
+              985.2000122070312,
+              6838.9501953125,
+              1200.8000183105469,
+              6862.9501953125
+            ],
+            "center": [
+              1093.000015258789,
+              6850.9501953125
+            ],
+            "text": "English\nAustralian English\nBritish English\nCatalan\nChinese\nDansk\nDeutsch\nEnglish (India)\nEspa\u00f1ol\nEspa\u00f1ol latinoamericano\nEstonian\nFran\u00e7ais\nFran\u00e7ais canadien\nGaeilge\nHrvatski\nIndonesia\nItaliano\nLatvie\u0161u\nLietuvi\u0173\nMagyar\nMaltese\nNederlands\nNorsk\nPolski\nPortuguese\nPortugu\u00eas (Brasil)\nP\u0443\u0441\u0441\u043a\u0438\u0439\nRom\u00e2n\u0103\nSloven\u010dina\nSloven\u0161\u010dina\nSpanish\nSuomi\nSvenska\nTi\u1ebfng Vi\u1ec7t\nT\u00fcrkiye\nY\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430\n\u010de\u0161tina\n\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac\n\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438\n\u05e2\u05d1\u05e8\u05d9\u05ea\n\u0627\u0644\u0639\u0631\u0628\u064a\u0629\n\u0939\u093f\u0928\u094d\u0926\u0940\n\u0e44\u0e17\u0e22\n\u4e2d\u6587 (\u53f0\u7063)\n\u65e5\u672c\u8a9e\n\ud55c\uad6d\uc5b4",
+            "is_match": null,
+            "strategy": "dom"
+          },
+          "original_error": "Assertion failed for all selector candidates"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 3,
+    "passed_steps": 3,
+    "failed_steps": 0,
+    "duration": 296.620991,
+    "plan_a_steps": 0,
+    "plan_b_steps": 3
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260501_235554_I_type__OpenAI__into_the_search_field.png",
+    "reports\\screenshots\\step_20260501_235653_I_click_the_Google_Search_button.png",
+    "reports\\screenshots\\step_20260501_235731_I_should_see__OpenAI_.png"
+  ],
+  "metadata": null
+}

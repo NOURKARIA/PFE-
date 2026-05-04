@@ -1,0 +1,337 @@
+{
+  "execution_id": "903423b5-dc9a-4af8-ac5f-d409a3b63a79",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-05-01T23:36:15.787657",
+  "finished_at": "2026-05-01T23:40:09.850206",
+  "duration": 234.062549,
+  "steps": [
+    {
+      "step_text": "I click the \"Allow all cookies\" button",
+      "action": "click",
+      "selector": "text='\"allow all cookies\" button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "Allow all cookies",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [946.4348754882812, 509.4876708984375]",
+      "duration": 42.647684812545776,
+      "screenshot_path": "reports\\screenshots\\step_20260501_233707_I_click_the__Allow_all_cookies__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"Allow all cookies\" button",
+          "action": "click",
+          "target": "text='\"allow all cookies\" button'",
+          "value": "Allow all cookies",
+          "selector": "text='\"allow all cookies\" button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"Allow all cookies\" button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "Allow all cookies"
+              ],
+              "target": "\"allow all cookies\" button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='\"allow all cookies\" button'",
+              "text=\"allow all cookies\" button",
+              "button:has-text('\"allow all cookies\"')",
+              "[role='button']:has-text('\"allow all cookies\"')",
+              "xpath=//button[contains(normalize-space(.), '\"allow all cookies\"')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [946.4348754882812, 509.4876708984375]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              677.7796630859375,
+              488.6104736328125,
+              1215.090087890625,
+              530.3648681640625
+            ],
+            "center": [
+              946.4348754882812,
+              509.4876708984375
+            ],
+            "text": "Create new account _\nCreate new account\nRe",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"email\" field with \"nour.pfe.test@gmail.com\"",
+      "action": "input",
+      "selector": "text='nour.pfe.test@gmail.com'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "email",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 67.13471221923828,
+      "screenshot_path": "reports\\screenshots\\step_20260501_233815_I_fill_the__email__field_with__nour_pfe_test_gmail_com_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"email\" field with \"nour.pfe.test@gmail.com\"",
+          "action": "input",
+          "target": "text='nour.pfe.test@gmail.com'",
+          "value": "email",
+          "selector": "text='nour.pfe.test@gmail.com'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"email\" field with \"nour.pfe.test@gmail.com\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "email"
+              ],
+              "target": "nour.pfe.test@gmail.com",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='nour.pfe.test@gmail.com'",
+              "text=nour.pfe.test@gmail.com"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"pass\" field with \"PFE2026_DataIA\"",
+      "action": "input",
+      "selector": "text='PFE2026_DataIA'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "pass",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 64.25042033195496,
+      "screenshot_path": "reports\\screenshots\\step_20260501_233919_I_fill_the__pass__field_with__PFE2026_DataIA_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"pass\" field with \"PFE2026_DataIA\"",
+          "action": "input",
+          "target": "text='PFE2026_DataIA'",
+          "value": "pass",
+          "selector": "text='PFE2026_DataIA'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"pass\" field with \"PFE2026_DataIA\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "pass"
+              ],
+              "target": "PFE2026_DataIA",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='PFE2026_DataIA'",
+              "text=PFE2026_DataIA"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    },
+    {
+      "step_text": "I click the \"login\" button",
+      "action": "click",
+      "selector": "text='\"login\" button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "login",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [632.3999938964844, 608.0]",
+      "duration": 28.55440616607666,
+      "screenshot_path": "reports\\screenshots\\step_20260501_233948_I_click_the__login__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"login\" button",
+          "action": "click",
+          "target": "text='\"login\" button'",
+          "value": "login",
+          "selector": "text='\"login\" button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"login\" button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "login"
+              ],
+              "target": "\"login\" button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='\"login\" button'",
+              "text=\"login\" button",
+              "button:has-text('\"login\"')",
+              "[role='button']:has-text('\"login\"')",
+              "xpath=//button[contains(normalize-space(.), '\"login\"')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [632.3999938964844, 608.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              664.0
+            ],
+            "center": [
+              632.3999938964844,
+              608.0
+            ],
+            "text": "Mobile number or email\nMobile number or email\nPlease enter a valid mobile number or email address.",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+      "action": "assert",
+      "selector": "text='The email address you entered isn'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "The email address you entered isn",
+      "status": "passed",
+      "message": "Assertion fallback succeeded by locating visible element via vision",
+      "duration": 21.62514567375183,
+      "screenshot_path": "reports\\screenshots\\step_20260501_234009_I_should_see_the_error_message__The_email_address_you_entere.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+          "action": "assert",
+          "target": "text='The email address you entered isn'",
+          "value": "The email address you entered isn",
+          "selector": "text='The email address you entered isn'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see the error message \"The email address you entered isn't connected to an account\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "The email address you entered isn"
+              ],
+              "target": "The email address you entered isn",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='The email address you entered isn'",
+              "text=The email address you entered isn",
+              "input[placeholder*='The email address you entered isn']",
+              "input[name*='The email address you entered isn']",
+              "input[id*='The email address you entered isn']",
+              "xpath=//label[contains(normalize-space(.), 'The email address you entered isn')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion fallback succeeded by locating visible element via vision",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              664.0
+            ],
+            "center": [
+              632.3999938964844,
+              608.0
+            ],
+            "text": "Mobile number or email\nMobile number or email\nPlease enter a valid mobile number or email address.",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "Assertion failed for all selector candidates"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 5,
+    "failed_steps": 0,
+    "duration": 234.062549,
+    "plan_a_steps": 0,
+    "plan_b_steps": 5
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260501_233707_I_click_the__Allow_all_cookies__button.png",
+    "reports\\screenshots\\step_20260501_233815_I_fill_the__email__field_with__nour_pfe_test_gmail_com_.png",
+    "reports\\screenshots\\step_20260501_233919_I_fill_the__pass__field_with__PFE2026_DataIA_.png",
+    "reports\\screenshots\\step_20260501_233948_I_click_the__login__button.png",
+    "reports\\screenshots\\step_20260501_234009_I_should_see_the_error_message__The_email_address_you_entere.png"
+  ],
+  "metadata": null
+}

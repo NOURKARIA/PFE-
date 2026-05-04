@@ -18,7 +18,7 @@ class MappingService:
 
         normalized = str(target).strip()
         lowered = normalized.lower()
-        candidates = [f"text='{normalized}'", f"text={normalized}"]
+        candidates = []
 
         if element_type == "button" or "button" in lowered:
             label = normalized.replace("button", "").strip() or normalized
@@ -27,16 +27,26 @@ class MappingService:
                     f"button:has-text('{label}')",
                     f"[role='button']:has-text('{label}')",
                     f"xpath=//button[contains(normalize-space(.), '{label}')]",
+                    f"text='{label}'",
+                    f"text={label}",
                 ]
             )
-        elif element_type == "input" or any(token in lowered for token in ["field", "input", "email", "username", "password"]):
+        elif element_type == "input" or any(token in lowered for token in ["field", "input", "email", "username", "password", "pass"]):
             label = normalized.replace("field", "").replace("input", "").strip() or normalized
+            alias_candidates = []
+            if label.lower() in ["email", "username"]:
+                alias_candidates = ["input[name='email']", "input#email"]
+            elif label.lower() in ["pass", "password"]:
+                alias_candidates = ["input[name='pass']", "input#pass", "input[type='password']"]
             candidates.extend(
                 [
+                    *alias_candidates,
                     f"input[placeholder*='{label}']",
                     f"input[name*='{label}']",
                     f"input[id*='{label}']",
                     f"xpath=//label[contains(normalize-space(.), '{label}')]/following::input[1]",
+                    f"text='{label}'",
+                    f"text={label}",
                 ]
             )
         elif element_type == "link" or "link" in lowered:
@@ -47,6 +57,22 @@ class MappingService:
                     f"xpath=//a[contains(normalize-space(.), '{label}')]",
                 ]
             )
+        else:
+            candidates = [f"text='{normalized}'", f"text={normalized}"]
+
+        if lowered in ["login button", "log in button", "login"]:
+            candidates = [
+                "button[name='login']",
+                "button[type='submit']",
+                "[aria-label='Log in']",
+                "[aria-label='Log In']",
+                "[aria-label*='Log in']",
+                "[role='button']:has-text('Log in')",
+                "div[role='button']:has-text('Log in')",
+                "button:has-text('Log in')",
+                "button:has-text('Log In')",
+                *candidates,
+            ]
 
         return list(dict.fromkeys([candidate for candidate in candidates if candidate]))
 

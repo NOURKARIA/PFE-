@@ -28,6 +28,7 @@ class ReportService:
         )
         self.jinja_env.filters["strftime"] = lambda dt, fmt: dt.strftime(fmt) if hasattr(dt, "strftime") else dt
         self.jinja_env.filters["isoformat"] = lambda dt: dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+        self.jinja_env.filters["basename"] = lambda path: os.path.basename(path) if path else path
 
     def generate_json_report(self, report: ExecutionReport) -> str:
         report_dict = report.model_dump(mode="json")

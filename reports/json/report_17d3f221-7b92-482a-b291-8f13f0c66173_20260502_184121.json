@@ -1,0 +1,66 @@
+{
+  "execution_id": "17d3f221-7b92-482a-b291-8f13f0c66173",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-05-02T18:41:13.044544",
+  "finished_at": "2026-05-02T18:41:21.041162",
+  "duration": 7.996618,
+  "steps": [
+    {
+      "step_text": "I should see \"OpenAI\"",
+      "action": "assert",
+      "selector": "text='OpenAI'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "OpenAI",
+      "status": "passed",
+      "message": "Assertion passed for text=OpenAI",
+      "duration": 3.642082929611206,
+      "screenshot_path": "reports\\screenshots\\step_20260502_184120_I_should_see__OpenAI_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see \"OpenAI\"",
+          "action": "assert",
+          "target": "text='OpenAI'",
+          "value": "OpenAI",
+          "selector": "text='OpenAI'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see \"OpenAI\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "OpenAI"
+              ],
+              "target": "OpenAI",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='OpenAI'",
+              "text=OpenAI"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion passed for text=OpenAI",
+          "selector_used": "text=OpenAI",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 7.996618,
+    "plan_a_steps": 1,
+    "plan_b_steps": 0
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_184120_I_should_see__OpenAI_.png"
+  ],
+  "metadata": null
+}

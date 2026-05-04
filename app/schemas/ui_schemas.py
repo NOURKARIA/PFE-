@@ -8,6 +8,9 @@ class UIDetectionRequest(BaseModel):
     include_ocr: bool = False
     target_text: Optional[str] = None
     min_confidence: float = 0.25
+    # Optional DOM information coming from a browser (bounding boxes in page coordinates).
+    # Each item is expected to be a dict with keys such as: 'tag', 'text', 'x', 'y', 'width', 'height', 'attributes'
+    dom: Optional[List[Dict[str, Any]]] = None
 
 
 class UIElement(BaseModel):

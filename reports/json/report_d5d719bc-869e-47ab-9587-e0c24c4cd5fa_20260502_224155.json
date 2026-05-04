@@ -1,0 +1,254 @@
+{
+  "execution_id": "d5d719bc-869e-47ab-9587-e0c24c4cd5fa",
+  "feature_name": "Demo PFE end-to-end scenario",
+  "scenario_name": "Submit login form on Facebook",
+  "status": "failed",
+  "started_at": "2026-05-02T22:40:31.891334",
+  "finished_at": "2026-05-02T22:41:55.951864",
+  "duration": 84.06053,
+  "steps": [
+    {
+      "step_text": "I click the \"Allow all cookies\" button",
+      "action": "click",
+      "selector": "button:has-text('Allow all cookies')",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [596.6499996185303, 800.9750366210938]",
+      "duration": 35.16760802268982,
+      "screenshot_path": "reports\\screenshots\\step_20260502_224114_I_click_the__Allow_all_cookies__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"Allow all cookies\" button",
+          "action": "click",
+          "target": "button:has-text('Allow all cookies')",
+          "value": null,
+          "selector": "button:has-text('Allow all cookies')",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"Allow all cookies\" button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "Allow all cookies button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "button:has-text('Allow all cookies')",
+              "[role='button']:has-text('Allow all cookies')",
+              "xpath=//button[contains(normalize-space(.), 'Allow all cookies')]",
+              "text='Allow all cookies'",
+              "text=Allow all cookies"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [596.6499996185303, 800.9750366210938]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              570.5625,
+              790.9750366210938,
+              622.7374992370605,
+              810.9750366210938
+            ],
+            "center": [
+              596.6499996185303,
+              800.9750366210938
+            ],
+            "text": "Cookies",
+            "is_match": null,
+            "strategy": "dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"email\" field with \"nour.karia@h\"",
+      "action": "input",
+      "selector": "input[name='email']",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "nour.karia@h",
+      "status": "passed",
+      "message": "Typed 'nour.karia@h' into input[name='email']",
+      "duration": 0.34604835510253906,
+      "screenshot_path": "reports\\screenshots\\step_20260502_224114_I_fill_the__email__field_with__nour_karia_h_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"email\" field with \"nour.karia@h\"",
+          "action": "input",
+          "target": "input[name='email']",
+          "value": "nour.karia@h",
+          "selector": "input[name='email']",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"email\" field with \"nour.karia@h\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "nour.karia@h"
+              ],
+              "target": "email",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "input[name='email']",
+              "input#email",
+              "input[placeholder*='email']",
+              "input[name*='email']",
+              "input[id*='email']",
+              "xpath=//label[contains(normalize-space(.), 'email')]/following::input[1]",
+              "text='email'",
+              "text=email"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'nour.karia@h' into input[name='email']",
+          "selector_used": "input[name='email']",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"pass\" field with \"tourbillon 1234\"",
+      "action": "input",
+      "selector": "input[name='pass']",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "tourbillon 1234",
+      "status": "passed",
+      "message": "Typed 'tourbillon 1234' into input[name='pass']",
+      "duration": 0.32123517990112305,
+      "screenshot_path": "reports\\screenshots\\step_20260502_224114_I_fill_the__pass__field_with__tourbillon_1234_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"pass\" field with \"tourbillon 1234\"",
+          "action": "input",
+          "target": "input[name='pass']",
+          "value": "tourbillon 1234",
+          "selector": "input[name='pass']",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"pass\" field with \"tourbillon 1234\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "tourbillon 1234"
+              ],
+              "target": "pass",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "input[name='pass']",
+              "input#pass",
+              "input[type='password']",
+              "input[placeholder*='pass']",
+              "input[name*='pass']",
+              "input[id*='pass']",
+              "xpath=//label[contains(normalize-space(.), 'pass')]/following::input[1]",
+              "text='pass'",
+              "text=pass"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'tourbillon 1234' into input[name='pass']",
+          "selector_used": "input[name='pass']",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I click the \"login\" button",
+      "action": "click",
+      "selector": "button[name='login']",
+      "plan_used": "plan_a_selector_playwright",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked selector [aria-label='Log In']",
+      "duration": 15.498234987258911,
+      "screenshot_path": "reports\\screenshots\\step_20260502_224130_I_click_the__login__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"login\" button",
+          "action": "click",
+          "target": "button[name='login']",
+          "value": null,
+          "selector": "button[name='login']",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"login\" button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "login button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "button[name='login']",
+              "button[type='submit']",
+              "[aria-label='Log in']",
+              "[aria-label='Log In']",
+              "[aria-label*='Log in']",
+              "[role='button']:has-text('Log in')",
+              "div[role='button']:has-text('Log in')",
+              "button:has-text('Log in')",
+              "button:has-text('Log In')",
+              "button:has-text('login')",
+              "[role='button']:has-text('login')",
+              "xpath=//button[contains(normalize-space(.), 'login')]",
+              "text='login'",
+              "text=login"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked selector [aria-label='Log In']",
+          "selector_used": "[aria-label='Log In']",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+      "action": null,
+      "selector": null,
+      "plan_used": null,
+      "value": null,
+      "status": "failed",
+      "message": "Assertion failed for all selector candidates",
+      "duration": 25.31810712814331,
+      "screenshot_path": "reports\\screenshots\\step_20260502_224155_I_should_see_the_error_message__The_email_address_you_entere.png",
+      "metadata": {
+        "exception": "Assertion failed for all selector candidates"
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 4,
+    "failed_steps": 1,
+    "duration": 84.06053,
+    "plan_a_steps": 3,
+    "plan_b_steps": 1
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_224114_I_click_the__Allow_all_cookies__button.png",
+    "reports\\screenshots\\step_20260502_224114_I_fill_the__email__field_with__nour_karia_h_.png",
+    "reports\\screenshots\\step_20260502_224114_I_fill_the__pass__field_with__tourbillon_1234_.png",
+    "reports\\screenshots\\step_20260502_224130_I_click_the__login__button.png",
+    "reports\\screenshots\\step_20260502_224155_I_should_see_the_error_message__The_email_address_you_entere.png"
+  ],
+  "metadata": null
+}

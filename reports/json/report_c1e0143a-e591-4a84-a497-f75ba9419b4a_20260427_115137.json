@@ -1,0 +1,86 @@
+{
+  "execution_id": "c1e0143a-e591-4a84-a497-f75ba9419b4a",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-04-27T11:51:07.418994",
+  "finished_at": "2026-04-27T11:51:37.711627",
+  "duration": 30.292633,
+  "steps": [
+    {
+      "step_text": "When I click the 'Downloads' button",
+      "action": "click",
+      "selector": "text=''downloads' button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "Downloads",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [507.55084228515625, 190.0771484375]",
+      "duration": 25.799882888793945,
+      "screenshot_path": "reports\\screenshots\\step_20260427_115137_When_I_click_the__Downloads__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "When I click the 'Downloads' button",
+          "action": "click",
+          "target": "text=''downloads' button'",
+          "value": "Downloads",
+          "selector": "text=''downloads' button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "When I click the 'Downloads' button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "Downloads"
+              ],
+              "target": "'downloads' button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text=''downloads' button'",
+              "text='downloads' button",
+              "button:has-text(''downloads'')",
+              "[role='button']:has-text(''downloads'')",
+              "xpath=//button[contains(normalize-space(.), ''downloads'')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [507.55084228515625, 190.0771484375]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "button",
+            "confidence": 0.9354746341705322,
+            "box": [
+              422.3763427734375,
+              160.47787475585938,
+              592.725341796875,
+              219.67642211914062
+            ],
+            "center": [
+              507.55084228515625,
+              190.0771484375
+            ],
+            "text": null,
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 30.292633,
+    "plan_a_steps": 0,
+    "plan_b_steps": 1
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260427_115137_When_I_click_the__Downloads__button.png"
+  ],
+  "metadata": null
+}

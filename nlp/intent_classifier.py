@@ -16,15 +16,22 @@ class IntentClassifier:
         try:
             logger.info(f"IntentClassifier: Loading Custom PyTorch model from {model_path}...")
             self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-            self.model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=4)
 
-            if os.path.exists(model_path):
-                self.model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+            # Prefer loading a transformers save_pretrained directory if present
+            if os.path.isdir(model_path):
+                logger.info(f"IntentClassifier: Loading pretrained model directory from {model_path}...")
+                self.model = DistilBertForSequenceClassification.from_pretrained(model_path)
                 self.model.eval()
-                logger.info("IntentClassifier: Custom Model loaded successfully.")
+                logger.info("IntentClassifier: Loaded model from directory.")
             else:
-                logger.warning(f"IntentClassifier: Model file not found at {model_path}, using rules.")
-                self.model = None
+                self.model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=4)
+                if os.path.exists(model_path):
+                    self.model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+                    self.model.eval()
+                    logger.info("IntentClassifier: Custom Model loaded successfully from state_dict.")
+                else:
+                    logger.warning(f"IntentClassifier: Model file not found at {model_path}, using rules.")
+                    self.model = None
         except Exception as e:
             logger.warning(f"IntentClassifier: Falling back to rule-based classification: {e}")
             self.model = None

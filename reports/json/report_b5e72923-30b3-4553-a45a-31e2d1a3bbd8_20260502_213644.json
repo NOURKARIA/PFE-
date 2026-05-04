@@ -1,0 +1,147 @@
+{
+  "execution_id": "b5e72923-30b3-4553-a45a-31e2d1a3bbd8",
+  "feature_name": "Facebook login validation",
+  "scenario_name": "Invalid login shows an error",
+  "status": "passed",
+  "started_at": "2026-05-02T21:34:56.996171",
+  "finished_at": "2026-05-02T21:36:44.619122",
+  "duration": 107.622951,
+  "steps": [
+    {
+      "step_text": "I click the \"Allow all cookies\" button",
+      "action": "click",
+      "selector": "text='\"allow all cookies\" button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "Allow all cookies",
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [946.3331298828125, 509.41534423828125]",
+      "duration": 47.102447748184204,
+      "screenshot_path": "reports\\screenshots\\step_20260502_213550_I_click_the__Allow_all_cookies__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"Allow all cookies\" button",
+          "action": "click",
+          "target": "text='\"allow all cookies\" button'",
+          "value": "Allow all cookies",
+          "selector": "text='\"allow all cookies\" button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"Allow all cookies\" button",
+              "intent": "ACTION_CLICK",
+              "values": [
+                "Allow all cookies"
+              ],
+              "target": "\"allow all cookies\" button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='\"allow all cookies\" button'",
+              "text=\"allow all cookies\" button",
+              "button:has-text('\"allow all cookies\"')",
+              "[role='button']:has-text('\"allow all cookies\"')",
+              "xpath=//button[contains(normalize-space(.), '\"allow all cookies\"')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [946.3331298828125, 509.41534423828125]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              677.5313720703125,
+              488.4295654296875,
+              1215.1348876953125,
+              530.401123046875
+            ],
+            "center": [
+              946.3331298828125,
+              509.41534423828125
+            ],
+            "text": "Create new account _\nCreate new account\nMo",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"email\" field with \"demo@example.com\"",
+      "action": "input",
+      "selector": "text='demo@example.com'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "email",
+      "status": "passed",
+      "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+      "duration": 28.37138843536377,
+      "screenshot_path": "reports\\screenshots\\step_20260502_213619_I_fill_the__email__field_with__demo_example_com_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"email\" field with \"demo@example.com\"",
+          "action": "input",
+          "target": "text='demo@example.com'",
+          "value": "email",
+          "selector": "text='demo@example.com'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"email\" field with \"demo@example.com\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "email"
+              ],
+              "target": "demo@example.com",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='demo@example.com'",
+              "text=demo@example.com"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed value into UI element detected by vision at [632.3999938964844, 594.0]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0,
+              912.3999938964844,
+              636.0
+            ],
+            "center": [
+              632.3999938964844,
+              594.0
+            ],
+            "text": "Mobile number or email\nMobile number or email",
+            "is_match": null,
+            "strategy": "dom,dom,dom"
+          },
+          "original_error": "No selector or coordinates found for input"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 2,
+    "passed_steps": 2,
+    "failed_steps": 0,
+    "duration": 107.622951,
+    "plan_a_steps": 0,
+    "plan_b_steps": 2
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_213550_I_click_the__Allow_all_cookies__button.png",
+    "reports\\screenshots\\step_20260502_213619_I_fill_the__email__field_with__demo_example_com_.png"
+  ],
+  "metadata": null
+}

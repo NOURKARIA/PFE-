@@ -5,6 +5,7 @@ import re
 import time
 import uuid
 from datetime import datetime as dt
+from difflib import SequenceMatcher
 
 from playwright.async_api import async_playwright
 
@@ -16,14 +17,16 @@ from app.utils.logging_config import logger
 
 
 class ExecutorService:
-    def __init__(self):
+    def __init__(self, nlp: NLPService = None, vision: VisionService = None):
         self.playwright = None
         self.browser = None
         self.page = None
-        self.vision = VisionService()
-        self.nlp = NLPService()
+        self.vision = vision or VisionService()
+        self.nlp = nlp or NLPService()
         self.generator = None
         self.execution_id = None
+        self.feature_name = None
+        self.scenario_name = None
         self.start_time = None
         self.steps = []
         self.screenshots = []
@@ -37,6 +40,8 @@ class ExecutorService:
         self.playwright = await async_playwright().start()
         self.browser = await self.playwright.chromium.launch(headless=False)
         self.page = await self.browser.new_page()
+        self.page.set_default_timeout(10000)
+        self.page.set_default_navigation_timeout(30000)
 
         async def handle_dialog(dialog):
             logger.info("ExecutorService: dialog opened: %s", dialog.message)
@@ -44,7 +49,7 @@ class ExecutorService:
 
         self.page.on("dialog", lambda dialog: asyncio.create_task(handle_dialog(dialog)))
         self.generator = GeneratorService(self.page)
-        await self.page.goto(url)
+        await self.page.goto(url, wait_until="domcontentloaded", timeout=30000)
         await self.dismiss_popups()
         return self.page
 
@@ -131,12 +136,62 @@ class ExecutorService:
         temp_path = await self._get_temp_screenshot_path("fallback")
         await self.take_screenshot(temp_path)
 
-        elements = self.vision.detect_and_read(temp_path, target_text=action_data.get("target"))
+        # Try to collect DOM nodes from the page to improve vision detection
+        dom_nodes = None
+        try:
+            dom_nodes = await self.page.evaluate("""
+                () => {
+                    function isVisible(el) {
+                        if (!el) return false;
+                        const style = window.getComputedStyle(el);
+                        if (style.visibility === 'hidden' || style.display === 'none' || parseFloat(style.opacity || '1') === 0) return false;
+                        const rect = el.getBoundingClientRect();
+                        if (rect.width === 0 || rect.height === 0) return false;
+                        return true;
+                    }
+                    const selectors = ['button','input','a','select','textarea','label','option','[role="button"]','[aria-label]'];
+                    const candidates = Array.from(document.querySelectorAll(selectors.join(',')));
+                    return candidates
+                        .filter(isVisible)
+                        .map(el => {
+                            const r = el.getBoundingClientRect();
+                            const text = (el.innerText || el.value || el.getAttribute('aria-label') || el.getAttribute('alt') || '').toString().trim();
+                            return {
+                                tag: el.tagName.toLowerCase(),
+                                text: text || null,
+                                x: r.left + window.scrollX,
+                                y: r.top + window.scrollY,
+                                width: r.width,
+                                height: r.height,
+                                id: el.id || null,
+                                class: el.className || null,
+                                name: el.getAttribute('name') || null,
+                                aria_label: el.getAttribute('aria-label') || null,
+                                role: el.getAttribute('role') || null
+                            };
+                        });
+                }
+            """)
+        except Exception:
+            dom_nodes = None
+
+        target_text = self._clean_target_text(action_data.get("target"))
+        elements = self.vision.detect_and_read(temp_path, target_text=target_text, dom_elements=dom_nodes)
         matched = next((item for item in elements if item.get("is_match")), None)
-        if not matched and elements:
-            matched = elements[0]
+        if not matched:
+            matched = self._best_semantic_match(elements, target_text, action_data.get("action"))
+
+        if matched and self._is_optional_cookie_step(action_data) and not self._is_cookie_consent_control(matched):
+            matched = None
 
         if not matched:
+            if self._is_optional_cookie_step(action_data):
+                return {
+                    "status": "success",
+                    "message": "Cookie consent control was not visible; skipped optional cookie step",
+                    "plan_used": "plan_b_yolo_ocr",
+                    "original_error": original_error,
+                }
             return {"status": "error", "message": "Vision fallback did not detect a matching UI element", "plan_used": "plan_b_yolo_ocr", "original_error": original_error}
 
         coords = matched.get("center")
@@ -162,6 +217,69 @@ class ExecutorService:
 
         return {"status": "error", "message": "Vision fallback did not support this action", "plan_used": "plan_b_yolo_ocr", "matched_element": matched, "original_error": original_error}
 
+    @staticmethod
+    def _clean_target_text(target: str | None) -> str:
+        if not target:
+            return ""
+        cleaned = str(target).strip()
+        text_match = re.match(r"^text=['\"]?(.+?)['\"]?$", cleaned)
+        if text_match:
+            cleaned = text_match.group(1)
+        cleaned = cleaned.replace(" button", "").replace(" field", "").strip("\"' ")
+        return cleaned
+
+    @staticmethod
+    def _similarity(left: str | None, right: str | None) -> float:
+        left = (left or "").lower().strip()
+        right = (right or "").lower().strip()
+        if not left or not right:
+            return 0.0
+        if left in right or right in left:
+            return 1.0
+        return SequenceMatcher(None, left, right).ratio()
+
+    def _best_semantic_match(self, elements: list[dict], target_text: str, action: str | None):
+        if not target_text:
+            return None
+
+        expected_label = None
+        lowered_target = target_text.lower()
+        if action == "click":
+            expected_label = "button"
+        elif action == "input" or any(token in lowered_target for token in ["email", "pass", "password", "field"]):
+            expected_label = "input_field"
+
+        scored = []
+        for element in elements:
+            label = element.get("label")
+            text = element.get("text") or ""
+            score = self._similarity(target_text, text)
+            if expected_label and label == expected_label:
+                score += 0.2
+            scored.append((score, element))
+
+        if not scored:
+            return None
+
+        score, element = max(scored, key=lambda item: item[0])
+        if score >= 0.72:
+            return element
+        return None
+
+    @staticmethod
+    def _is_optional_cookie_step(action_data: dict) -> bool:
+        text = " ".join(
+            str(action_data.get(key) or "")
+            for key in ["step_text", "target", "value", "selector"]
+        ).lower()
+        return action_data.get("action") == "click" and any(token in text for token in ["cookie", "cookies", "consent"])
+
+    @staticmethod
+    def _is_cookie_consent_control(element: dict) -> bool:
+        text = (element.get("text") or "").lower()
+        label = (element.get("label") or "").lower()
+        return label == "button" and any(token in text for token in ["allow", "accept", "essential", "optional", "consent"])
+
     async def dismiss_popups(self):
         if not self.page:
             return
@@ -174,6 +292,9 @@ class ExecutorService:
             'button:has-text("Cancel")',
             'button:has-text("OK")',
             'button:has-text("Accept")',
+            'button:has-text("Allow all cookies")',
+            'button:has-text("Allow essential and optional cookies")',
+            'button:has-text("Only allow essential cookies")',
         ]
         for selector in selectors:
             try:
@@ -223,6 +344,8 @@ class ExecutorService:
 
         return ExecutionReport(
             execution_id=self.execution_id,
+            feature_name=self.feature_name,
+            scenario_name=self.scenario_name,
             status=overall_status,
             started_at=self.start_time,
             finished_at=dt.now(),

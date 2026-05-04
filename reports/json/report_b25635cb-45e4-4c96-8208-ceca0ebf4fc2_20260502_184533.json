@@ -1,0 +1,66 @@
+{
+  "execution_id": "b25635cb-45e4-4c96-8208-ceca0ebf4fc2",
+  "feature_name": "Google search pipeline smoke",
+  "scenario_name": "Search for OpenAI on Google",
+  "status": "passed",
+  "started_at": "2026-05-02T18:45:25.425203",
+  "finished_at": "2026-05-02T18:45:33.255525",
+  "duration": 7.830322,
+  "steps": [
+    {
+      "step_text": "I should see \"OpenAI\"",
+      "action": "assert",
+      "selector": "text='OpenAI'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "OpenAI",
+      "status": "passed",
+      "message": "Assertion passed for text=OpenAI",
+      "duration": 3.4571914672851562,
+      "screenshot_path": "reports\\screenshots\\step_20260502_184532_I_should_see__OpenAI_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see \"OpenAI\"",
+          "action": "assert",
+          "target": "text='OpenAI'",
+          "value": "OpenAI",
+          "selector": "text='OpenAI'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see \"OpenAI\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "OpenAI"
+              ],
+              "target": "OpenAI",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='OpenAI'",
+              "text=OpenAI"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion passed for text=OpenAI",
+          "selector_used": "text=OpenAI",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 7.830322,
+    "plan_a_steps": 1,
+    "plan_b_steps": 0
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_184532_I_should_see__OpenAI_.png"
+  ],
+  "metadata": null
+}

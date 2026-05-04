@@ -1,0 +1,103 @@
+{
+  "step_result": {
+    "status": "completed",
+    "step": "Then I should see 'Dashboard'",
+    "action": {
+      "step_text": "Then I should see 'Dashboard'",
+      "action": "assert",
+      "target": "text='Dashboard'",
+      "value": "Dashboard",
+      "selector": "text='Dashboard'",
+      "intent": "VERIFICATION",
+      "metadata": {
+        "raw_nlp": {
+          "step": "Then I should see 'Dashboard'",
+          "intent": "VERIFICATION",
+          "values": [
+            "Dashboard"
+          ],
+          "target": "Dashboard",
+          "element_type": "element"
+        },
+        "selector_candidates": [
+          "text='Dashboard'",
+          "text=Dashboard"
+        ],
+        "element_type": "element"
+      }
+    },
+    "result": {
+      "status": "success",
+      "message": "Assertion passed for text='Dashboard'",
+      "selector_used": "text='Dashboard'",
+      "plan_used": "plan_a_selector_playwright"
+    },
+    "screenshot": "reports\\screenshots\\step_20260501_234217_Then_I_should_see__Dashboard_.png"
+  },
+  "report": {
+    "execution_id": "5dca7633-9e2d-46c5-ac8d-66eb4915cde7",
+    "feature_name": null,
+    "scenario_name": null,
+    "status": "passed",
+    "started_at": "2026-05-01T23:42:12.627016",
+    "finished_at": "2026-05-01T23:42:17.885895",
+    "duration": 5.258879,
+    "steps": [
+      {
+        "step_text": "Then I should see 'Dashboard'",
+        "action": "assert",
+        "selector": "text='Dashboard'",
+        "plan_used": "plan_a_selector_playwright",
+        "value": "Dashboard",
+        "status": "passed",
+        "message": "Assertion passed for text='Dashboard'",
+        "duration": 0.9511480331420898,
+        "screenshot_path": "reports\\screenshots\\step_20260501_234217_Then_I_should_see__Dashboard_.png",
+        "metadata": {
+          "nlp_payload": {
+            "step_text": "Then I should see 'Dashboard'",
+            "action": "assert",
+            "target": "text='Dashboard'",
+            "value": "Dashboard",
+            "selector": "text='Dashboard'",
+            "intent": "VERIFICATION",
+            "metadata": {
+              "raw_nlp": {
+                "step": "Then I should see 'Dashboard'",
+                "intent": "VERIFICATION",
+                "values": [
+                  "Dashboard"
+                ],
+                "target": "Dashboard",
+                "element_type": "element"
+              },
+              "selector_candidates": [
+                "text='Dashboard'",
+                "text=Dashboard"
+              ],
+              "element_type": "element"
+            }
+          },
+          "execution_result": {
+            "status": "success",
+            "message": "Assertion passed for text='Dashboard'",
+            "selector_used": "text='Dashboard'",
+            "plan_used": "plan_a_selector_playwright"
+          }
+        }
+      }
+    ],
+    "summary": {
+      "total_steps": 1,
+      "passed_steps": 1,
+      "failed_steps": 0,
+      "duration": 5.258879,
+      "plan_a_steps": 1,
+      "plan_b_steps": 0
+    },
+    "screenshots": [
+      "reports\\screenshots\\step_20260501_234217_Then_I_should_see__Dashboard_.png"
+    ],
+    "metadata": null
+  }
+}

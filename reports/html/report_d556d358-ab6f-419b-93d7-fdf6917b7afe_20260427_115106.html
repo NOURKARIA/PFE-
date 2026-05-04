@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execution Report - d556d358-ab6f-419b-93d7-fdf6917b7afe</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; }
+        header h1 { margin-bottom: 10px; font-size: 28px; }
+        .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; font-size: 14px; }
+        .meta-item { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; }
+        .meta-label { opacity: 0.9; margin-bottom: 4px; }
+        .meta-value { font-weight: bold; font-size: 16px; }
+        .summary { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; padding: 30px; border-bottom: 1px solid #e0e0e0; }
+        .summary-card { text-align: center; padding: 15px; background: #f9f9f9; border-radius: 4px; border-left: 4px solid #ccc; }
+        .summary-card.passed { border-left-color: #4caf50; }
+        .summary-card.failed { border-left-color: #f44336; }
+        .summary-card.total { border-left-color: #2196f3; }
+        .summary-card.duration { border-left-color: #ff9800; }
+        .summary-card.plan-a { border-left-color: #1976d2; }
+        .summary-card.plan-b { border-left-color: #8e24aa; }
+        .summary-value { font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .summary-label { color: #666; font-size: 12px; text-transform: uppercase; }
+        .status-badge { display: inline-block; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-top: 10px; }
+        .status-badge.passed { background: #c8e6c9; color: #2e7d32; }
+        .status-badge.failed { background: #ffcdd2; color: #c62828; }
+        .steps-section { padding: 30px; }
+        .steps-section h2 { margin-bottom: 20px; color: #333; font-size: 24px; }
+        .step { margin-bottom: 20px; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; }
+        .step-header { padding: 15px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .step-header:hover { background: #f5f5f5; }
+        .step-header.passed { border-left: 4px solid #4caf50; }
+        .step-header.failed { border-left: 4px solid #f44336; }
+        .step-title { font-weight: 600; color: #333; flex: 1; }
+        .step-status { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-left: 10px; }
+        .step-status.passed { background: #e8f5e9; color: #2e7d32; }
+        .step-status.failed { background: #ffebee; color: #c62828; }
+        .step-duration { color: #999; font-size: 12px; margin-left: 10px; }
+        .step-content { display: none; padding: 15px; background: #fafafa; }
+        .step-content.show { display: block; }
+        .step-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px; }
+        .meta-group { background: white; padding: 10px; border-radius: 4px; border-left: 3px solid #667eea; }
+        .meta-group-label { font-size: 11px; text-transform: uppercase; color: #999; margin-bottom: 5px; }
+        .meta-group-value { font-family: 'Courier New', monospace; font-size: 13px; color: #333; word-break: break-all; }
+        .step-message { margin-bottom: 15px; padding: 10px; background: white; border-radius: 4px; border-left: 3px solid #ff9800; }
+        .step-screenshot { margin-top: 15px; }
+        .step-screenshot img { max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #e0e0e0; }
+        .screenshot-label { font-size: 12px; color: #999; margin-bottom: 8px; }
+        footer { background: #f9f9f9; padding: 20px; text-align: center; border-top: 1px solid #e0e0e0; color: #999; font-size: 12px; }
+        .no-steps { text-align: center; padding: 40px; color: #999; }
+        @media (max-width: 768px) {
+            .summary { grid-template-columns: repeat(2, 1fr); }
+            .header-meta { grid-template-columns: 1fr; }
+            .step-meta { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        function toggleStep(element) {
+            const content = element.nextElementSibling;
+            content.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Test Execution Report</h1>
+            <div class="header-meta">
+                <div class="meta-item"><div class="meta-label">Feature</div><div class="meta-value">None</div></div>
+                <div class="meta-item"><div class="meta-label">Scenario</div><div class="meta-value">None</div></div>
+                <div class="meta-item"><div class="meta-label">Execution ID</div><div class="meta-value">d556d358-ab6f-419b-93d7-fdf6917b7afe</div></div>
+                <div class="meta-item"><div class="meta-label">Status</div><div class="meta-value"><span class="status-badge passed">PASSED</span></div></div>
+                <div class="meta-item"><div class="meta-label">Started At</div><div class="meta-value">2026-04-27 11:51:00</div></div>
+                <div class="meta-item"><div class="meta-label">Duration</div><div class="meta-value">5.64s</div></div>
+            </div>
+        </header>
+
+        <div class="summary">
+            <div class="summary-card total"><div class="summary-value">1</div><div class="summary-label">Total Steps</div></div>
+            <div class="summary-card passed"><div class="summary-value">1</div><div class="summary-label">Passed</div></div>
+            <div class="summary-card failed"><div class="summary-value">0</div><div class="summary-label">Failed</div></div>
+            <div class="summary-card duration"><div class="summary-value">5.6s</div><div class="summary-label">Duration</div></div>
+            <div class="summary-card plan-a"><div class="summary-value">1</div><div class="summary-label">Plan A</div></div>
+            <div class="summary-card plan-b"><div class="summary-value">0</div><div class="summary-label">Plan B</div></div>
+        </div>
+
+        <div class="steps-section">
+            <h2>Execution Steps</h2>
+                    <div class="step">
+                        <div class="step-header passed" onclick="toggleStep(this)">
+                            <div class="step-title">When I type 'test automation' into the 'Search Wikipedia' field</div>
+                            <div class="step-duration">0.72s</div>
+                            <div class="step-status passed">PASSED</div>
+                        </div>
+                        <div class="step-content">
+                                <div class="step-meta">
+                                    <div class="meta-group"><div class="meta-group-label">Action</div><div class="meta-group-value">input</div></div>
+                                        <div class="meta-group"><div class="meta-group-label">Selector</div><div class="meta-group-value">text='Search Wikipedia'</div></div>
+                                        <div class="meta-group"><div class="meta-group-label">Plan Used</div><div class="meta-group-value">plan_a_selector_playwright</div></div>
+                                        <div class="meta-group"><div class="meta-group-label">Value</div><div class="meta-group-value">test automation</div></div>
+                                </div>
+
+                                <div class="step-message"><strong>Message:</strong> Typed 'test automation' into text='Search Wikipedia'</div>
+
+                                <div class="step-screenshot">
+                                    <div class="screenshot-label">Screenshot</div>
+                                    <img src="reports\screenshots\step_20260427_115105_When_I_type__test_automation__into_the__Search_Wikipedia__fi.png" alt="Step screenshot">
+                                </div>
+                        </div>
+                    </div>
+        </div>
+
+        <footer>Generated on 2026-04-27 11:51:06</footer>
+    </div>
+</body>
+</html>

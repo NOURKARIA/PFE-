@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data-AI Test Studio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="auth-screen" class="auth-screen">
+    <section class="auth-panel">
+      <div class="brand-mark mb-4">
+        <span class="brand-icon"><i class="bi bi-shield-check"></i></span>
+        <div>
+          <p class="eyebrow mb-1">Data-AI Test Studio</p>
+          <h1 class="h3 mb-0">Sign in to your QA workspace</h1>
+        </div>
+      </div>
+
+      <form id="auth-form" class="vstack gap-3">
+        <div>
+          <label for="auth-name" class="form-label">Full name</label>
+          <input id="auth-name" class="form-control form-control-lg" type="text" placeholder="username "required>
+        </div>
+        <div>
+          <label for="auth-email" class="form-label">Email</label>
+          <input id="auth-email" class="form-control form-control-lg" type="email" placeholder="tester@example.com" required>
+        </div>
+        <div>
+          <label for="auth-role" class="form-label">Role</label>
+          <select id="auth-role" class="form-select form-select-lg">
+            <option>QA Engineer</option>
+            <option>Automation Engineer</option>
+            <option>Product Owner</option>
+            <option>Developer</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-lg w-100" type="submit">
+          <i class="bi bi-box-arrow-in-right"></i>
+          Enter Studio
+        </button>
+      </form>
+    </section>
+
+    <section class="auth-preview">
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="preview-content">
+          <div class="mini-status passed">Pipeline Ready</div>
+          <h2>Gherkin to execution reports in one workspace.</h2>
+          <div class="preview-grid">
+            <div><strong>Plan A</strong><span>Playwright selectors</span></div>
+            <div><strong>Plan B</strong><span>YOLO + OCR fallback</span></div>
+            <div><strong>NLP</strong><span>Intent and entity extraction</span></div>
+            <div><strong>Reports</strong><span>JSON and HTML evidence</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-shell" class="app-shell d-none">
+    <aside class="sidebar">
+      <a class="app-brand" href="#dashboard" data-view="dashboard-view">
+        <span class="brand-icon"><i class="bi bi-cpu"></i></span>
+        <span>Data-AI<br><small>Test Studio</small></span>
+      </a>
+
+      <nav class="nav flex-column gap-1 mt-4">
+        <button class="nav-link active" data-view="dashboard-view"><i class="bi bi-grid-1x2"></i> Dashboard</button>
+        <button class="nav-link" data-view="studio-view"><i class="bi bi-play-circle"></i> Test Studio</button>
+        <button class="nav-link" data-view="screenshots-view"><i class="bi bi-image"></i> Screenshots</button>
+        <button class="nav-link" data-view="reports-view"><i class="bi bi-file-earmark-bar-graph"></i> Reports</button>
+        <button class="nav-link" data-view="settings-view"><i class="bi bi-sliders"></i> Settings</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="backend-state" id="backend-state">
+          <span class="state-dot"></span>
+          <span>Checking backend</span>
+        </div>
+        <button id="logout-btn" class="btn btn-outline-light w-100 mt-3">
+          <i class="bi bi-box-arrow-left"></i>
+          Sign out
+        </button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow mb-1">Functional test automation</p>
+          <h1 id="page-title" class="h4 mb-0">Dashboard</h1>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button id="refresh-reports" class="btn btn-light btn-sm"><i class="bi bi-arrow-clockwise"></i> Sync</button>
+          <div class="user-chip">
+            <span id="user-initials">QA</span>
+            <div>
+              <strong id="user-name">User</strong>
+              <small id="user-role">QA Engineer</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section id="dashboard-view" class="view active">
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="metric-card">
+              <i class="bi bi-collection"></i>
+              <span>Total Reports</span>
+              <strong id="metric-total">0</strong>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card success">
+              <i class="bi bi-check2-circle"></i>
+              <span>Passed</span>
+              <strong id="metric-passed">0</strong>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card danger">
+              <i class="bi bi-x-octagon"></i>
+              <span>Failed</span>
+              <strong id="metric-failed">0</strong>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-card accent">
+              <i class="bi bi-eye"></i>
+              <span>Plan B Uses</span>
+              <strong id="metric-plan-b">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-xl-7">
+            <div class="panel h-100">
+              <div class="panel-header">
+                <div>
+                  <h2>Execution Workspace</h2>
+                  <p>Run a website scenario or inspect UI screenshots.</p>
+                </div>
+                <button class="btn btn-primary" data-jump="studio-view"><i class="bi bi-play-fill"></i> New Run</button>
+              </div>
+              <div class="pipeline-map">
+                <div><i class="bi bi-braces"></i><strong>Gherkin</strong><span>Feature and scenario input</span></div>
+                <div><i class="bi bi-magic"></i><strong>NLP</strong><span>Intent, target, value</span></div>
+                <div><i class="bi bi-browser-chrome"></i><strong>Execute</strong><span>Playwright or fallback</span></div>
+                <div><i class="bi bi-filetype-html"></i><strong>Report</strong><span>Evidence and summary</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="panel h-100">
+              <div class="panel-header">
+                <div>
+                  <h2>Latest Reports</h2>
+                  <p>Most recent pipeline results.</p>
+                </div>
+              </div>
+              <div id="latest-reports" class="report-list compact"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="studio-view" class="view">
+        <div class="row g-4">
+          <div class="col-xl-7">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Scenario Builder</h2>
+                  <p>Enter the target URL and the full Gherkin scenario to execute.</p>
+                </div>
+                <span class="badge text-bg-primary">Full session</span>
+              </div>
+
+              <form id="scenario-form" class="vstack gap-3">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="feature-name" class="form-label">Feature name</label>
+                    <input id="feature-name" class="form-control" value="Google search pipeline smoke">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="scenario-name" class="form-label">Scenario name</label>
+                    <input id="scenario-name" class="form-control" value="Search for OpenAI on Google">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="target-url" class="form-label">Website URL</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-globe2"></i></span>
+                    <input id="target-url" class="form-control" type="url" value="https://www.google.com/search?q=OpenAI" required>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label for="gherkin-input" class="form-label">Gherkin scenario</label>
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-outline-secondary" type="button" data-template="google">Google</button>
+                      <button class="btn btn-outline-secondary" type="button" data-template="facebook">Facebook</button>
+                    </div>
+                  </div>
+                  <textarea id="gherkin-input" class="form-control code-input" rows="12">Feature: Google search pipeline smoke
+
+Scenario: Search for OpenAI on Google
+  Given I navigate to "https://www.google.com/search?q=OpenAI"
+  Then I should see "OpenAI"</textarea>
+                </div>
+
+                <div class="action-row">
+                  <button id="parse-btn" class="btn btn-outline-primary" type="button"><i class="bi bi-diagram-3"></i> Parse</button>
+                  <button id="generate-btn" class="btn btn-outline-dark" type="button"><i class="bi bi-code-slash"></i> Generate Script</button>
+                  <button id="execute-btn" class="btn btn-primary ms-auto" type="submit"><i class="bi bi-play-fill"></i> Run Pipeline</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-xl-5">
+            <div class="panel mb-4">
+              <div class="panel-header">
+                <div>
+                  <h2>Run Status</h2>
+                  <p>Live output from parser, generator, and executor.</p>
+                </div>
+                <span id="run-badge" class="badge text-bg-secondary">Idle</span>
+              </div>
+              <div id="run-loader" class="run-loader d-none">
+                <div class="spinner-border text-primary" role="status"></div>
+                <span>Running pipeline. Browser automation can take a moment.</span>
+              </div>
+              <pre id="execution-output" class="output-box">Ready.</pre>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Generated Script</h2>
+                  <p>Preview the Playwright code created from Gherkin.</p>
+                </div>
+              </div>
+              <pre id="script-output" class="output-box small-box">No script generated yet.</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="screenshots-view" class="view">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Screenshot Analyzer</h2>
+                  <p>Upload a UI screenshot and detect visible components with YOLO/OCR.</p>
+                </div>
+              </div>
+              <form id="screenshot-form" class="vstack gap-3">
+                <div class="upload-zone" id="upload-zone">
+                  <i class="bi bi-cloud-arrow-up"></i>
+                  <strong>Drop screenshot here</strong>
+                  <span>PNG, JPG, JPEG, or WEBP</span>
+                  <input id="screenshot-file" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+                </div>
+                <div>
+                  <label for="target-text" class="form-label">Target text or element label</label>
+                  <input id="target-text" class="form-control" placeholder="Login, Search, email...">
+                </div>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Analyze Screenshot</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Vision Result</h2>
+                  <p>Preview and detected UI elements.</p>
+                </div>
+                <span id="vision-badge" class="badge text-bg-secondary">Idle</span>
+              </div>
+              <div class="screenshot-preview">
+                <img id="screenshot-preview" alt="Screenshot preview">
+                <div id="empty-preview" class="empty-preview">No screenshot selected.</div>
+              </div>
+              <pre id="vision-output" class="output-box mt-3">Waiting for screenshot.</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports-view" class="view">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Report History</h2>
+              <p>Review generated reports and their execution summaries.</p>
+            </div>
+            <button class="btn btn-outline-primary" id="reports-reload"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+          </div>
+          <div id="reports-list" class="report-list"></div>
+        </div>
+      </section>
+
+      <section id="settings-view" class="view">
+        <div class="panel settings-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Workspace Settings</h2>
+              <p>Configure local frontend preferences.</p>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="api-base" class="form-label">API base URL</label>
+              <input id="api-base" class="form-control" value="http://localhost:8000/api/ia">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Theme</label>
+              <div class="form-check form-switch mt-2">
+                <input id="theme-switch" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="theme-switch">Use dark mode</label>
+              </div>
+            </div>
+          </div>
+          <button id="save-settings" class="btn btn-primary mt-4"><i class="bi bi-save"></i> Save Settings</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

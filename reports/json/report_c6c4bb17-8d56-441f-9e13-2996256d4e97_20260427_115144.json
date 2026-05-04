@@ -1,0 +1,70 @@
+{
+  "execution_id": "c6c4bb17-8d56-441f-9e13-2996256d4e97",
+  "feature_name": null,
+  "scenario_name": null,
+  "status": "passed",
+  "started_at": "2026-04-27T11:51:38.917752",
+  "finished_at": "2026-04-27T11:51:44.279884",
+  "duration": 5.362132,
+  "steps": [
+    {
+      "step_text": "When I type 'demo@example.com' into the 'Username or email address' field",
+      "action": "input",
+      "selector": "text='Username or email address'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "demo@example.com",
+      "status": "passed",
+      "message": "Typed 'demo@example.com' into text='Username or email address'",
+      "duration": 0.48892784118652344,
+      "screenshot_path": "reports\\screenshots\\step_20260427_115144_When_I_type__demo_example_com__into_the__Username_or_email_a.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "When I type 'demo@example.com' into the 'Username or email address' field",
+          "action": "input",
+          "target": "text='Username or email address'",
+          "value": "demo@example.com",
+          "selector": "text='Username or email address'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "When I type 'demo@example.com' into the 'Username or email address' field",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "demo@example.com"
+              ],
+              "target": "Username or email address",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='Username or email address'",
+              "text=Username or email address",
+              "input[placeholder*='Username or email address']",
+              "input[name*='Username or email address']",
+              "input[id*='Username or email address']",
+              "xpath=//label[contains(normalize-space(.), 'Username or email address')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'demo@example.com' into text='Username or email address'",
+          "selector_used": "text='Username or email address'",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 1,
+    "passed_steps": 1,
+    "failed_steps": 0,
+    "duration": 5.362132,
+    "plan_a_steps": 1,
+    "plan_b_steps": 0
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260427_115144_When_I_type__demo_example_com__into_the__Username_or_email_a.png"
+  ],
+  "metadata": null
+}

@@ -1,0 +1,307 @@
+{
+  "execution_id": "c7bc9181-9937-45c1-9452-500ad50a22ff",
+  "feature_name": "Facebook login validation",
+  "scenario_name": "Invalid login shows an error",
+  "status": "passed",
+  "started_at": "2026-05-02T21:52:36.489859",
+  "finished_at": "2026-05-02T21:54:42.960553",
+  "duration": 126.470694,
+  "steps": [
+    {
+      "step_text": "I click the \"Allow all cookies\" button",
+      "action": "click",
+      "selector": "text='Allow all cookies button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [945.9879150390625, 509.4442138671875]",
+      "duration": 42.33435368537903,
+      "screenshot_path": "reports\\screenshots\\step_20260502_215329_I_click_the__Allow_all_cookies__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"Allow all cookies\" button",
+          "action": "click",
+          "target": "text='Allow all cookies button'",
+          "value": null,
+          "selector": "text='Allow all cookies button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"Allow all cookies\" button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "Allow all cookies button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='Allow all cookies button'",
+              "text=Allow all cookies button",
+              "button:has-text('Allow all cookies')",
+              "[role='button']:has-text('Allow all cookies')",
+              "xpath=//button[contains(normalize-space(.), 'Allow all cookies')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [945.9879150390625, 509.4442138671875]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "link",
+            "confidence": 0.99,
+            "box": [
+              676.8623046875,
+              488.451904296875,
+              1215.113525390625,
+              530.4365234375
+            ],
+            "center": [
+              945.9879150390625,
+              509.4442138671875
+            ],
+            "text": "Create new account _\nCreate new account\nRe",
+            "is_match": false,
+            "strategy": "yolo+opencv+ocr,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"email\" field with \"demo@example.com\"",
+      "action": "input",
+      "selector": "text='email'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "demo@example.com",
+      "status": "passed",
+      "message": "Typed 'demo@example.com' into text=email",
+      "duration": 10.502008199691772,
+      "screenshot_path": "reports\\screenshots\\step_20260502_215340_I_fill_the__email__field_with__demo_example_com_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"email\" field with \"demo@example.com\"",
+          "action": "input",
+          "target": "text='email'",
+          "value": "demo@example.com",
+          "selector": "text='email'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"email\" field with \"demo@example.com\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "demo@example.com"
+              ],
+              "target": "email",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='email'",
+              "text=email",
+              "input[placeholder*='email']",
+              "input[name*='email']",
+              "input[id*='email']",
+              "xpath=//label[contains(normalize-space(.), 'email')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'demo@example.com' into text=email",
+          "selector_used": "text=email",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I fill the \"pass\" field with \"demo password\"",
+      "action": "input",
+      "selector": "text='pass'",
+      "plan_used": "plan_a_selector_playwright",
+      "value": "demo password",
+      "status": "passed",
+      "message": "Typed 'demo password' into text=pass",
+      "duration": 10.484528064727783,
+      "screenshot_path": "reports\\screenshots\\step_20260502_215350_I_fill_the__pass__field_with__demo_password_.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I fill the \"pass\" field with \"demo password\"",
+          "action": "input",
+          "target": "text='pass'",
+          "value": "demo password",
+          "selector": "text='pass'",
+          "intent": "ACTION_TYPE",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I fill the \"pass\" field with \"demo password\"",
+              "intent": "ACTION_TYPE",
+              "values": [
+                "demo password"
+              ],
+              "target": "pass",
+              "element_type": "input"
+            },
+            "selector_candidates": [
+              "text='pass'",
+              "text=pass",
+              "input[placeholder*='pass']",
+              "input[name*='pass']",
+              "input[id*='pass']",
+              "xpath=//label[contains(normalize-space(.), 'pass')]/following::input[1]"
+            ],
+            "element_type": "input"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Typed 'demo password' into text=pass",
+          "selector_used": "text=pass",
+          "plan_used": "plan_a_selector_playwright"
+        }
+      }
+    },
+    {
+      "step_text": "I click the \"login\" button",
+      "action": "click",
+      "selector": "text='login button'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": null,
+      "status": "passed",
+      "message": "Clicked on UI element detected by vision at [632.3999938964844, 612.5000114440918]",
+      "duration": 34.08392834663391,
+      "screenshot_path": "reports\\screenshots\\step_20260502_215425_I_click_the__login__button.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I click the \"login\" button",
+          "action": "click",
+          "target": "text='login button'",
+          "value": null,
+          "selector": "text='login button'",
+          "intent": "ACTION_CLICK",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I click the \"login\" button",
+              "intent": "ACTION_CLICK",
+              "values": [],
+              "target": "login button",
+              "element_type": "button"
+            },
+            "selector_candidates": [
+              "text='login button'",
+              "text=login button",
+              "button:has-text('login')",
+              "[role='button']:has-text('login')",
+              "xpath=//button[contains(normalize-space(.), 'login')]"
+            ],
+            "element_type": "button"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Clicked on UI element detected by vision at [632.3999938964844, 612.5000114440918]",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              552.0000114440918,
+              912.3999938964844,
+              673.0000114440918
+            ],
+            "center": [
+              632.3999938964844,
+              612.5000114440918
+            ],
+            "text": "Mobile number or email\nMobile number or email\nIt looks like you may have entered an incorrect email address. Please correct it if necessary, then click to continue.",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "No selector or coordinates found for click"
+        }
+      }
+    },
+    {
+      "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+      "action": "assert",
+      "selector": "text='The email address you entered isn't connected to an account'",
+      "plan_used": "plan_b_yolo_ocr",
+      "value": "The email address you entered isn't connected to an account",
+      "status": "passed",
+      "message": "Assertion fallback succeeded by locating visible element via vision",
+      "duration": 17.794751405715942,
+      "screenshot_path": "reports\\screenshots\\step_20260502_215442_I_should_see_the_error_message__The_email_address_you_entere.png",
+      "metadata": {
+        "nlp_payload": {
+          "step_text": "I should see the error message \"The email address you entered isn't connected to an account\"",
+          "action": "assert",
+          "target": "text='The email address you entered isn't connected to an account'",
+          "value": "The email address you entered isn't connected to an account",
+          "selector": "text='The email address you entered isn't connected to an account'",
+          "intent": "VERIFICATION",
+          "metadata": {
+            "raw_nlp": {
+              "step": "I should see the error message \"The email address you entered isn't connected to an account\"",
+              "intent": "VERIFICATION",
+              "values": [
+                "The email address you entered isn't connected to an account"
+              ],
+              "target": "The email address you entered isn't connected to an account",
+              "element_type": "element"
+            },
+            "selector_candidates": [
+              "text='The email address you entered isn't connected to an account'",
+              "text=The email address you entered isn't connected to an account",
+              "input[placeholder*='The email address you entered isn't connected to an account']",
+              "input[name*='The email address you entered isn't connected to an account']",
+              "input[id*='The email address you entered isn't connected to an account']",
+              "xpath=//label[contains(normalize-space(.), 'The email address you entered isn't connected to an account')]/following::input[1]"
+            ],
+            "element_type": "element"
+          }
+        },
+        "execution_result": {
+          "status": "success",
+          "message": "Assertion fallback succeeded by locating visible element via vision",
+          "plan_used": "plan_b_yolo_ocr",
+          "matched_element": {
+            "label": "input_field",
+            "confidence": 0.99,
+            "box": [
+              352.3999938964844,
+              551.9999847412109,
+              912.3999938964844,
+              672.9999847412109
+            ],
+            "center": [
+              632.3999938964844,
+              612.4999847412109
+            ],
+            "text": "Mobile number or email\nMobile number or email\nIt looks like you may have entered an incorrect email address. Please correct it if necessary, then click to continue.",
+            "is_match": null,
+            "strategy": "dom,dom"
+          },
+          "original_error": "Assertion failed for all selector candidates"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 5,
+    "failed_steps": 0,
+    "duration": 126.470694,
+    "plan_a_steps": 2,
+    "plan_b_steps": 3
+  },
+  "screenshots": [
+    "reports\\screenshots\\step_20260502_215329_I_click_the__Allow_all_cookies__button.png",
+    "reports\\screenshots\\step_20260502_215340_I_fill_the__email__field_with__demo_example_com_.png",
+    "reports\\screenshots\\step_20260502_215350_I_fill_the__pass__field_with__demo_password_.png",
+    "reports\\screenshots\\step_20260502_215425_I_click_the__login__button.png",
+    "reports\\screenshots\\step_20260502_215442_I_should_see_the_error_message__The_email_address_you_entere.png"
+  ],
+  "metadata": null
+}

@@ -10,8 +10,7 @@ import streamlit as st
 from fastapi.testclient import TestClient
 
 os.environ.setdefault("ENVIRONMENT", "production")
-
-from app.main import app
+os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", "/tmp/ms-playwright")
 
 
 st.set_page_config(
@@ -36,6 +35,8 @@ def slugify(value: str) -> str:
 
 @st.cache_resource(show_spinner="Loading NLP and vision models...")
 def get_client() -> TestClient:
+    from app.main import app
+
     return TestClient(app)
 
 
@@ -45,7 +46,6 @@ def ensure_playwright_browser() -> None:
         [sys.executable, "-m", "playwright", "install", "chromium"],
         check=True,
         text=True,
-        capture_output=True,
     )
 
 

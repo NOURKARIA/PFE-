@@ -2,6 +2,8 @@ import base64
 import json
 import os
 import re
+import subprocess
+import sys
 from typing import Any
 
 import streamlit as st
@@ -35,6 +37,16 @@ def slugify(value: str) -> str:
 @st.cache_resource(show_spinner="Loading NLP and vision models...")
 def get_client() -> TestClient:
     return TestClient(app)
+
+
+@st.cache_resource(show_spinner="Installing Playwright Chromium...")
+def ensure_playwright_browser() -> None:
+    subprocess.run(
+        [sys.executable, "-m", "playwright", "install", "chromium"],
+        check=True,
+        text=True,
+        capture_output=True,
+    )
 
 
 def request_json(method: str, path: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -189,6 +201,11 @@ def render_reports() -> None:
 
 
 def main() -> None:
+    try:
+        ensure_playwright_browser()
+    except Exception as exc:
+        st.error(f"Playwright browser installation failed: {exc}")
+
     st.title("Data-AI Test Studio")
     st.caption("Streamlit interface for the self-healing functional test automation pipeline.")
 

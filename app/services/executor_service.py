@@ -10,6 +10,7 @@ from difflib import SequenceMatcher
 from playwright.async_api import async_playwright
 
 from app.schemas.report_schemas import ExecutionReport, ReportStep, ReportSummary
+from app.config import settings
 from app.services.generator_service import GeneratorService
 from app.services.nlp_service import NLPService
 from app.services.vision_service import VisionService
@@ -38,7 +39,10 @@ class ExecutorService:
         self.screenshots = []
 
         self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.launch(headless=False)
+        self.browser = await self.playwright.chromium.launch(
+            headless=settings.playwright_headless,
+            args=["--no-sandbox"],
+        )
         self.page = await self.browser.new_page()
         self.page.set_default_timeout(10000)
         self.page.set_default_navigation_timeout(30000)

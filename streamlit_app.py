@@ -1,4 +1,6 @@
 import base64
+import asyncio
+import datetime
 import json
 import os
 import re
@@ -65,6 +67,109 @@ def request_json(method: str, path: str, payload: dict[str, Any] | None = None) 
 
 def show_json(data: Any) -> None:
     st.code(json.dumps(data, indent=2, ensure_ascii=False), language="json")
+
+
+def get_target_url_from_gherkin(gherkin_text: str) -> str | None:
+    match = re.search(r'Given\s+I\s+navigate\s+to\s+"([^"]+)"', gherkin_text, re.IGNORECASE)
+    return match.group(1) if match else None
+
+
+async def execute_live_feature(
+    *,
+    url: str,
+    gherkin_text: str,
+    feature_name: str,
+    scenario_name: str,
+    screenshot_slot: Any,
+    status_slot: Any,
+    progress_slot: Any,
+) -> dict[str, Any]:
+    from app.services.executor_service import ExecutorService
+    from app.services.report_service import report_service
+    from app.utils.gherkin_parser import parse_gherkin_text
+
+    parsed = parse_gherkin_text(gherkin_text)
+    if not parsed or not parsed.get("scenarios"):
+        raise RuntimeError("No scenarios found in the provided Gherkin text")
+
+    scenario = parsed["scenarios"][0]
+    steps = scenario.get("steps", [])
+    target_url = url or get_target_url_from_gherkin(gherkin_text)
+    if not target_url:
+        raise RuntimeError("A target URL is required.")
+
+    executable_steps = [
+        step
+        for step in steps
+        if not (
+            step.get("keyword", "").strip().lower().startswith("given")
+            and "navigate to" in step.get("text", "").lower()
+        )
+    ]
+
+    executor = ExecutorService()
+    step_results = []
+    try:
+        status_slot.info("Opening browser and navigating...")
+        await executor.start_session(target_url)
+        executor.feature_name = feature_name or parsed.get("feature_name")
+        executor.scenario_name = scenario_name or scenario.get("name")
+
+        initial_path = os.path.join(
+            "reports",
+            "screenshots",
+            f"live_{datetime.datetime.now():%Y%m%d_%H%M%S}_navigation.png",
+        )
+        await executor.take_screenshot(initial_path)
+        if os.path.exists(initial_path):
+            screenshot_slot.image(initial_path, caption=f"Navigated to {target_url}", width="stretch")
+
+        total = max(len(executable_steps), 1)
+        for index, step in enumerate(executable_steps, start=1):
+            text = step.get("text", "")
+            status_slot.info(f"Step {index}/{len(executable_steps)}: {text}")
+            try:
+                result = await executor.execute_gherkin_step(text)
+            except Exception as exc:
+                screenshot_path = await executor._take_step_screenshot(text)
+                result = {
+                    "status": "failed",
+                    "step": text,
+                    "error": str(exc),
+                    "screenshot": screenshot_path,
+                }
+            step_results.append(result)
+
+            screenshot_path = result.get("screenshot")
+            if screenshot_path and os.path.exists(screenshot_path):
+                screenshot_slot.image(screenshot_path, caption=text, width="stretch")
+            progress_slot.progress(index / total)
+            if result.get("status") == "failed":
+                status_slot.error(f"Step failed: {text}")
+                break
+
+        execution_report = executor.get_execution_report()
+        report_paths = report_service.save_both_reports(execution_report)
+        return {
+            "status": "completed",
+            "execution_id": execution_report.execution_id,
+            "feature_name": execution_report.feature_name,
+            "scenario_name": execution_report.scenario_name,
+            "summary": execution_report.summary.model_dump(mode="json"),
+            "steps": step_results,
+            "reports": report_paths,
+        }
+    finally:
+        try:
+            await executor.stop_session()
+        except Exception:
+            pass
+
+
+def run_live_feature(**kwargs: Any) -> dict[str, Any]:
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    return asyncio.run(execute_live_feature(**kwargs))
 
 
 def render_execution_evidence(result: dict[str, Any]) -> None:
@@ -151,6 +256,9 @@ def render_studio() -> None:
 
     with right:
         output = st.empty()
+        live_status = st.empty()
+        live_progress = st.empty()
+        live_browser = st.empty()
         evidence = st.container()
 
     if parse_clicked:
@@ -181,21 +289,21 @@ def render_studio() -> None:
     if execute_clicked:
         with st.spinner("Running browser automation. This can take a moment..."):
             try:
-                result = request_json(
-                    "POST",
-                    "/api/ia/execute-feature",
-                    {
-                        "url": target_url,
-                        "gherkin_text": gherkin_text,
-                        "feature_name": feature_name,
-                        "scenario_name": scenario_name,
-                    },
+                result = run_live_feature(
+                    url=target_url,
+                    gherkin_text=gherkin_text,
+                    feature_name=feature_name,
+                    scenario_name=scenario_name,
+                    screenshot_slot=live_browser,
+                    status_slot=live_status,
+                    progress_slot=live_progress,
                 )
                 summary = result.get("summary", {})
                 if summary.get("failed_steps", 0):
                     output.warning("Pipeline completed with failed steps.")
                 else:
                     output.success("Pipeline passed.")
+                live_status.success("Browser run finished.")
                 with evidence:
                     render_execution_evidence(result)
                     with st.expander("Raw execution JSON", expanded=False):

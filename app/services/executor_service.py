@@ -42,6 +42,7 @@ class ExecutorService:
         self.browser = await self.playwright.chromium.launch(
             headless=settings.playwright_headless,
             args=["--no-sandbox"],
+            slow_mo=int(os.getenv("PLAYWRIGHT_SLOW_MO", "450")),
         )
         self.page = await self.browser.new_page()
         self.page.set_default_timeout(10000)

@@ -1,5 +1,7 @@
 ﻿# --- Web & API ---
 fastapi
+httpx
+streamlit
 uvicorn[standard]
 pydantic
 jinja2

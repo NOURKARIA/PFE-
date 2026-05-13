@@ -172,63 +172,6 @@ def run_live_feature(**kwargs: Any) -> dict[str, Any]:
     return asyncio.run(execute_live_feature(**kwargs))
 
 
-def render_execution_evidence(result: dict[str, Any]) -> None:
-    summary = result.get("summary", {})
-    if summary:
-        metric_cols = st.columns(5)
-        metric_cols[0].metric("Total", summary.get("total_steps", 0))
-        metric_cols[1].metric("Passed", summary.get("passed_steps", 0))
-        metric_cols[2].metric("Failed", summary.get("failed_steps", 0))
-        metric_cols[3].metric("Plan A", summary.get("plan_a_steps", 0))
-        metric_cols[4].metric("Plan B", summary.get("plan_b_steps", 0))
-
-    execution_id = result.get("execution_id")
-    if execution_id:
-        try:
-            request_json("GET", f"/api/ia/reports/{execution_id}")
-        except Exception as exc:
-            st.warning(f"Report lookup failed: {exc}")
-
-    steps = result.get("steps", [])
-    if steps:
-        rows = []
-        for step in steps:
-            action = step.get("action", {})
-            execution = step.get("result", {})
-            rows.append(
-                {
-                    "step": step.get("step"),
-                    "status": step.get("status"),
-                    "action": action.get("action") if isinstance(action, dict) else None,
-                    "plan": execution.get("plan_used") if isinstance(execution, dict) else None,
-                    "message": execution.get("message") if isinstance(execution, dict) else None,
-                    "screenshot": step.get("screenshot"),
-                }
-            )
-        st.dataframe(rows, width="stretch", hide_index=True)
-
-    screenshot_paths = []
-    for step in steps:
-        if step.get("screenshot"):
-            screenshot_paths.append(step["screenshot"])
-    screenshot_paths = list(dict.fromkeys(screenshot_paths))
-    if screenshot_paths:
-        st.markdown("#### Browser Evidence")
-        for path in screenshot_paths:
-            if os.path.exists(path):
-                st.image(path, caption=path, width="stretch")
-            else:
-                st.caption(f"Screenshot path recorded but not available: {path}")
-
-    if execution_id:
-        try:
-            html_report = request_json("GET", f"/api/ia/reports/{execution_id}?format=html")
-            with st.expander("HTML report", expanded=False):
-                st.components.v1.html(html_report["content"], height=700, scrolling=True)
-        except Exception as exc:
-            st.caption(f"HTML report unavailable: {exc}")
-
-
 def render_status() -> None:
     st.subheader("Backend Status")
     try:
@@ -259,7 +202,6 @@ def render_studio() -> None:
         live_status = st.empty()
         live_progress = st.empty()
         live_browser = st.empty()
-        evidence = st.container()
 
     if parse_clicked:
         with st.spinner("Parsing Gherkin with NLP..."):
@@ -304,10 +246,6 @@ def render_studio() -> None:
                 else:
                     output.success("Pipeline passed.")
                 live_status.success("Browser run finished.")
-                with evidence:
-                    render_execution_evidence(result)
-                    with st.expander("Raw execution JSON", expanded=False):
-                        st.json(result)
             except Exception as exc:
                 output.error(str(exc))
 

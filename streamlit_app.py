@@ -1,10 +1,13 @@
 import base64
 import json
+import os
 import re
 from typing import Any
 
 import streamlit as st
 from fastapi.testclient import TestClient
+
+os.environ.setdefault("ENVIRONMENT", "production")
 
 from app.main import app
 

@@ -67,6 +67,63 @@ def show_json(data: Any) -> None:
     st.code(json.dumps(data, indent=2, ensure_ascii=False), language="json")
 
 
+def render_execution_evidence(result: dict[str, Any]) -> None:
+    summary = result.get("summary", {})
+    if summary:
+        metric_cols = st.columns(5)
+        metric_cols[0].metric("Total", summary.get("total_steps", 0))
+        metric_cols[1].metric("Passed", summary.get("passed_steps", 0))
+        metric_cols[2].metric("Failed", summary.get("failed_steps", 0))
+        metric_cols[3].metric("Plan A", summary.get("plan_a_steps", 0))
+        metric_cols[4].metric("Plan B", summary.get("plan_b_steps", 0))
+
+    execution_id = result.get("execution_id")
+    if execution_id:
+        try:
+            request_json("GET", f"/api/ia/reports/{execution_id}")
+        except Exception as exc:
+            st.warning(f"Report lookup failed: {exc}")
+
+    steps = result.get("steps", [])
+    if steps:
+        rows = []
+        for step in steps:
+            action = step.get("action", {})
+            execution = step.get("result", {})
+            rows.append(
+                {
+                    "step": step.get("step"),
+                    "status": step.get("status"),
+                    "action": action.get("action") if isinstance(action, dict) else None,
+                    "plan": execution.get("plan_used") if isinstance(execution, dict) else None,
+                    "message": execution.get("message") if isinstance(execution, dict) else None,
+                    "screenshot": step.get("screenshot"),
+                }
+            )
+        st.dataframe(rows, width="stretch", hide_index=True)
+
+    screenshot_paths = []
+    for step in steps:
+        if step.get("screenshot"):
+            screenshot_paths.append(step["screenshot"])
+    screenshot_paths = list(dict.fromkeys(screenshot_paths))
+    if screenshot_paths:
+        st.markdown("#### Browser Evidence")
+        for path in screenshot_paths:
+            if os.path.exists(path):
+                st.image(path, caption=path, width="stretch")
+            else:
+                st.caption(f"Screenshot path recorded but not available: {path}")
+
+    if execution_id:
+        try:
+            html_report = request_json("GET", f"/api/ia/reports/{execution_id}?format=html")
+            with st.expander("HTML report", expanded=False):
+                st.components.v1.html(html_report["content"], height=700, scrolling=True)
+        except Exception as exc:
+            st.caption(f"HTML report unavailable: {exc}")
+
+
 def render_status() -> None:
     st.subheader("Backend Status")
     try:
@@ -88,12 +145,13 @@ def render_studio() -> None:
         gherkin_text = st.text_area("Gherkin scenario", value=SAMPLE_GHERKIN, height=280)
 
         actions = st.columns(3)
-        parse_clicked = actions[0].button("Parse", use_container_width=True)
-        generate_clicked = actions[1].button("Generate Script", use_container_width=True)
-        execute_clicked = actions[2].button("Run Pipeline", type="primary", use_container_width=True)
+        parse_clicked = actions[0].button("Parse", width="stretch")
+        generate_clicked = actions[1].button("Generate Script", width="stretch")
+        execute_clicked = actions[2].button("Run Pipeline", type="primary", width="stretch")
 
     with right:
         output = st.empty()
+        evidence = st.container()
 
     if parse_clicked:
         with st.spinner("Parsing Gherkin with NLP..."):
@@ -138,7 +196,10 @@ def render_studio() -> None:
                     output.warning("Pipeline completed with failed steps.")
                 else:
                     output.success("Pipeline passed.")
-                output.json(result)
+                with evidence:
+                    render_execution_evidence(result)
+                    with st.expander("Raw execution JSON", expanded=False):
+                        st.json(result)
             except Exception as exc:
                 output.error(str(exc))
 
@@ -150,7 +211,7 @@ def render_screenshot_analyzer() -> None:
     min_confidence = st.slider("Minimum confidence", 0.05, 0.95, 0.25, 0.05)
 
     if uploaded:
-        st.image(uploaded, caption=uploaded.name, use_container_width=True)
+        st.image(uploaded, caption=uploaded.name, width="stretch")
 
     if st.button("Analyze Screenshot", type="primary", disabled=uploaded is None):
         image_bytes = uploaded.getvalue()
@@ -187,15 +248,15 @@ def render_reports() -> None:
         st.info("No reports yet. Run a scenario to create one.")
         return
 
-    st.dataframe(reports, use_container_width=True, hide_index=True)
+    st.dataframe(reports, width="stretch", hide_index=True)
     execution_ids = [report["execution_id"] for report in reports]
     selected = st.selectbox("Open report", execution_ids)
     col1, col2 = st.columns(2)
 
-    if col1.button("Show JSON", use_container_width=True):
+    if col1.button("Show JSON", width="stretch"):
         show_json(request_json("GET", f"/api/ia/reports/{selected}"))
 
-    if col2.button("Show HTML", use_container_width=True):
+    if col2.button("Show HTML", width="stretch"):
         html_report = request_json("GET", f"/api/ia/reports/{selected}?format=html")
         st.components.v1.html(html_report["content"], height=700, scrolling=True)
 

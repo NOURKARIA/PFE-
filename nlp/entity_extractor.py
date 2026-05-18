@@ -13,6 +13,10 @@ class EntityExtractor:
         self.tokenizer = None
         self.id2label = {0: "O", 1: "B-TARGET", 2: "I-TARGET", 3: "B-VALUE", 4: "I-VALUE"}
 
+        if os.getenv("DISABLE_NLP_MODELS", "").lower() in {"1", "true", "yes"}:
+            logger.info("EntityExtractor: DISABLE_NLP_MODELS is enabled, using rule-based extraction.")
+            return
+
         try:
             logger.info(f"EntityExtractor: Loading LLM Token Classifier from {model_path}...")
             self.tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')

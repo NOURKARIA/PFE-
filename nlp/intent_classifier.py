@@ -13,6 +13,10 @@ class IntentClassifier:
         self.tokenizer = None
         self.label_map = {0: "ACTION_CLICK", 1: "ACTION_TYPE", 2: "NAVIGATION", 3: "VERIFICATION"}
 
+        if os.getenv("DISABLE_NLP_MODELS", "").lower() in {"1", "true", "yes"}:
+            logger.info("IntentClassifier: DISABLE_NLP_MODELS is enabled, using rule-based classification.")
+            return
+
         try:
             logger.info(f"IntentClassifier: Loading Custom PyTorch model from {model_path}...")
             self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')

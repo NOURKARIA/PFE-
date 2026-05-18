@@ -1,23 +1,22 @@
 # --- Web & API ---
-fastapi
-httpx
-streamlit
-uvicorn[standard]
-pydantic
-jinja2
-gherkin-official
+fastapi==0.110.0
+httpx==0.27.2
+uvicorn[standard]==0.28.0
+pydantic==2.6.4
+jinja2==3.1.4
+gherkin-official==29.0.0
 
 # --- AI & NLP ---
-spacy
-transformers
-ultralytics
+transformers==4.38.0
+ultralytics==8.1.0
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch
 
 # --- Computer Vision & OCR ---
-opencv-python
-pytesseract
+opencv-python-headless==4.9.0.80
+pytesseract==0.3.13
 
 # --- Automation & Tools ---
-playwright
-python-dotenv
-loguru
+playwright==1.42.0
+python-dotenv==1.0.1
+loguru==0.7.2

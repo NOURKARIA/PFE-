@@ -78,6 +78,42 @@ def test_semantic_mapping_endpoint_returns_selector_candidates_metadata():
     assert payload["playwright_method"] == "click"
     assert payload["selector"] == "button[name='login']"
     assert payload["value"] is None
+    assert "selector_candidates" in payload
+    assert "button[name='login']" in payload["selector_candidates"]
+
+
+def test_semantic_mapping_endpoint_accepts_raw_step_text(monkeypatch):
+    client = build_test_client()
+
+    async def fake_process_step(step_text):
+        return {
+            "step_text": step_text,
+            "action": "click",
+            "target": "button[name='login']",
+            "value": None,
+            "selector": "button[name='login']",
+            "intent": "ACTION_CLICK",
+            "metadata": {
+                "selector_candidates": ["button[name='login']", "button[type='submit']"],
+                "element_type": "button",
+            },
+        }
+
+    from app.services.nlp_service import gherkin_nlp_service
+
+    monkeypatch.setattr(gherkin_nlp_service, "process_step", fake_process_step)
+
+    response = client.post(
+        "/api/ia/semantic-mapping",
+        json={"step_text": "When I click the login button"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["step_text"] == "When I click the login button"
+    assert payload["playwright_method"] == "click"
+    assert payload["selector_candidates"][0] == "button[name='login']"
+    assert payload["element_type"] == "button"
 
 
 def test_segmentation_endpoint_returns_debug_payload(monkeypatch):

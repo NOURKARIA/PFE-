@@ -1,0 +1,409 @@
+\chapter{Semantic Intelligence: NLP and Mapping Module}
+\label{chap:nlp_mapping}
+\minitoc
+\newpage
+
+\section{Introduction}
+\label{sec:ch3_intro}
+
+After presenting the general requirements and the artificial intelligence foundations of the project, this chapter focuses on the first operational intelligence layer of \textbf{VisionTest-AI}: the NLP and semantic mapping module. Its role is to transform a functional scenario written in Gherkin into structured actions that can be executed by Playwright.
+
+The input scenario is readable for a tester, but it is still too abstract for a browser automation engine. A sentence such as \texttt{When I click the login button} must be converted into an action type, a target, a possible selector, and optional fallback information. This chapter explains how this transformation is performed in the current prototype.
+
+\subsection*{Chapter Overview}
+\phantomsection
+\addcontentsline{toc}{subsection}{Chapter Overview}
+
+This chapter presents the NLP pipeline used in \textbf{VisionTest-AI}. It describes Gherkin parsing, intent classification, entity extraction, semantic mapping, API endpoints, generated Playwright scripts, validation examples, and the main limitations observed during testing.
+
+\section{Objectives of the NLP Module}
+\label{sec:nlp_objectives}
+
+The NLP module was designed to solve a simple but important problem: converting business-readable test steps into automation-ready actions. In the context of the project, the module has five main objectives:
+
+\begin{itemize}
+	\item Parse Gherkin scenarios and identify features, scenarios, and steps.
+	\item Detect the intent of each step, such as navigation, click, input, or verification.
+	\item Extract useful entities such as target elements, values, URLs, and expected results.
+	\item Convert the interpreted step into a Playwright-compatible action.
+	\item Provide selector candidates that can be used first by Playwright and later by the vision fallback.
+\end{itemize}
+
+The module is therefore placed at the beginning of the complete pipeline. It receives raw text from the Streamlit interface, sends structured data to the backend services, and prepares the execution plan used by the automation layer.
+
+Figure~\ref{fig:nlp_pipeline} represents the NLP and semantic mapping flow used in the prototype. The diagram was created by the author using Mermaid~\cite{mermaid_docs}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{nlp_pipeline.png}
+	\caption{NLP and semantic mapping pipeline of VisionTest-AI}
+	\label{fig:nlp_pipeline}
+\end{figure}
+
+\section{Gherkin Parsing}
+\label{sec:gherkin_parsing}
+
+The parser receives a raw Gherkin scenario and separates it into meaningful blocks. Gherkin was selected because it is widely used in Behavior-Driven Development and is understandable by both technical and non-technical stakeholders~\cite{gherkin_reference,bdd_cucumber_book}.
+
+\subsection{Parsed Elements}
+\label{subsec:parsed_elements}
+
+The parser extracts three levels of information:
+
+\begin{itemize}
+	\item \textbf{Feature:} the general functionality being tested.
+	\item \textbf{Scenario:} the specific test case.
+	\item \textbf{Steps:} the executable instructions introduced by \texttt{Given}, \texttt{When}, \texttt{Then}, \texttt{And}, or \texttt{But}.
+\end{itemize}
+
+For example, in a login scenario, the parser identifies the authentication feature, the successful login scenario, and each step related to navigation, typing credentials, clicking a button, and checking the expected result.
+
+Table~\ref{tab:step_extraction_example} shows how raw Gherkin lines are separated into keywords, step text, and initial interpretation.
+
+\begin{table}[H]
+	\centering
+	\caption{Example of parsed Gherkin steps}
+	\label{tab:step_extraction_example}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Keyword} & \textbf{Step Text} & \textbf{Initial Interpretation} \\ \hline
+		\texttt{Given} & I am on the login page & Navigation or initial context \\ \hline
+		\texttt{When} & I enter admin in the username field & Input action \\ \hline
+		\texttt{And} & I click the login button & Click action \\ \hline
+		\texttt{Then} & I should see the dashboard & Verification action \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Handling \texttt{And} and \texttt{But}}
+\label{subsec:and_but_steps}
+
+The keywords \texttt{And} and \texttt{But} do not define a new action category by themselves. Their meaning depends on the previous step. For this reason, the parser keeps the original keyword for traceability, but the semantic interpretation is based on the content of the sentence. This avoids treating all \texttt{And} steps in the same way.
+
+\section{Intent Classification}
+\label{sec:intent_classification}
+
+Intent classification identifies what the user wants to do in each step. In the current version, the system supports the most frequent actions required for functional web testing.
+
+Table~\ref{tab:supported_intents} presents the supported intents and their corresponding automation behavior.
+
+\begin{table}[H]
+	\centering
+	\caption{Supported intents in the NLP module}
+	\label{tab:supported_intents}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Intent} & \textbf{Playwright Action} & \textbf{Example Step} \\ \hline
+		\texttt{NAVIGATION} & \texttt{goto} & Given I am on \texttt{https://example.com} \\ \hline
+		\texttt{ACTION\_CLICK} & \texttt{click} & When I click the login button \\ \hline
+		\texttt{ACTION\_TYPE} & \texttt{fill} & When I enter admin in the username field \\ \hline
+		\texttt{VERIFICATION} & \texttt{expect} & Then I should see the dashboard \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Rule-Based First Version}
+\label{subsec:rule_based_classification}
+
+The first implementation used deterministic rules. Words such as \texttt{open}, \texttt{go to}, and \texttt{navigate} were mapped to navigation. Words such as \texttt{click}, \texttt{press}, and \texttt{select} were mapped to click actions. This approach was fast and easy to debug, but it was sensitive to wording variation.
+
+\subsection{DistilBERT-Based Improvement}
+\label{subsec:distilbert_classification}
+
+To improve flexibility, the second version introduced a lightweight Transformer-based classifier using DistilBERT~\cite{distilbert_paper}. This model is smaller than BERT~\cite{bert_paper}, which makes it more suitable for a prototype that also includes browser automation and computer vision services.
+
+In practice, the project uses a hybrid strategy. The model is used when the sentence is clear enough, while deterministic rules remain available as a fallback. This keeps the system understandable and avoids relying only on probabilistic output.
+
+\subsection{Confidence Management}
+\label{subsec:confidence_management}
+
+Each interpreted step is associated with a confidence score. When the score is high, the predicted intent is accepted directly. When the score is low or when the step contains explicit patterns such as quoted values or URLs, rule-based extraction is used to protect execution reliability. This design is important because a wrong semantic decision may generate an incorrect browser action.
+
+\section{Entity Extraction}
+\label{sec:entity_extraction}
+
+After detecting the intent, the module extracts the entities required for execution. The most important entities are the target element, the value to type, the URL, and the expected result.
+
+Table~\ref{tab:extracted_entities} summarizes the main entities extracted from the interpreted Gherkin steps.
+
+\begin{table}[H]
+	\centering
+	\caption{Main entities extracted from Gherkin steps}
+	\label{tab:extracted_entities}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Entity} & \textbf{Role} & \textbf{Example} \\ \hline
+		Target & UI element to interact with. & email field, login button \\ \hline
+		Value & Text to type or value to verify. & demo@example.com \\ \hline
+		URL & Page to open. & https://www.facebook.com/ \\ \hline
+		Element type & Expected UI component category. & input, button, link \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Target and Value Extraction}
+\label{subsec:target_value_extraction}
+
+The target is usually detected from expressions such as \texttt{in the email field}, \texttt{on the login button}, or \texttt{the dashboard}. The value is commonly found inside quotes or between verbs and target expressions. For example:
+
+\begin{verbatim}
+When I enter demo@example.com in the email field
+\end{verbatim}
+
+The extracted value is \texttt{demo@example.com}, and the extracted target is \texttt{email field}. The element type is inferred as \texttt{input} because the target contains the word \texttt{field}.
+
+\subsection{Regex Fallback}
+\label{subsec:regex_extraction}
+
+Regular expressions are used for information that must be exact, especially URLs and quoted values. This fallback is intentionally simple because it protects the system from avoidable mistakes. For example, when the user writes a value between quotes, the system should not paraphrase or modify it.
+
+\section{Semantic Mapping}
+\label{sec:semantic_mapping}
+
+Semantic mapping converts the interpreted step into a browser action. This part of the system is not only linguistic; it also prepares technical information for execution.
+
+Table~\ref{tab:intent_action_mapping} shows how each semantic intent is translated into a Playwright-compatible method.
+
+\begin{table}[H]
+	\centering
+	\caption{Mapping between semantic intents and Playwright methods}
+	\label{tab:intent_action_mapping}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Intent} & \textbf{Method} & \textbf{Generated Information} \\ \hline
+		\texttt{NAVIGATION} & \texttt{goto} & URL to open \\ \hline
+		\texttt{ACTION\_CLICK} & \texttt{click} & Selector candidates for a button, link, or role \\ \hline
+		\texttt{ACTION\_TYPE} & \texttt{fill} & Selector candidates and input value \\ \hline
+		\texttt{VERIFICATION} & \texttt{expect} & Expected text or visible element \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Selector Candidate Generation}
+\label{subsec:selector_candidate_generation}
+
+For each target, the mapping service generates several selector candidates. This avoids depending on one fragile selector. For an email field, candidates may include \texttt{input[name='email']}, \texttt{input\#email}, placeholders, partial name matches, partial ID matches, and label-based XPath selectors. During execution, Playwright tries the strongest selector first and can move to alternative candidates when needed.
+
+\subsection{Preparing Vision Fallback}
+\label{subsec:fallback_preparation}
+
+The semantic output is also useful for the vision module. When a Playwright selector fails, the execution service still knows the target label and the expected element type. This information is later combined with YOLO and OCR detections to search for the element visually.
+
+\section{API Endpoints of the NLP Module}
+\label{sec:nlp_api_endpoints}
+
+The semantic intelligence layer is exposed through FastAPI endpoints. This made it easier to test each part independently from the Streamlit interface.
+
+\subsection{\texttt{/api/ia/parse-gherkin}}
+\label{subsec:api_parse_gherkin}
+
+This endpoint receives a raw Gherkin scenario and returns the parsed structure. It is useful for checking whether the system correctly identifies the feature, scenario, and steps before generating executable actions.
+
+Figure~\ref{fig:parse_gherkin_request} shows an example request sent to the parsing endpoint.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.87\textwidth]{parse_gherkin_request.png}
+	\caption{Example request of the \texttt{/api/ia/parse-gherkin} endpoint}
+	\label{fig:parse_gherkin_request}
+\end{figure}
+
+Figure~\ref{fig:parse_gherkin_response} represents the response returned by the endpoint after parsing the Gherkin scenario.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.87\textwidth]{parse_gherkin_response.png}
+	\caption{Example response of the \texttt{/api/ia/parse-gherkin} endpoint}
+	\label{fig:parse_gherkin_response}
+\end{figure}
+
+\subsection{\texttt{/api/ia/semantic-mapping}}
+\label{subsec:api_semantic_mapping}
+
+The \texttt{/api/ia/semantic-mapping} endpoint maps one raw step or one NLP payload into an actionable Playwright step. This endpoint was especially useful during debugging because it allowed each semantic decision to be tested separately.
+
+Figure~\ref{fig:semantic_mapping_request} shows the request format used to test the semantic mapping endpoint.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.87\textwidth]{semantic_mapping_request.png}
+	\caption{Example request of the \texttt{/api/ia/semantic-mapping} endpoint}
+	\label{fig:semantic_mapping_request}
+\end{figure}
+
+The following response shows an input step where the system extracts the typed value, detects the target as the email field, infers the element type as an input, and generates selector candidates.
+
+\begin{lstlisting}[language=json, caption={Semantic mapping response for an input action}, label={lst:semantic_mapping_input}]
+{
+  "step_text": "When I enter demo@example.com in the email field",
+  "intent": "ACTION_TYPE",
+  "playwright_method": "input",
+  "selector": "input[name='email']",
+  "value": "demo@example.com",
+  "element_type": "input",
+  "selector_candidates": [
+    "input[name='email']",
+    "input#email",
+    "input[placeholder*='email']",
+    "input[name*='email']",
+    "input[id*='email']"
+  ],
+  "metadata": {
+    "raw_nlp": {
+      "target": "email field",
+      "values": ["demo@example.com"],
+      "element_type": "input"
+    }
+  }
+}
+\end{lstlisting}
+
+\subsection{\texttt{/api/ia/generate-test}}
+\label{subsec:api_generate_test}
+
+The \texttt{/api/ia/generate-test} endpoint processes a complete Gherkin scenario. Unlike the semantic mapping endpoint, which focuses on one step, this endpoint returns both a generated Playwright script and the list of interpreted actions.
+\vspace{1cm}
+Figure~\ref{fig:generate_test_request} shows an example request for generating a Playwright test from a complete scenario.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{generate_test_request.png}
+	\caption{Example request of the \texttt{/api/ia/generate-test} endpoint}
+	\label{fig:generate_test_request}
+\end{figure}
+\vspace{1cm}
+\begin{lstlisting}[language=json, caption={Simplified response of the test generation endpoint}, label={lst:generate_test_response}]
+{
+  "status": "success",
+  "test_name": "facebook_login_test",
+  "scenarios_count": 1,
+  "script": "import { test, expect } from '@playwright/test'; ...",
+  "actions": [
+    {
+      "step_text": "Given I am on 'https://www.facebook.com/'",
+      "intent": "NAVIGATION",
+      "playwright_method": "navigate"
+    },
+    {
+      "step_text": "When I type 'nour.karia@horizon.tn' into the 'email' field",
+      "intent": "ACTION_TYPE",
+      "playwright_method": "input"
+    },
+    {
+      "step_text": "And I click the 'Log In' button",
+      "intent": "ACTION_CLICK",
+      "playwright_method": "click"
+    }
+  ]
+}
+\end{lstlisting}
+
+\section{Generated Playwright Script}
+\label{sec:generated_playwright_script}
+
+The output of semantic mapping can be transformed into a Playwright script~\cite{playwright_docs}. This generated script gives the tester a clear view of what the system understood before execution.
+
+\begin{lstlisting}[caption={Generated Playwright script from the Facebook login scenario}, label={lst:generated_playwright_script}]
+import { test, expect } from '@playwright/test';
+
+test("facebook_login_test", async ({ page }) => {
+  await page.goto("https://www.facebook.com/");
+  await page.locator("input[name='email']").first()
+    .fill("nour.karia@horizon.tn");
+  await page.getByRole('button', { name: "Log In",
+    exact: false }).click();
+});
+\end{lstlisting}
+
+\section{Validation and Results}
+\label{sec:nlp_validation_results}
+
+The validation of this module focused on realistic steps that appear frequently in functional tests: opening a page, filling a field, clicking a button, searching for a product, and checking that a message or dashboard is visible.
+
+Table~\ref{tab:nlp_validation_examples} presents examples of correctly interpreted steps during validation.
+
+\begin{table}[H]
+	\centering
+	\caption{Validation examples for the NLP and semantic mapping module}
+	\label{tab:nlp_validation_examples}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|X|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Input Step} & \textbf{Intent} & \textbf{Target} & \textbf{Value} \\ \hline
+		Given I am on \texttt{https://example.com} & Navigation & page URL & https://example.com \\ \hline
+		When I enter admin in the username field & Input & username field & admin \\ \hline
+		When I click the login button & Click & login button & -- \\ \hline
+		Then I should see the dashboard & Verification & dashboard & -- \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Observed Results}
+\label{subsec:observed_results}
+
+The tests showed that the module works well for explicit and well-structured steps. Navigation steps with URLs were extracted reliably. Input steps worked correctly when the target field and the value were both present. Click actions were also mapped correctly when the target was specific, such as \texttt{login button} or \texttt{search button}.
+
+Table~\ref{tab:observed_mapping_results} summarizes the main mapping results observed during these tests.
+
+\begin{table}[H]
+	\centering
+	\caption{Observed mapping results}
+	\label{tab:observed_mapping_results}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|X|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Case} & \textbf{Result} & \textbf{Observation} \\ \hline
+		URL navigation & Successful & URLs are easy to detect with regex fallback. \\ \hline
+		Input with clear field & Successful & Target and value are extracted correctly. \\ \hline
+		Click with visible button name & Successful & Several selector candidates are generated. \\ \hline
+		Abstract business step & Partial & The system needs more context to choose an action. \\ \hline
+		Unsupported interaction & Failed & Upload, drag-and-drop, and hover are not yet mapped. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Error Analysis}
+\label{subsec:nlp_error_analysis}
+
+Some errors are normal at this prototype stage. They are mainly caused by ambiguity, missing information, or unsupported actions.
+
+Table~\ref{tab:nlp_error_analysis} presents representative NLP errors and the correction strategy considered for each case.
+
+\begin{table}[H]
+	\centering
+	\caption{NLP limitations observed during validation}
+	\label{tab:nlp_error_analysis}
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\begin{tabularx}{\textwidth}{|X|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Input Step} & \textbf{Observed Problem} & \textbf{Correction Strategy} \\ \hline
+		I authenticate with valid credentials & Too abstract for direct execution. & Ask for explicit username and password steps. \\ \hline
+		I choose the first result & Depends on dynamic page state. & Add ranking logic using DOM and visual order. \\ \hline
+		I upload a file & Unsupported action. & Add an upload intent and file chooser mapping. \\ \hline
+		I confirm the operation & Ambiguous target. & Use popup context, OCR text, or a clearer target name. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\section{Limitations and Possible Improvements}
+\label{sec:nlp_limitations}
+
+The current NLP module provides a solid foundation, but it remains limited to the most common functional testing actions. Natural language can still be ambiguous, especially when the user writes business-level steps without concrete targets. The module is also mainly oriented toward English scenarios; supporting French or mixed-language scenarios would require more examples and additional extraction rules.
+Future improvements include expanding the intent list, improving multilingual support, adding confidence thresholds in the interface, using previous execution reports to improve selector generation, and asking the user for confirmation when a mapping is uncertain.
+
+\section{Conclusion}
+\label{sec:ch3_conclusion}
+This chapter presented the semantic intelligence layer of \textbf{VisionTest-AI}. The NLP module parses Gherkin scenarios, classifies step intents, extracts useful entities, and maps the result into Playwright-compatible actions. The validation examples show that the module works well for explicit functional steps such as navigation, input, click, and verification.
+
+The chapter also showed why a hybrid approach is useful. Transformer-based classification improves flexibility, while deterministic fallback rules protect exact information such as URLs and typed values. The output of this module becomes the input of the execution service and prepares the target information used by the visual fallback. The next chapter presents this visual perception layer, where YOLOv8 and OCR are used to detect UI elements and support self-healing execution.

@@ -34,26 +34,7 @@ async def get_report(execution_id: str, format: Optional[str] = "json") -> Dict[
                 "status": "success",
             }
 
-        return {
-            "execution_id": report.execution_id,
-            "format": "json",
-            "status": report.status,
-            "feature_name": report.feature_name,
-            "scenario_name": report.scenario_name,
-            "started_at": report.started_at.isoformat(),
-            "finished_at": report.finished_at.isoformat(),
-            "duration": report.duration,
-            "summary": {
-                "total_steps": report.summary.total_steps,
-                "passed_steps": report.summary.passed_steps,
-                "failed_steps": report.summary.failed_steps,
-                "plan_a_steps": report.summary.plan_a_steps,
-                "plan_b_steps": report.summary.plan_b_steps,
-                "duration": report.summary.duration,
-            },
-            "steps_count": len(report.steps),
-            "report": report_service.get_report_summary(report),
-        }
+        return report.model_dump(mode="json")
     except HTTPException:
         raise
     except Exception as exc:

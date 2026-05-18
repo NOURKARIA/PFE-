@@ -1,0 +1,55 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.1}Introduction}{\reset@font\mtcSfont 52}{section*.254}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode Chapter Overview}{\reset@font\mtcSSfont 52}{section*.255}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.2}Complete Pipeline Integration}{\reset@font\mtcSfont 52}{section*.256}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.2.1}User Submits a Gherkin Scenario}{\reset@font\mtcSSfont 52}{subsection*.257}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.2.2}NLP Parsing and Semantic Mapping}{\reset@font\mtcSSfont 53}{subsection*.258}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.2.3}Playwright Execution}{\reset@font\mtcSSfont 53}{subsection*.259}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.2.4}Vision Fallback When Selectors Fail}{\reset@font\mtcSSfont 53}{subsection*.260}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.2.5}Report Generation}{\reset@font\mtcSSfont 53}{subsection*.261}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.3}Backend Implementation}{\reset@font\mtcSfont 54}{section*.264}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.1}FastAPI Routers}{\reset@font\mtcSSfont 54}{subsection*.265}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.2}Services Layer}{\reset@font\mtcSSfont 55}{subsection*.268}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.3}Schemas and Validation}{\reset@font\mtcSSfont 55}{subsection*.269}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.4}Error Handling and Logs}{\reset@font\mtcSSfont 55}{subsection*.270}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.4}Reporting System}{\reset@font\mtcSfont 55}{section*.271}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.4.1}JSON Report Generation}{\reset@font\mtcSSfont 56}{subsection*.272}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.4.2}HTML Report Generation}{\reset@font\mtcSSfont 56}{subsection*.296}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.4.3}Screenshot Evidence}{\reset@font\mtcSSfont 57}{subsection*.299}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.4.4}Report API Endpoints}{\reset@font\mtcSSfont 57}{subsection*.300}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.4.5}Streamlit Report Viewer}{\reset@font\mtcSSfont 58}{subsection*.303}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.5}User Interface}{\reset@font\mtcSfont 58}{section*.304}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.5.1}Scenario Studio}{\reset@font\mtcSSfont 58}{subsection*.305}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.5.2}Script Generation View}{\reset@font\mtcSSfont 59}{subsection*.308}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.5.3}Screenshot Analyzer}{\reset@font\mtcSSfont 60}{subsection*.311}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.5.4}Reports Page}{\reset@font\mtcSSfont 60}{subsection*.312}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.6}Deployment Attempts}{\reset@font\mtcSfont 61}{section*.315}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.1}Local Deployment}{\reset@font\mtcSSfont 61}{subsection*.316}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.2}Docker Deployment}{\reset@font\mtcSSfont 61}{subsection*.317}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.3}First Streamlit Cloud Attempt}{\reset@font\mtcSSfont 62}{subsection*.318}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.4}Resource Limit Issue}{\reset@font\mtcSSfont 62}{subsection*.319}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.5}Final Proposed Architecture: Railway Backend and Streamlit UI}{\reset@font\mtcSSfont 62}{subsection*.320}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.6.6}CI/CD Integration Strategy}{\reset@font\mtcSSfont 63}{subsection*.323}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.7}Testing and Validation}{\reset@font\mtcSfont 64}{section*.330}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.7.1}Unit Tests}{\reset@font\mtcSSfont 64}{subsection*.331}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.7.2}API Tests}{\reset@font\mtcSSfont 64}{subsection*.332}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.7.3}End-to-End Test Scenarios}{\reset@font\mtcSSfont 64}{subsection*.333}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.7.4}Unseen-Site Benchmark}{\reset@font\mtcSSfont 64}{subsection*.334}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.8}Actual Results}{\reset@font\mtcSfont 65}{section*.335}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.1}Generated JSON Reports}{\reset@font\mtcSSfont 65}{subsection*.336}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.2}Generated HTML Reports}{\reset@font\mtcSSfont 66}{subsection*.339}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.3}Successful Execution Examples}{\reset@font\mtcSSfont 66}{subsection*.342}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.4}Failed Execution Examples}{\reset@font\mtcSSfont 66}{subsection*.343}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.5}Plan A vs Plan B Usage}{\reset@font\mtcSSfont 67}{subsection*.346}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.8.6}Performance Observations}{\reset@font\mtcSSfont 67}{subsection*.349}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.9}Limitations}{\reset@font\mtcSfont 68}{section*.350}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.9.1}Model Accuracy Limitations}{\reset@font\mtcSSfont 68}{subsection*.351}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.9.2}OCR Limitations}{\reset@font\mtcSSfont 68}{subsection*.352}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.9.3}Deployment Resource Limitations}{\reset@font\mtcSSfont 68}{subsection*.353}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.9.4}Lack of PostgreSQL and Redis Integration}{\reset@font\mtcSSfont 68}{subsection*.354}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.10}Perspectives}{\reset@font\mtcSfont 68}{section*.355}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.10.1}Improve NLP Multilingual Support}{\reset@font\mtcSSfont 68}{subsection*.356}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.10.2}Expand the Annotated Dataset}{\reset@font\mtcSSfont 69}{subsection*.357}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.10.3}Add PostgreSQL and Redis}{\reset@font\mtcSSfont 69}{subsection*.358}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.10.4}Add Authentication and Project History}{\reset@font\mtcSSfont 69}{subsection*.359}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.10.5}Improve Cloud Deployment}{\reset@font\mtcSSfont 69}{subsection*.360}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.11}Conclusion}{\reset@font\mtcSfont 69}{section*.361}}

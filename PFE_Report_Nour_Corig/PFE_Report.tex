@@ -1,0 +1,236 @@
+\documentclass[a4paper,12pt,english]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}  
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinelanguage{json}{
+	basicstyle=\ttfamily\small,
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	backgroundcolor=\color{gray!5},
+	string=[s]{"}{"},
+	stringstyle=\color{blue},
+	comment=[l]{:},
+	commentstyle=\color{black},
+}
+
+\usepackage[english]{babel}
+\renewcommand{\contentsname}{Table of Contents}
+\usepackage{geometry}
+\usepackage[english]{minitoc}
+\usepackage[dvipsnames, table]{xcolor}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{cases}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\usepackage{upgreek}
+\newtheorem{observation}{Observation}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{lipsum}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[unicode, colorlinks, linkcolor=Blue, hypertexnames=false]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage[nohyperlinks]{acronym}  
+\usepackage{pgfplots}
+\usepackage{adjustbox}
+\usepackage{array,multirow,makecell}
+\usepackage{tabularx}
+\newtheorem{algo}{Algorithme}
+\pagestyle{fancy}
+\pgfplotsset{compat=1.18}
+\usepackage{ctable} 
+\usepackage{float}
+\usepackage{url}
+\usepackage{blindtext, color}
+\usepackage{titlesec}
+\titleformat*{\subsubsection}{\itshape}
+\renewcommand{\thesubsubsection}{\Alph{subsubsection}.}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[block]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+\setcellgapes{1pt}
+\makegapedcells
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash }b{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} 
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyfoot[C]{\textbf{\thepage}}
+\fancyhead[L]{\textsl{\rightmark}}
+\setlength{\headheight}{14.5pt}
+\headsep = 25pt
+\headwidth=16.50cm
+\renewcommand{\headrulewidth}{0.1pt} 
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2cm}
+\renewcommand{\baselinestretch}{1.15}
+\newcommand{\tolstrut}{%
+  \vrule height\dimexpr\fontcharht\font`\A+.1ex\relax width 0pt\relax
+}
+\DeclareRobustCommand{\textoverline}[1]{%
+  \ensuremath{\overline{\mbox{\tolstrut#1}}}%
+}
+\usepackage[nottoc]{tocbibind}
+\makeatletter
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection .\@alph\c@subsubsubsection}
+\newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+\newcommand*\l@subsubsubsection{\@dottedtocline{4}{8.0em}{4.1em}}
+\renewcommand*\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{6}{12em}{6em}}
+\newcommand*{\subsubsubsectionmark}[1]{}
+\makeatother
+% Cover page extra packages
+\usepackage{tikz}
+\usepackage{setspace}
+% Bibliography style is set below near \bibliography call
+
+%--------------------------------------------------------------
+\begin{document}
+
+%--------------------------------------------------------------
+% COVER PAGE — Official Horizon University Template
+%--------------------------------------------------------------
+\begin{titlepage}
+    \begin{center}
+        % Header: University name left, Ministry right
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            Private University\\
+            Horizon School of Digital\\
+            Technologies\\
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            Republic of Tunisia\\
+            Ministry of Higher Education\\
+            and Scientific Research
+        \end{minipage}
+        \vspace{1cm}
+
+        % Horizon Logo
+        \includegraphics[width=0.6\textwidth]{logo_horizon.png}
+
+        \vspace{0.7cm}
+
+        % Background image block + main cover content
+        \begin{tikzpicture}[remember picture, overlay]
+            \node[opacity=0.5, inner sep=0pt, anchor=center] at (current page.center) {
+                \includegraphics[width=\paperwidth]{bg.png}
+            };
+        \end{tikzpicture}
+
+        {\Large \textbf{End Of Studies Project Report}} \\
+        \vspace{0.5cm}
+        {Presented in order to obtain the National \textbf{Bachelor's Degree} in} \\
+        \vspace{0.3cm}
+        {\large \textbf{Computer Science}} \\
+        \vspace{0.2cm}
+        {Major: {\large \textbf{Software Engineering and Information Systems}}}
+
+        \vspace{1.5cm}
+
+        % Project Title Box
+        \begin{minipage}{0.85\textwidth}
+            \centering
+            \rule{\linewidth}{0.5pt} \\
+            \vspace{0.3cm}
+            \large \textbf{VisionTest-AI: An Intelligent Agent for Autonomous Functional Testing using NLP and Computer Vision} \\
+            \vspace{0.3cm}
+            \rule{\linewidth}{0.5pt}
+        \end{minipage}
+
+        \vspace{1cm}
+
+        % Author
+        {\large By: \textbf{Nour El Karia}}
+
+        \vfill
+
+        % Jury Table
+        \vspace{0.3cm}
+        {Defended on \quad / \quad / 2026 \quad in front of the jury composed of:} \\
+        \vspace{0.8cm}
+        \begin{flushleft}
+            \begin{tabular}{ll}
+                Mr./Mme : ............................................\hspace{3.4cm} President \\
+                Mr./Mme : ............................................\hspace{3.4cm} Reviewer \\
+                Mme Noura Aboudi \hspace{4.15cm} Academic Supervisor \\
+                M. Baha Rahmouni \hspace{4.45cm} Professional Supervisor \\
+            \end{tabular}
+        \end{flushleft}
+
+        \vspace{0.5cm}
+        % Company logo (ADDINN / Orange internship company)
+        \includegraphics[width=2.5cm]{Addine_logo.png}
+
+        \vspace{0.4cm}
+        \begin{center}
+            Réf : .......... \\
+            \vspace{0.6cm}
+            \rule{4cm}{0.5pt} \quad Année Universitaire : 2025 -- 2026 \quad \rule{4.5cm}{0.5pt}
+        \end{center}
+
+    \end{center}
+\end{titlepage}
+%--------------------------------------------------------------
+% REST OF DOCUMENT
+%----------------------------------------------------------------
+\setcounter{minitocdepth}{2}
+\dominitoc
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\pagenumbering{roman}
+\include{chapters/dedicaces}
+\mtcaddchapter
+\include{chapters/Acknowledgements}
+\mtcaddchapter
+\include{chapters/abstract}
+\mtcaddchapter
+
+\tableofcontents
+\listoffigures \mtcaddchapter 
+\listoftables  \mtcaddchapter
+\include{chapters/abreviation}
+
+\pagenumbering{arabic}
+\include{chapters/introduction}
+\include{chapters/chapter_general_context}
+\include{chapters/chapter2_literature_review}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/conclusion}
+
+\bibliographystyle{plain}
+\bibliography{references/allbiblio}
+
+%\include{chapters/annexe}
+
+\end{document}

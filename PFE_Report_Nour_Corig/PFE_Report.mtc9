@@ -1,0 +1,26 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.1}Introduction}{\reset@font\mtcSfont 19}{section*.59}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode Chapter Overview}{\reset@font\mtcSSfont 19}{section*.60}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.2}Objectives of the NLP Module}{\reset@font\mtcSfont 19}{section*.61}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.3}Gherkin Parsing}{\reset@font\mtcSfont 20}{section*.64}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.1}Parsed Elements}{\reset@font\mtcSSfont 20}{subsection*.65}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.2}Handling \texttt {And} and \texttt {But}}{\reset@font\mtcSSfont 20}{subsection*.68}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.4}Intent Classification}{\reset@font\mtcSfont 21}{section*.69}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.1}Rule-Based First Version}{\reset@font\mtcSSfont 21}{subsection*.72}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.2}DistilBERT-Based Improvement}{\reset@font\mtcSSfont 21}{subsection*.73}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.3}Confidence Management}{\reset@font\mtcSSfont 21}{subsection*.74}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.5}Entity Extraction}{\reset@font\mtcSfont 21}{section*.75}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.1}Target and Value Extraction}{\reset@font\mtcSSfont 22}{subsection*.78}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.2}Regex Fallback}{\reset@font\mtcSSfont 22}{subsection*.79}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Semantic Mapping}{\reset@font\mtcSfont 22}{section*.80}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.1}Selector Candidate Generation}{\reset@font\mtcSSfont 23}{subsection*.83}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.2}Preparing Vision Fallback}{\reset@font\mtcSSfont 23}{subsection*.84}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.7}API Endpoints of the NLP Module}{\reset@font\mtcSfont 23}{section*.85}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.7.1}\texttt {/api/ia/parse-gherkin}}{\reset@font\mtcSSfont 23}{subsection*.86}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.7.2}\texttt {/api/ia/semantic-mapping}}{\reset@font\mtcSSfont 25}{subsection*.91}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.7.3}\texttt {/api/ia/generate-test}}{\reset@font\mtcSSfont 27}{subsection*.117}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.8}Generated Playwright Script}{\reset@font\mtcSfont 28}{section*.144}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.9}Validation and Results}{\reset@font\mtcSfont 29}{section*.155}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.9.1}Observed Results}{\reset@font\mtcSSfont 29}{subsection*.158}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.9.2}Error Analysis}{\reset@font\mtcSSfont 30}{subsection*.161}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.10}Limitations and Possible Improvements}{\reset@font\mtcSfont 30}{section*.164}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.11}Conclusion}{\reset@font\mtcSfont 30}{section*.165}}

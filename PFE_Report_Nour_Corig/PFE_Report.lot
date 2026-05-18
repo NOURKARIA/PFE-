@@ -1,0 +1,35 @@
+\babel@toc {english}{}\relax 
+\contentsline {xchapter}{}{ii}{chapter*.1}%
+\contentsline {xchapter}{}{iii}{chapter*.2}%
+\contentsline {xchapter}{}{iv}{chapter*.3}%
+\contentsline {xchapter}{}{ix}{chapter*.5}%
+\contentsline {xchapter}{}{x}{chapter*.6}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{General Context, Requirements and Project Overview}{3}{chapter*.14}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces Comparative study of existing testing solutions}}{6}{table.25}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Project sprint planning}}{10}{table.39}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Literature Review: Data and Artificial Intelligence Foundations}{11}{chapter*.41}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Semantic Intelligence: NLP and Mapping Module}{17}{chapter*.58}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Example of parsed Gherkin steps}}{20}{table.67}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Supported intents in the NLP module}}{21}{table.71}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Main entities extracted from Gherkin steps}}{22}{table.77}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Mapping between semantic intents and Playwright methods}}{22}{table.82}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Validation examples for the NLP and semantic mapping module}}{29}{table.157}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Observed mapping results}}{29}{table.160}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces NLP limitations observed during validation}}{30}{table.163}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Visual Perception and Self-Healing Execution}{31}{chapter*.166}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces UI classes used in the vision dataset}}{39}{table.185}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Dataset split used for YOLOv8n training}}{39}{table.188}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces YOLOv8 variants and project positioning}}{40}{table.192}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces YOLOv8n training configuration}}{40}{table.195}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Examples of successful self-healing situations}}{48}{table.247}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Observed failed cases in the vision module}}{48}{table.250}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Integration, Reporting, Deployment and Final Results}{50}{chapter*.253}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Main FastAPI routers of VisionTest-AI}}{54}{table.267}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Reporting API endpoints}}{58}{table.302}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Examples of failed execution cases}}{67}{table.345}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Comparison between Plan A and Plan B}}{67}{table.348}%

@@ -1,0 +1,40 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.1}Introduction}{\reset@font\mtcSfont 33}{section*.167}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode Chapter Overview}{\reset@font\mtcSSfont 33}{section*.168}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.2}Objective of the Vision Module}{\reset@font\mtcSfont 33}{section*.169}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.3}Dataset Preparation: From Failed Attempts to DOM-Assisted Labeling}{\reset@font\mtcSfont 34}{section*.170}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.1}The Challenge of Building a UI Dataset}{\reset@font\mtcSSfont 34}{subsection*.171}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.2}First Attempt: Searching for Ready-Made Datasets}{\reset@font\mtcSSfont 34}{subsection*.172}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.3}Second Attempt: Playwright Screenshot Generation}{\reset@font\mtcSSfont 35}{subsection*.173}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.4}Third Attempt: Manual Annotation with Roboflow and LabelImg}{\reset@font\mtcSSfont 35}{subsection*.174}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.5}Limitations of Classic Auto-Labeling}{\reset@font\mtcSSfont 36}{subsection*.177}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.6}Final Solution: DOM-Assisted Auto-Labeling}{\reset@font\mtcSSfont 37}{subsection*.180}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.7}UI Element Classes}{\reset@font\mtcSSfont 38}{subsection*.183}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.3.8}Dataset Split and Preparation for Training}{\reset@font\mtcSSfont 39}{subsection*.186}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.4}YOLOv8n Training}{\reset@font\mtcSfont 39}{section*.189}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.4.1}Why YOLOv8n}{\reset@font\mtcSSfont 39}{subsection*.190}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.4.2}Training Configuration}{\reset@font\mtcSSfont 40}{subsection*.193}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.4.3}Loss Function Analysis}{\reset@font\mtcSSfont 40}{subsection*.196}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.4.4}Training Metrics}{\reset@font\mtcSSfont 41}{subsection*.197}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.4.5}Model Evaluation}{\reset@font\mtcSSfont 41}{subsection*.200}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.5}OCR Pipeline}{\reset@font\mtcSfont 42}{section*.203}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.5.1}Role of OCR in the Vision Module}{\reset@font\mtcSSfont 42}{subsection*.204}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.5.2}OpenCV Preprocessing}{\reset@font\mtcSSfont 42}{subsection*.205}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.5.3}Tesseract OCR}{\reset@font\mtcSSfont 43}{subsection*.206}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.5.4}Text Cleaning and Matching}{\reset@font\mtcSSfont 43}{subsection*.207}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.6}Vision API Implementation}{\reset@font\mtcSfont 43}{section*.208}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.6.1}\texttt {/api/ia/analyze-screenshot}}{\reset@font\mtcSSfont 43}{subsection*.209}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.6.2}Screenshot Input}{\reset@font\mtcSSfont 44}{subsection*.212}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.6.3}Bounding Box Detection}{\reset@font\mtcSSfont 44}{subsection*.213}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.6.4}OCR Enrichment}{\reset@font\mtcSSfont 44}{subsection*.232}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.6.5}Returned JSON Structure}{\reset@font\mtcSSfont 45}{subsection*.233}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.7}Self-Healing Execution}{\reset@font\mtcSfont 45}{section*.234}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.7.1}Plan A: Playwright Selector Execution}{\reset@font\mtcSSfont 45}{subsection*.235}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.7.2}Plan B: YOLO + OCR + Coordinate-Based Action}{\reset@font\mtcSSfont 46}{subsection*.236}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.7.3}Retry Mechanism}{\reset@font\mtcSSfont 46}{subsection*.239}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.7.4}Popup and Dialog Handling}{\reset@font\mtcSSfont 46}{subsection*.240}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.8}Results and Observations}{\reset@font\mtcSfont 47}{section*.241}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.8.1}Successful Detection Cases}{\reset@font\mtcSSfont 47}{subsection*.242}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.8.2}Successful Self-Healing Cases}{\reset@font\mtcSSfont 47}{subsection*.245}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.8.3}Failed Cases}{\reset@font\mtcSSfont 48}{subsection*.248}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.8.4}Error Analysis}{\reset@font\mtcSSfont 48}{subsection*.251}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.9}Conclusion}{\reset@font\mtcSfont 49}{section*.252}}

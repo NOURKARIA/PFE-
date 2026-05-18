@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: PFE_Report.aux
+Reallocating 'name_of_file' (item size: 1) to 23 items.
+A level-1 auxiliary file: chapters/dedicaces.aux
+Reallocating 'name_of_file' (item size: 1) to 30 items.
+A level-1 auxiliary file: chapters/Acknowledgements.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: chapters/abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: chapters/abreviation.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: chapters/introduction.aux
+Reallocating 'name_of_file' (item size: 1) to 37 items.
+A level-1 auxiliary file: chapters/chapter_general_context.aux
+Reallocating 'name_of_file' (item size: 1) to 40 items.
+A level-1 auxiliary file: chapters/chapter2_literature_review.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: chapters/chapter3.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: chapters/chapter4.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: chapters/chapter5.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
+A level-1 auxiliary file: chapters/conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+Database file #1: references/allbiblio.bib
+You've used 28 entries,
+            2118 wiz_defined-function locations,
+            630 strings with 7135 characters,
+and the built_in function-call counts, 6617 in all, are:
+= -- 655
+> -- 255
+< -- 1
++ -- 109
+- -- 78
+* -- 244
+:= -- 1141
+add.period$ -- 106
+call.type$ -- 28
+change.case$ -- 123
+chr.to.int$ -- 0
+cite$ -- 28
+duplicate$ -- 229
+empty$ -- 616
+format.name$ -- 78
+if$ -- 1431
+int.to.chr$ -- 0
+int.to.str$ -- 28
+missing$ -- 7
+newline$ -- 165
+num.names$ -- 56
+pop$ -- 217
+preamble$ -- 1
+purify$ -- 95
+quote$ -- 0
+skip$ -- 185
+stack$ -- 0
+substring$ -- 175
+swap$ -- 38
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 110
+warning$ -- 0
+while$ -- 59
+width$ -- 30
+write$ -- 328

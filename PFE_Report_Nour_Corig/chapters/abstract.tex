@@ -1,0 +1,19 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\hrule
+\vspace{1.2cm}
+
+Functional test automation is an important part of modern software quality assurance, especially in Agile and DevOps environments where applications change frequently. However, automated tests often remain fragile because they depend on technical selectors, DOM structure, and manually written scripts. A small change in the user interface can break a test even when the business behavior of the application is still correct.
+
+This end-of-studies project, carried out within \textbf{ADDINN Group}, presents \textbf{VisionTest-AI}, an intelligent functional testing agent designed to reduce this fragility. The system starts from business-readable Gherkin scenarios and transforms them into executable browser actions. It combines Natural Language Processing for scenario parsing and intent extraction, semantic mapping for action generation, Playwright for browser automation, YOLOv8 for UI element detection, OCR for visible text extraction, and a reporting module for JSON and HTML execution reports.
+
+The proposed solution follows a hybrid execution strategy. First, it tries to interact with the application using generated Playwright selectors. If the selector-based execution fails, the system activates a visual fallback mechanism based on screenshot analysis, object detection, OCR, and coordinate-based interaction. This approach brings the automation process closer to the behavior of a human tester who reads a scenario, observes the interface, and interacts with visible elements.
+
+The final prototype includes a FastAPI backend, a Streamlit user interface, NLP and semantic mapping services, a vision service, an execution service, and a reporting service. The project also highlights practical limitations, especially the need for a larger annotated dataset, better OCR robustness, and a more scalable deployment architecture. Despite these limitations, \textbf{VisionTest-AI} demonstrates the feasibility of combining semantic understanding, browser automation, and visual perception to support more resilient functional testing.
+
+\textbf{Keywords:} Functional Testing, Artificial Intelligence, Gherkin, NLP, Playwright, YOLOv8, OCR,\\
+Computer Vision, Test Automation.
+
+\vspace{1.2cm}
+\hrule
+\vfill

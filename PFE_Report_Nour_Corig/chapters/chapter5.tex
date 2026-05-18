@@ -1,0 +1,618 @@
+\chapter{Integration, Reporting, Deployment and Final Results}
+\label{chap:integration_results}
+\minitoc
+\newpage
+
+\section{Introduction}
+\label{sec:ch5_intro}
+
+After presenting the semantic intelligence module and the visual perception layer, this chapter focuses on the complete integration of \textbf{VisionTest-AI}. The objective is to show how the different modules work together to form a functional testing pipeline, from the submission of a Gherkin scenario to the generation of execution reports.
+
+This chapter presents the full system workflow, the backend implementation, the reporting system, the user interface, deployment attempts, testing strategy, and final results. It also discusses the limitations observed during the project and the possible improvements for future versions.
+
+Unlike the previous chapters, which focused on specific modules, this chapter provides a global view of the final prototype. It shows how NLP parsing, semantic mapping, Playwright execution, vision fallback, and report generation are connected inside the same system.
+
+\subsection*{Chapter Overview}
+\phantomsection
+\addcontentsline{toc}{subsection}{Chapter Overview}
+
+This chapter presents the final prototype from an engineering point of view. It describes the complete pipeline, backend routers and services, reporting system, Streamlit interface, deployment attempts, validation strategy, actual results, limitations, and perspectives.
+
+\section{Complete Pipeline Integration}
+\label{sec:complete_pipeline}
+
+The complete pipeline of \textbf{VisionTest-AI} starts with a Gherkin scenario written by the user and ends with structured execution reports. The system was designed as a modular pipeline where each component has a specific responsibility.
+
+\subsection{User Submits a Gherkin Scenario}
+\label{subsec:user_submits_gherkin}
+
+The first step begins when the user submits a Gherkin scenario through the interface. The scenario describes the functional behavior to test using readable steps such as \texttt{Given}, \texttt{When}, and \texttt{Then}.
+
+An example scenario is:
+
+\begin{verbatim}
+	Feature: Facebook login
+	
+	Scenario: Invalid login attempt
+	Given I am on 'https://www.facebook.com/'
+	When I type 'nour.karia@horizon.tn' into the 'email' field
+	And I type 'facebook1234' into the 'password' field
+	And I click the 'Log In' button
+	Then I should see the error message
+\end{verbatim}
+
+This scenario is understandable by a human tester, but it must be transformed into structured actions before execution.
+
+\subsection{NLP Parsing and Semantic Mapping}
+\label{subsec:nlp_mapping_integration}
+
+After receiving the scenario, the backend sends it to the NLP module. This module extracts the feature name, scenario name, and steps. Each step is then analyzed to identify the intent, target, value, and element type.
+
+The semantic mapping module converts these interpreted steps into executable actions. For example, an input step is mapped to a Playwright \texttt{fill} action, while a click step is mapped to a Playwright \texttt{click} action.
+
+\subsection{Playwright Execution}
+\label{subsec:playwright_execution_integration}
+
+The execution service uses Playwright to interact with the browser. It opens the target page, executes each action, captures screenshots, and records the status of every step.
+
+The primary execution strategy is selector-based. This means that the system first tries to interact with elements using generated selector candidates such as role selectors, text selectors, CSS selectors, or XPath expressions.
+
+\subsection{Vision Fallback When Selectors Fail}
+\label{subsec:vision_fallback_integration}
+
+If all selector candidates fail, the system activates the visual fallback strategy. In this case, the execution service captures a screenshot of the current page and sends it to the vision module.
+
+The vision module analyzes the screenshot using YOLOv8n and OCR. It detects UI elements, extracts visible text, ranks possible candidates, and returns coordinates that can be used for a fallback action.
+
+This mechanism is called self-healing execution because it allows the system to recover from some selector failures.
+
+\subsection{Report Generation}
+\label{subsec:report_generation_pipeline}
+
+At the end of execution, the reporting service generates structured reports. These reports contain the execution status, the list of executed steps, screenshots, errors, execution duration, and the strategy used for each step.
+
+Two report formats are generated:
+
+\begin{itemize}
+	\item \textbf{JSON report:} Used for structured storage and future processing.
+	\item \textbf{HTML report:} Used for human-readable visualization.
+\end{itemize}
+
+Figure~\ref{fig:complete_pipeline} represents the complete execution pipeline of \textbf{VisionTest-AI}, from scenario submission to report generation. The diagram was created by the author using Mermaid~\cite{mermaid_docs}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{complete_pipeline.png}
+	\caption{Complete execution pipeline of VisionTest-AI}
+	\label{fig:complete_pipeline}
+\end{figure}
+
+\section{Backend Implementation}
+\label{sec:backend_implementation}
+
+The backend was implemented using \textbf{FastAPI}~\cite{fastapi_docs}. It exposes the different services of the system through REST API endpoints and coordinates the communication between the NLP, mapping, execution, vision, and reporting modules.
+
+\subsection{FastAPI Routers}
+\label{subsec:fastapi_routers}
+
+The backend is organized using routers. Each router is responsible for a specific part of the system.
+
+Table~\ref{tab:fastapi_routers} summarizes the main FastAPI routers implemented in the backend.
+
+\begin{table}[H]
+	\centering
+	\caption{Main FastAPI routers of VisionTest-AI}
+	\label{tab:fastapi_routers}
+	\renewcommand{\arraystretch}{1.35}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Router} & \textbf{Responsibility} \\ \hline
+		\texttt{nlp\_parsing.py} & Parses Gherkin scenarios and returns structured actions. \\ \hline
+		\texttt{semantic\_mapping.py} & Maps interpreted steps to executable Playwright actions. \\ \hline
+		\texttt{test\_generation.py} & Generates Playwright scripts from Gherkin scenarios. \\ \hline
+		\texttt{test\_execution.py} & Executes test scenarios using Playwright. \\ \hline
+		\texttt{ql\_detection.py} & Analyzes screenshots and detects UI elements. \\ \hline
+		\texttt{reporting.py} & Lists, retrieves, and displays generated reports. \\ \hline
+	\end{tabularx}
+\end{table}
+
+This organization makes the backend easier to maintain and extend.
+
+\subsection{Services Layer}
+\label{subsec:services_layer}
+
+The business logic is separated into services. This avoids placing complex logic directly inside API endpoints.
+
+The main services are:
+
+\begin{itemize}
+	\item \textbf{NLP service:} Handles Gherkin parsing and step interpretation.
+	\item \textbf{Mapping service:} Generates Playwright actions and selector candidates.
+	\item \textbf{Execution service:} Runs the browser automation pipeline.
+	\item \textbf{Vision service:} Detects UI elements from screenshots.
+	\item \textbf{Report service:} Saves JSON and HTML reports.
+	\item \textbf{Generator service:} Produces Playwright scripts.
+\end{itemize}
+
+This separation improves modularity and makes each component easier to test independently.
+
+\subsection{Schemas and Validation}
+\label{subsec:schemas_validation}
+
+The backend uses \textbf{Pydantic}~\cite{pydantic_docs} schemas to validate input and output data. This ensures that API requests follow the expected structure and that responses remain consistent.
+
+For example, Gherkin parsing requests contain the raw scenario text, while execution reports contain structured information such as status, duration, steps, screenshots, and metadata.
+
+Using schemas also makes the API documentation clearer through the automatic Swagger interface generated by FastAPI.
+
+\subsection{Error Handling and Logs}
+\label{subsec:error_handling_logs}
+
+Error handling was an important part of the implementation. During test execution, several types of errors can occur: selector failure, timeout, browser issue, OCR failure, or unexpected page behavior.
+
+The system records these errors and includes them in the final report instead of hiding them. This is important because a test report should not only say that a scenario failed, but also explain where and why it failed.
+
+Logs were also used during development to understand pipeline behavior and debug failures.
+
+\section{Reporting System}
+\label{sec:reporting_system}
+
+The reporting system is one of the most important parts of the final prototype. It provides evidence of execution and allows the user to analyze the result of each test.
+
+\subsection{JSON Report Generation}
+\label{subsec:json_report_generation}
+
+The JSON report stores the execution result in a structured format. It contains information such as the execution ID, feature name, scenario name, status, start time, end time, duration, executed steps, screenshots, and summary metrics.
+
+A simplified example of a JSON report structure is shown below:
+
+\begin{lstlisting}[caption={Simplified JSON report structure}, label={lst:json_report_structure}]
+	{
+		"execution_id": "b25635cb-45e4-4c96-8208-ceca0ebf4fc2",
+		"feature_name": "Facebook login",
+		"scenario_name": "Invalid login attempt",
+		"status": "passed",
+		"summary": {
+			"total_steps": 5,
+			"passed_steps": 5,
+			"failed_steps": 0,
+			"plan_a_steps": 4,
+			"plan_b_steps": 1
+		},
+		"steps": [
+		{
+			"step_text": "When I click the login button",
+			"action": "click",
+			"status": "passed",
+			"plan_used": "plan_a_selector_playwright",
+			"screenshot_path": "reports/screenshots/step_login.png"
+		}
+		]
+	}
+\end{lstlisting}
+
+The JSON format is useful because it can later be stored in a database, analyzed automatically, or used to generate dashboards.
+
+\subsection{HTML Report Generation}
+\label{subsec:html_report_generation}
+
+The HTML report provides a readable view of the execution. It is designed for users who want to quickly understand the result without reading raw JSON.
+
+The report displays:
+
+\begin{itemize}
+	\item General execution status.
+	\item Feature and scenario names.
+	\item Execution duration.
+	\item Number of passed and failed steps.
+	\item Step-by-step details.
+	\item Screenshots captured during execution.
+	\item Errors and metadata when available.
+\end{itemize}
+
+Figure~\ref{fig:html_report_example} shows an example of an HTML report generated by the reporting module.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{html_report_example.png}
+	\caption{Example of an HTML execution report generated by VisionTest-AI}
+	\label{fig:html_report_example}
+\end{figure}
+
+\subsection{Screenshot Evidence}
+\label{subsec:screenshot_evidence}
+
+Screenshots are captured during execution and linked to the report. They provide visual evidence of what happened during each step. This is especially useful when a test fails, because it allows the user to inspect the actual state of the page.
+
+For example, if a login test fails because an error message is displayed, the screenshot allows the tester to confirm the result visually.
+
+
+\subsection{Report API Endpoints}
+\label{subsec:report_api_endpoints}
+
+The reporting module exposes several API endpoints.
+
+Table~\ref{tab:reporting_endpoints} presents the API endpoints used to list and retrieve generated reports.
+
+\begin{table}[H]
+	\centering
+	\caption{Reporting API endpoints}
+	\label{tab:reporting_endpoints}
+	\renewcommand{\arraystretch}{1.35}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Endpoint} & \textbf{Description} \\ \hline
+		\texttt{GET /api/ia/reports} & Lists generated reports. \\ \hline
+		\texttt{GET /api/ia/reports/\{execution\_id\}} & Retrieves a specific JSON report. \\ \hline
+		\texttt{GET /api/ia/reports/\{execution\_id\}?format=html} & Retrieves a specific HTML report. \\ \hline
+		\texttt{GET /api/ia/reports/\{execution\_id\}/summary} & Retrieves a compact summary of a report. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Streamlit Report Viewer}
+\label{subsec:streamlit_report_viewer}
+
+The Streamlit interface includes a report viewer. This page allows the user to select a generated report, view the HTML version, inspect the JSON file, and check the execution summary.
+
+This feature makes the reporting system more accessible because the user does not need to manually open files from the project directory.
+
+\section{User Interface}
+\label{sec:user_interface}
+
+The frontend of the project was implemented using \textbf{Streamlit}~\cite{streamlit_docs}. It provides a simple interface for interacting with the backend services.
+
+\subsection{Scenario Studio}
+\label{subsec:scenario_studio}
+
+The Scenario Studio allows the user to write or paste a Gherkin scenario. The scenario can then be parsed, transformed into actions, generated as a Playwright script, or executed directly.
+
+This page represents the main entry point of the system.
+
+Figure~\ref{fig:scenario_studio} shows the Scenario Studio page used to submit and process Gherkin scenarios.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{scenario_studio.png}
+	\caption{Scenario Studio interface for submitting Gherkin scenarios}
+	\label{fig:scenario_studio}
+\end{figure}
+
+\subsection{Script Generation View}
+\label{subsec:script_generation_view}
+
+The script generation view displays the Playwright code generated from the submitted Gherkin scenario. This is useful for users who want to inspect, reuse, or manually adapt the generated script.
+
+Figure~\ref{fig:streamlit_generated_script} represents the generated Playwright script as displayed in the Streamlit interface.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{streamlit_generated_script.png}
+	\caption{Generated Playwright script displayed in the Streamlit interface}
+	\label{fig:streamlit_generated_script}
+\end{figure}
+
+\subsection{Screenshot Analyzer}
+\label{subsec:screenshot_analyzer}
+
+The screenshot analyzer allows the user to test the vision module independently. The user can upload a screenshot, activate OCR, define a target text, and view detected elements.
+
+This page was useful during development because it allowed isolated testing of the YOLO/OCR pipeline.
+
+
+\subsection{Reports Page}
+\label{subsec:reports_page}
+
+The reports page allows the user to browse generated reports and inspect previous executions. It provides access to both HTML and JSON versions of each report.
+
+Figure~\ref{fig:reports_page} shows the reports page used to inspect previous executions.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{reports_page.png}
+	\caption{Reports page in the Streamlit interface}
+	\label{fig:reports_page}
+\end{figure}
+
+\section{Deployment Attempts}
+\label{sec:deployment_attempts}
+
+Deployment was an important part of the project because the system includes several components: a backend API, browser automation, AI models, OCR dependencies, and a Streamlit frontend.
+
+\subsection{Local Deployment}
+\label{subsec:local_deployment}
+
+The first stable deployment was local. The FastAPI backend was launched locally, and the Streamlit interface communicated with it through API calls.
+
+This environment was useful for development and testing because it allowed direct access to logs, screenshots, reports, and model files.
+
+\subsection{Docker Deployment}
+\label{subsec:docker_deployment}
+
+\textbf{Docker}~\cite{docker_docs} was considered to make the application easier to run in different environments. Containerization helps package the backend, dependencies, and configuration in a reproducible way.
+
+However, Docker deployment required careful handling of Playwright browsers, OCR dependencies, model files, and report storage. These requirements made deployment more complex than a simple web application.
+
+\subsection{First Streamlit Cloud Attempt}
+\label{subsec:streamlit_cloud_attempt}
+
+A first cloud deployment attempt was made using Streamlit Cloud because it is simple and convenient for Python interfaces. However, this approach showed limitations for the full system.
+
+Streamlit Cloud is well suited for lightweight data applications, but \textbf{VisionTest-AI} requires browser automation, AI model loading, OCR, and backend services. Running all these components in the same lightweight environment created resource and configuration problems.
+
+\subsection{Resource Limit Issue}
+\label{subsec:resource_limit_issue}
+
+The main issue was resource limitation. Playwright requires browser binaries, YOLO requires model loading, and OCR may require system-level dependencies. These elements can exceed the constraints of a simple Streamlit deployment.
+
+This experience showed that the frontend and backend should not be deployed in the same environment.
+
+\subsection{Final Proposed Architecture: Railway Backend and Streamlit UI}
+\label{subsec:final_deployment_architecture}
+
+The final proposed deployment architecture separates the backend from the frontend:
+
+\begin{itemize}
+	\item \textbf{FastAPI backend:} Deployed on a platform such as Railway~\cite{railway_docs}.
+	\item \textbf{Streamlit frontend:} Deployed separately and configured to call the backend API.
+	\item \textbf{Reports and screenshots:} Stored by the backend service.
+	\item \textbf{AI models:} Loaded by the backend where more resources are available.
+\end{itemize}
+
+This architecture is more realistic because it separates user interaction from heavy processing.
+
+Figure~\ref{fig:deployment_architecture} represents the final proposed deployment architecture. The diagram was created by the author using Mermaid~\cite{mermaid_docs}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{deployment_architecture.png}
+	\caption{Final proposed deployment architecture}
+	\label{fig:deployment_architecture}
+\end{figure}
+
+\subsection{CI/CD Integration Strategy}
+\label{subsec:cicd_strategy}
+
+Although a complete production CI/CD pipeline was not fully deployed during the internship, the project was structured to support this evolution. The objective of the CI/CD strategy is to automate verification before each deployment and reduce the risk of breaking the testing platform itself.
+
+The proposed CI/CD workflow is composed of the following stages:
+
+\begin{enumerate}
+	\item \textbf{Source code update:} A developer pushes changes to the project repository.
+	\item \textbf{Static verification:} The pipeline checks formatting, dependencies, and basic import errors.
+	\item \textbf{Unit and API tests:} Tests are executed for the mapping service, report service, generation service, and API endpoints.
+	\item \textbf{Docker build:} The backend image is built with the required Python dependencies, Playwright configuration, OCR tools, and model files.
+	\item \textbf{Deployment:} If tests pass, the backend can be deployed to Railway and the Streamlit frontend can be deployed separately.
+	\item \textbf{Post-deployment smoke test:} A simple scenario is executed to verify that the API, browser automation, and report generation still work after deployment.
+\end{enumerate}
+
+In the current version, the project already contains automated tests and Docker configuration, which represent the foundation of this CI/CD strategy. Future work should connect these steps to a Git-based pipeline in order to automate deployment and validation.
+
+\section{Testing and Validation}
+\label{sec:testing_validation}
+
+The system was validated using several types of tests. The objective was to verify individual modules and the complete pipeline.
+
+\subsection{Unit Tests}
+\label{subsec:unit_tests}
+
+Unit tests were used to validate isolated services such as the mapping service, report service, generator service, and utility functions.
+
+These tests help ensure that the internal logic remains stable when changes are made.
+
+\subsection{API Tests}
+\label{subsec:api_tests}
+
+API tests were used to verify that the main endpoints return correct responses. These tests covered endpoints such as semantic mapping, test generation, segmentation, and reporting.
+
+Example tested endpoints include:
+
+\begin{itemize}
+	\item \texttt{/api/ia/semantic-mapping}
+	\item \texttt{/api/ia/generate-test}
+	\item \texttt{/api/ia/reports}
+	\item \texttt{/api/ia/reports/\{execution\_id\}/summary}
+\end{itemize}
+
+\subsection{End-to-End Test Scenarios}
+\label{subsec:e2e_test_scenarios}
+
+End-to-end scenarios were used to test the complete pipeline. These scenarios started from Gherkin input and ended with generated reports.
+
+The tested workflows included:
+
+\begin{itemize}
+	\item Google search scenario.
+	\item Facebook login scenario.
+	\item Form filling scenario.
+	\item Verification of expected text.
+\end{itemize}
+
+\subsection{Unseen-Site Benchmark}
+\label{subsec:unseen_site_benchmark}
+
+The system was also tested on websites not used during development. This type of testing is important because it checks whether the pipeline can generalize beyond known examples.
+
+The results were mixed. The NLP and mapping modules performed well on explicit steps, while the vision module still depended strongly on the quality of detections and OCR.
+
+\section{Actual Results}
+\label{sec:actual_results}
+
+This section presents the main results obtained from the final prototype. The goal is to describe what works, what partially works, and what still needs improvement.
+
+\subsection{Generated JSON Reports}
+\label{subsec:generated_json_reports}
+
+The system successfully generated JSON reports after execution. These reports contain structured information about the scenario, steps, screenshots, and execution summary.
+
+Figure~\ref{fig:json_report_example} presents an example of a generated JSON report.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{json_report_example.png}
+	\caption{Example of a generated JSON report}
+	\label{fig:json_report_example}
+\end{figure}
+
+\subsection{Generated HTML Reports}
+\label{subsec:generated_html_reports}
+
+The system also generated HTML reports. These reports provide a more readable representation of the execution and are easier to analyze manually.
+
+Figure~\ref{fig:html_report_final} represents the final HTML report generated by the reporting module.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{html_report_final.png}
+	\caption{Example of a generated HTML report}
+	\label{fig:html_report_final}
+\end{figure}
+
+\subsection{Successful Execution Examples}
+\label{subsec:successful_execution_examples}
+
+Some scenarios were executed successfully from beginning to end. The most stable cases were scenarios with explicit steps and clear UI targets.
+
+Examples include:
+
+\begin{itemize}
+	\item Navigating to a target page.
+	\item Filling a visible input field.
+	\item Clicking a clearly identified button.
+	\item Verifying that expected text appears on the page.
+\end{itemize}
+
+\subsection{Failed Execution Examples}
+\label{subsec:failed_execution_examples}
+
+Some scenarios failed due to selector issues, page changes, popups, OCR errors, or ambiguous targets. These failures were useful because they helped identify the current limits of the system.
+
+Table~\ref{tab:failed_execution_cases} lists representative failed execution cases and possible improvements.
+
+\begin{table}[H]
+	\centering
+	\caption{Examples of failed execution cases}
+	\label{tab:failed_execution_cases}
+	\renewcommand{\arraystretch}{1.35}
+	\small
+	\begin{tabularx}{\textwidth}{|X|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Failure Case} & \textbf{Cause} & \textbf{Possible Improvement} \\ \hline
+		Button not clicked & Selector failed and visual detection was not precise enough. & Improve YOLO dataset and candidate ranking. \\ \hline
+		Wrong element selected & Several visual candidates were similar. & Combine OCR, DOM context, and semantic scoring. \\ \hline
+		OCR text incorrect & Text was small or low contrast. & Improve preprocessing and OCR configuration. \\ \hline
+		Cloud execution issue & Deployment environment lacked required resources. & Separate backend and frontend deployment. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Plan A vs Plan B Usage}
+\label{subsec:plan_a_plan_b_usage}
+
+The execution strategy is divided into Plan A and Plan B. Plan A uses Playwright selectors, while Plan B uses visual fallback.
+
+In the current version, Plan A remains the most reliable strategy when selectors are valid. Plan B is useful in some cases, but its success depends on YOLO detection quality, OCR readability, and target ranking.
+
+Table~\ref{tab:plan_a_plan_b} compares the two execution strategies used by the system.
+
+\begin{table}[H]
+	\centering
+	\caption{Comparison between Plan A and Plan B}
+	\label{tab:plan_a_plan_b}
+	\renewcommand{\arraystretch}{1.35}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Strategy} & \textbf{Strengths} & \textbf{Limitations} \\ \hline
+		Plan A: Playwright selectors & Fast, precise, reliable when DOM is stable. & Breaks when selectors change or elements are hard to locate. \\ \hline
+		Plan B: YOLO/OCR fallback & Can recover when the element is visible but selectors fail. & Depends on model accuracy, OCR quality, and ranking logic. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Performance Observations}
+\label{subsec:performance_observations}
+
+The NLP and semantic mapping modules are lightweight and respond quickly for simple scenarios. Playwright execution time depends mainly on page loading, network speed, and browser behavior.
+
+The vision module is more expensive because it requires screenshot processing, YOLO inference, and OCR. For this reason, it is only activated when needed, rather than being used for every action.
+
+This design keeps the normal execution path efficient while still allowing fallback when necessary.
+
+\section{Limitations}
+\label{sec:chapter5_limitations}
+
+The final prototype achieved the main objective of connecting Gherkin understanding, test generation, execution, vision fallback, and reporting. However, several limitations remain.
+
+\subsection{Model Accuracy Limitations}
+\label{subsec:model_accuracy_limitations}
+
+The YOLO model still requires improvement. Some detections are inaccurate, especially for small elements, dense interfaces, or visually similar components. The dataset must be expanded and cleaned further to improve model generalization.
+
+\subsection{OCR Limitations}
+\label{subsec:ocr_limitations}
+
+OCR performance depends on image quality, font size, contrast, and page layout. In some cases, OCR extracted incorrect or incomplete text, which affected target matching.
+
+\subsection{Deployment Resource Limitations}
+\label{subsec:deployment_resource_limitations}
+
+The deployment phase showed that the system requires more resources than a simple Streamlit application. Browser automation, OCR, and AI model inference should be handled by a dedicated backend service.
+
+\subsection{Lack of PostgreSQL and Redis Integration}
+\label{subsec:postgres_redis_limitations}
+
+The current version stores reports as local JSON and HTML files. This is sufficient for a prototype, but not ideal for a production system.
+
+A future version should use:
+
+\begin{itemize}
+	\item \textbf{PostgreSQL} for persistent storage of projects, executions, users, and reports.
+	\item \textbf{Redis} for caching, queues, and background execution management.
+\end{itemize}
+
+\section{Perspectives}
+\label{sec:perspectives}
+
+Several improvements can be added in future versions of \textbf{VisionTest-AI}.
+
+\subsection{Improve NLP Multilingual Support}
+\label{subsec:improve_multilingual_support}
+
+The current NLP module mainly supports English scenarios. Future work should add support for French and mixed-language Gherkin scenarios.
+
+\subsection{Expand the Annotated Dataset}
+\label{subsec:expand_dataset}
+
+The vision dataset should be expanded with more websites, component libraries, screen sizes, themes, and UI styles. This would improve YOLO detection quality and reduce false positives.
+
+\subsection{Add PostgreSQL and Redis}
+\label{subsec:add_postgres_redis}
+
+A production version should include database and queue services. PostgreSQL can store reports and project history, while Redis can manage background tasks and improve performance.
+
+\subsection{Add Authentication and Project History}
+\label{subsec:add_auth_project_history}
+
+Authentication would allow multiple users to manage their own projects, scenarios, and reports. Project history would make it possible to compare executions over time.
+
+\subsection{Improve Cloud Deployment}
+\label{subsec:improve_cloud_deployment}
+
+The final deployment architecture should separate the frontend, backend, browser execution, model inference, and report storage. This would make the system more stable and scalable.
+
+\section{Conclusion}
+\label{sec:ch5_conclusion}
+
+This chapter presented the final integration of \textbf{VisionTest-AI}. It showed how the different modules are connected to form a complete pipeline, starting from a Gherkin scenario and ending with JSON and HTML execution reports.
+
+The backend implementation was organized around FastAPI routers and services. The Streamlit interface provided access to scenario submission, script generation, screenshot analysis, and report viewing. The reporting system made it possible to store and inspect execution evidence.
+
+The deployment attempts showed that the system is more complex than a simple web application because it includes browser automation, AI models, OCR, screenshots, and reports. This led to the final proposed architecture based on a separated backend and frontend.
+
+The final results confirm that the prototype can parse scenarios, generate Playwright scripts, execute tests, produce reports, and activate visual fallback in some cases. However, the project still has limitations related to YOLO accuracy, OCR reliability, deployment resources, and missing production features such as PostgreSQL, Redis, authentication, and project history.
+
+Overall, \textbf{VisionTest-AI} demonstrates the feasibility of an intelligent functional testing agent that combines semantic understanding, browser automation, visual perception, and reporting. The system provides a solid foundation for future improvements and industrialization.

@@ -1,0 +1,207 @@
+\chapter{General Context, Requirements and Project Overview}
+\label{chap:overview}
+\minitoc
+\newpage
+
+\section{Introduction}
+\label{sec:chapter1_intro}
+
+Software teams are asked to deliver new features faster while keeping applications stable. This pressure makes functional testing an essential activity in modern software engineering. Functional tests verify that the application behaves correctly from the user's point of view: opening a page, filling a form, clicking a button, or checking that an expected message appears.
+
+In practice, automated functional tests are often fragile. Many tools depend on technical selectors such as IDs, CSS classes, XPath expressions, or DOM structure. When the interface changes, a test can fail even if the application still works correctly for the user. The \textbf{VisionTest-AI} project was proposed to reduce this fragility by combining Gherkin parsing, semantic mapping, Playwright execution, computer vision, OCR, and reporting.
+
+\subsection*{Chapter Overview}
+\phantomsection
+\addcontentsline{toc}{subsection}{Chapter Overview}
+
+This chapter presents the general context of the project. It introduces the host organization, explains the problem statement, reviews existing testing solutions, defines the objectives and requirements, and summarizes the global architecture and project methodology.
+
+\section{Host Organization and Project Environment}
+\label{sec:host_environment}
+
+The project was carried out within \textbf{ADDINN Group}, a technology company active in digital engineering, data-oriented solutions, artificial intelligence, cybersecurity, cloud services, and business process automation. This environment was suitable for the project because \textbf{VisionTest-AI} is not only an AI experiment; it is an engineering prototype intended to answer a concrete software quality problem.
+
+Figure~\ref{fig:addinn_logo} presents the official logo of the host organization where the project was carried out.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.35\textwidth]{Addine_logo.png}
+	\caption{Official logo of ADDINN Group}
+	\label{fig:addinn_logo}
+\end{figure}
+
+The internship took place in a Data and Artificial Intelligence oriented context. The work required knowledge from several domains: functional testing, Behavior-Driven Development, natural language processing, browser automation, computer vision, OCR, backend development, and report generation. Professional supervision helped align the project with practical needs, while academic supervision ensured that the work respected the expected structure of an end-of-studies project.
+
+\section{Project Context and Problem Statement}
+\label{sec:project_context_problem}
+
+Web applications have become more dynamic and more complex. They often include asynchronous loading, responsive layouts, popups, dynamic components, and frequent user interface updates. Manual validation of these applications is slow and repetitive, which explains why companies rely on automated testing tools such as Selenium, Playwright, and Cypress.
+
+These tools are useful, but they do not remove all maintenance problems. A test script usually needs selectors to locate elements. If an element ID changes, if the DOM structure is refactored, or if a button is moved into another component, the test may fail for technical reasons rather than for a real functional defect.
+
+The main problems addressed by this project are:
+
+\begin{itemize}
+	\item \textbf{High maintenance cost:} QA engineers must frequently repair scripts after minor UI changes.
+	\item \textbf{False failures:} A test can fail because a selector changed, not because the application behavior is wrong.
+	\item \textbf{Limited accessibility:} Business-readable scenarios are not directly executable by automation tools.
+	\item \textbf{Weak visual understanding:} Traditional automation reads the DOM but does not perceive the screen like a human tester.
+	\item \textbf{Dynamic interface difficulty:} Popups, changing layouts, and visually similar components are difficult to automate reliably.
+\end{itemize}
+
+The central question can therefore be formulated as follows:
+
+\begin{quote}
+	How can we design an intelligent functional testing agent capable of understanding Gherkin scenarios, generating executable actions, interacting with web interfaces, and adapting when classical selectors fail?
+\end{quote}
+
+\section{Existing Solutions and Positioning}
+\label{sec:existing_solutions_positioning}
+
+\subsection{Traditional Automation Tools}
+\label{subsec:traditional_automation}
+
+\textbf{Selenium}~\cite{selenium_docs}, \textbf{Playwright}~\cite{playwright_docs}, and \textbf{Cypress}~\cite{cypress_docs} are widely used for web automation. They allow testers to open pages, click elements, fill fields, and verify results. These tools remain important because they provide the execution layer of many test suites. However, they still require scripts and selectors, and they do not fully solve the problem of fragile tests.
+
+\subsection{AI-Based Testing Platforms}
+\label{subsec:ai_testing_platforms}
+
+Several commercial platforms try to improve automated testing using artificial intelligence. \textbf{Mabl}~\cite{mabl_platform} focuses on low-code testing and self-healing. \textbf{QA Wolf}~\cite{qawolf_platform} provides managed Playwright-based test automation. \textbf{Applitools}~\cite{applitools_platform} is known for visual AI and screenshot comparison. \textbf{Functionize}~\cite{functionize_platform} uses ML and NLP for autonomous testing. \textbf{Testim}~\cite{testim_platform} improves selector stability using smart locators.
+
+Table~\ref{tab:existing_solutions_comparison} summarizes the main strengths and limits of the existing tools compared with the proposed prototype.
+
+\begin{table}[H]
+	\centering
+	\caption{Comparative study of existing testing solutions}
+	\label{tab:existing_solutions_comparison}
+	\renewcommand{\arraystretch}{1.25}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Solution} & \textbf{Main Strength} & \textbf{Main Limitation} \\ \hline
+		Selenium / Cypress / Playwright & Strong browser automation and large ecosystem. & Requires technical scripts and selectors. \\ \hline
+		Mabl & Low-code testing and self-healing support. & Commercial cloud platform with limited internal control. \\ \hline
+		QA Wolf & Fast Playwright-based test creation. & Managed service model, less suited to internal AI experimentation. \\ \hline
+		Applitools & Strong visual regression detection. & Focused mainly on visual validation. \\ \hline
+		Functionize & Natural language support and adaptive execution. & SaaS dependency and limited transparency. \\ \hline
+		Testim & More stable smart locators. & Still strongly related to DOM attributes. \\ \hline
+		VisionTest-AI & Hybrid NLP, Playwright, YOLO/OCR fallback, and reporting. & Prototype stage; depends on dataset and OCR quality. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Positioning of VisionTest-AI}
+\label{subsec:visiontest_positioning}
+
+\textbf{VisionTest-AI} is positioned as a custom intelligent testing prototype. It combines semantic understanding and visual perception instead of relying only on DOM selectors. The goal is not to replace Playwright, but to enrich it with NLP-based test generation, visual fallback, and execution reporting.
+
+\section{Proposed Solution}
+\label{sec:proposed_solution_ch1}
+
+The proposed solution follows a hybrid strategy. The user writes a Gherkin scenario. The NLP module parses the scenario and extracts steps, intents, targets, and values. The semantic mapping module transforms these interpreted steps into Playwright-compatible actions. The execution service first tries to perform the action with generated selectors. If this fails, the vision service analyzes a screenshot using YOLOv8 and OCR to find the target visually. At the end, the reporting service generates JSON and HTML reports.
+
+Figure~\ref{fig:global_architecture_ch1} represents the global architecture of \textbf{VisionTest-AI}. The diagram was created by the author using Mermaid~\cite{mermaid_docs}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{global_architecture.png}
+	\caption{Global architecture of VisionTest-AI}
+	\label{fig:global_architecture_ch1}
+\end{figure}
+
+The solution is organized around the following modules:
+
+\begin{itemize}
+	\item \textbf{Frontend:} Streamlit interface for scenario submission, script generation, screenshot analysis, and report viewing.
+	\item \textbf{Backend:} FastAPI service exposing the main API endpoints.
+	\item \textbf{NLP service:} Gherkin parsing, intent classification, and entity extraction.
+	\item \textbf{Semantic mapping service:} Conversion from interpreted steps to executable actions and selector candidates.
+	\item \textbf{Execution service:} Playwright-based browser automation.
+	\item \textbf{Vision service:} YOLOv8 and OCR-based fallback.
+	\item \textbf{Reporting service:} JSON and HTML report generation.
+\end{itemize}
+
+\section{Requirements Analysis}
+\label{sec:requirements_analysis_ch1}
+
+\subsection{Functional Requirements}
+\label{subsec:functional_requirements_ch1}
+
+
+The functional requirements of VisionTest-AI are as follows:
+\begin{itemize}
+	\item[FR1:] The system shall parse Gherkin scenarios into structured steps.
+	\item[FR2:] The system shall classify step intents (e.g., NAVIGATION, CLICK, INPUT, VERIFY).
+	\item[FR3:] The system shall extract entities (target, value, URL) from each step.
+	\item[FR4:] The system shall generate Playwright-compatible selectors and actions.
+	\item[FR5:] The system shall execute browser actions via Playwright automation.
+	\item[FR6:] The system shall trigger visual fallback (YOLOv8 + OCR) when selectors fail.
+	\item[FR7:] The system shall capture and store screenshots during test execution.
+	\item[FR8:] The system shall generate JSON and HTML execution reports for each scenario.
+	\item[FR9:] The system shall provide error messages and explanations in the final report.
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+\label{subsec:non_functional_requirements_ch1}
+
+
+The non-functional requirements are as follows:
+\begin{itemize}
+	\item[NFR1:] NLP parsing response time shall be less than 5 seconds per scenario.
+	\item[NFR2:] YOLOv8 inference time shall be less than 100ms per screenshot.
+	\item[NFR3:] The system must be modular, maintainable, and extensible for future improvements.
+	\item[NFR4:] Execution and error reports must be traceable and persistently stored.
+	\item[NFR5:] The system must be usable by non-technical users (business-readable input, clear outputs).
+	\item[NFR6:] The system must be robust to UI changes and provide fallback strategies.
+	\item[NFR7:] The system must be open for integration with authentication, database storage, and background task queues in future versions.
+\end{itemize}
+
+\subsection{Constraints and Assumptions}
+\label{subsec:constraints_assumptions_ch1}
+
+The current version is a prototype. Its visual fallback depends on the quality of the dataset, the accuracy of YOLO detections, and the readability of OCR output. Some dynamic websites may behave differently because of popups, network speed, or anti-bot protections. The current version also does not include full PostgreSQL, Redis, authentication, or project history integration.
+
+\section{Project Objectives}
+\label{sec:project_objectives_ch1}
+
+The functional objectives are to make Gherkin scenarios executable, reduce manual script writing, execute tests automatically, use visual fallback when needed, and generate readable execution reports. The technical objectives are to build a modular FastAPI backend~\cite{fastapi_docs}, use Pydantic schemas~\cite{pydantic_docs}, automate browsers with Playwright~\cite{playwright_docs}, integrate YOLOv8~\cite{ultralytics_yolov8_docs} and OCR, and prepare the application for future deployment improvements.
+
+\section{Project Management Methodology}
+\label{sec:methodology_ch1}
+
+The project followed an iterative methodology inspired by Agile Scrum. This choice was suitable because the project included several uncertain components: NLP interpretation, visual detection, OCR quality, browser execution, and deployment constraints.
+
+Figure~\ref{fig:scrum_logo} illustrates the general Scrum lifecycle used as inspiration for the project organization.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\textwidth]{Scrum_logo.jpg}
+	\caption{Agile Scrum lifecycle}
+	\label{fig:scrum_logo}
+\end{figure}
+
+Table~\ref{tab:sprint_planning_ch1} presents the sprint planning followed during the implementation of the prototype.
+
+\begin{table}[H]
+	\centering
+	\caption{Project sprint planning}
+	\label{tab:sprint_planning_ch1}
+	\renewcommand{\arraystretch}{1.25}
+	\small
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Sprint} & \textbf{Main Objective} & \textbf{Deliverable} \\ \hline
+		Sprint 1 & Problem study, requirements, and first local prototype. & Initial pipeline and backlog. \\ \hline
+		Sprint 2 & NLP parsing and semantic mapping. & Structured JSON and action mapping. \\ \hline
+		Sprint 3 & Dataset preparation and vision model training. & Annotated dataset and YOLO model. \\ \hline
+		Sprint 4 & Execution, fallback, UI, and reporting integration. & Complete prototype. \\ \hline
+	\end{tabularx}
+\end{table}
+
+Trello~\cite{trello_platform} was used for task organization, Git~\cite{git_docs} for version control, and VS Code~\cite{vscode_docs} as the main development environment.
+
+\section{Conclusion}
+\label{sec:chapter1_conclusion}
+
+This chapter presented the general context of the project, the host organization, the testing automation problem, existing solutions, the proposed architecture, the requirements, and the project methodology. The next chapter presents the literature review needed to understand the AI and Data concepts used later in the report.

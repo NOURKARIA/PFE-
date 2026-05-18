@@ -1,23 +1,8 @@
-﻿# --- Web & API ---
-fastapi
-httpx
-streamlit
-uvicorn[standard]
-pydantic
-jinja2
-gherkin-official
-
-# --- AI & NLP ---
-spacy
-transformers
-ultralytics
-torch
-
-# --- Computer Vision & OCR ---
-opencv-python
-pytesseract
-
-# --- Automation & Tools ---
-playwright
-python-dotenv
-loguru
+fastapi==0.110.0
+uvicorn==0.28.0
+pydantic==2.6.4
+playwright==1.42.0
+ultralytics==8.1.0
+spacy==3.7.4
+transformers==4.38.0
+torch --extra-index-url https://download.pytorch.org/whl/cpu

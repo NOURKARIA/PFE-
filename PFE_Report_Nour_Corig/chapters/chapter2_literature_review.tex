@@ -1,0 +1,143 @@
+\chapter{Literature Review: Data and Artificial Intelligence Foundations}
+\label{chap:literature_review}
+\minitoc
+\newpage
+
+\section{Introduction}
+\label{sec:ch2_intro}
+
+Before presenting the implementation of \textbf{VisionTest-AI}, it is important to introduce the main concepts that support the project. The system combines several fields: Data Science, Machine Learning, Deep Learning, Natural Language Processing, Computer Vision, OCR, and software test automation. These fields are connected in the project because the agent must read a scenario, understand it, observe a user interface, execute actions, and produce evidence.
+
+\subsection*{Chapter Overview}
+\phantomsection
+\addcontentsline{toc}{subsection}{Chapter Overview}
+
+This chapter gives a short literature review of the AI and Data concepts used in the project. It explains the difference between Data Science, Machine Learning, Deep Learning, NLP, and Computer Vision. It also presents object detection, OCR, browser automation, and the reason why a hybrid approach is suitable for intelligent functional testing.
+
+\section{Data Science and Artificial Intelligence}
+\label{sec:data_ai_foundations}
+
+Artificial Intelligence is a broad field that aims to build systems capable of performing tasks that usually require human intelligence. These tasks can include understanding language, recognizing objects, making decisions, or adapting to new situations. In this project, AI is used in a practical way: the system does not try to replace a QA engineer, but to assist the testing process by interpreting scenarios and detecting visual elements.
+
+Data Science is closely related to AI because it focuses on collecting, preparing, analyzing, and using data to support decisions or build models. In \textbf{VisionTest-AI}, data appears in different forms: Gherkin text, screenshots, annotations, model outputs, logs, and generated reports. The quality of these data directly affects the reliability of the final system.
+
+\section{Machine Learning}
+\label{sec:machine_learning_review}
+
+Machine Learning is a subfield of AI where systems learn patterns from data instead of being programmed only with fixed rules. A machine learning model receives examples during training and then uses what it learned to make predictions on new inputs.
+
+In general, machine learning can be divided into three families:
+
+\begin{itemize}
+	\item \textbf{Supervised learning:} The model learns from labeled examples. For example, a screenshot region can be labeled as a button, input field, or link.
+	\item \textbf{Unsupervised learning:} The model searches for patterns without explicit labels.
+	\item \textbf{Reinforcement learning:} The model learns by interacting with an environment and receiving rewards.
+\end{itemize}
+
+This project mainly uses supervised learning in the vision part. The YOLO model is trained using annotated screenshots where UI elements are labeled with bounding boxes.
+
+\section{Deep Learning}
+\label{sec:deep_learning_review}
+
+Deep Learning is a branch of machine learning based on neural networks with several layers. These models are effective when the input data is complex, such as text, images, audio, or video. Instead of manually defining all features, deep learning models learn useful representations from data.
+
+Deep learning is important in this project for two reasons. First, transformer-based models such as BERT and DistilBERT are useful for language understanding~\cite{bert_paper,distilbert_paper}. Second, convolutional and detection models such as YOLO are useful for detecting visual elements in screenshots~\cite{yolo_original,ultralytics_yolov8_docs}.
+
+\section{Natural Language Processing}
+\label{sec:nlp_review}
+
+Natural Language Processing, or NLP, is the field that studies how computers can process human language. It includes tasks such as text classification, entity extraction, question answering, translation, summarization, and semantic understanding.
+
+In \textbf{VisionTest-AI}, NLP is used to understand Gherkin scenarios. Gherkin is readable by humans, but it must be transformed into structured actions before it can be executed by a browser. For example, the sentence:
+
+\begin{verbatim}
+	When I enter "demo@example.com" in the email field
+\end{verbatim}
+
+must be interpreted as an input action, with the value \texttt{demo@example.com}, targeting the email field.
+
+\subsection{Rule-Based NLP}
+\label{subsec:rule_based_nlp_review}
+
+A rule-based NLP system uses predefined patterns. For example, if a sentence contains the word ``click'', the system may classify it as a click action. This approach is simple, fast, and predictable. However, it becomes limited when users write steps in different ways.
+
+\subsection{Transformer-Based NLP}
+\label{subsec:transformer_nlp_review}
+
+Transformer models improved many NLP tasks because they can capture context in a sentence. BERT introduced a powerful language representation method based on bidirectional context~\cite{bert_paper}. DistilBERT is a lighter version designed to keep much of BERT's performance while reducing model size and inference cost~\cite{distilbert_paper}. The project uses this family of models because the system must classify user intentions from short natural language steps.
+
+\subsection{Hybrid NLP Strategy}
+\label{subsec:hybrid_nlp_review}
+
+A fully rule-based system is too rigid, while a fully AI-based system may be difficult to control when confidence is low. For this reason, \textbf{VisionTest-AI} uses a hybrid strategy: AI helps classify intent, while deterministic rules and regular expressions are used for reliable extraction of values, URLs, and quoted text.
+
+\section{Computer Vision}
+\label{sec:computer_vision_review}
+
+Computer Vision is the field that allows computers to analyze visual information. It includes image classification, object detection, segmentation, OCR, and visual similarity. In this project, computer vision is used to help the agent observe the user interface when selectors are not reliable.
+
+Traditional automation tools mainly interact with the DOM. A vision-based approach adds another source of information: the screenshot. This is useful because a human tester does not need to know the DOM selector of a button; they can recognize the button visually and click it. The objective of the vision module is to bring part of this behavior into the automated system.
+
+\section{Object Detection and YOLO}
+\label{sec:yolo_review}
+
+Object detection is a computer vision task that identifies both the class and the position of objects in an image. The output is usually a bounding box with a label and a confidence score.
+
+YOLO, meaning ``You Only Look Once'', is a family of object detection models designed for fast detection~\cite{yolo_original}. YOLOv8, provided by Ultralytics, is widely used because it offers a practical API, efficient training, and real-time inference capabilities~\cite{ultralytics_yolov8_docs}.
+
+In \textbf{VisionTest-AI}, YOLO is trained to detect UI elements such as:
+
+\begin{itemize}
+	\item buttons,
+	\item input fields,
+	\item links,
+	\item dropdowns,
+	\item checkboxes.
+\end{itemize}
+
+The detected bounding boxes can then be used to estimate where the agent should click or type when the selector-based approach fails.
+
+\section{OCR and Text Extraction}
+\label{sec:ocr_review}
+
+OCR, or Optical Character Recognition, transforms text visible in an image into machine-readable text. This is important for UI testing because many elements are identified by their visible label: ``Login'', ``Submit'', ``Search'', or ``Cancel''.
+
+Tesseract is one of the most known OCR engines~\cite{tesseract_paper,tesseract_docs}. In the project, OCR is used with screenshot regions in order to enrich visual detections. For example, YOLO may detect a button, while OCR helps determine whether this button contains the text ``Log In''.
+
+OpenCV is also useful in the OCR pipeline because it provides image preprocessing operations such as resizing, grayscale conversion, thresholding, and cropping~\cite{opencv_library}. These operations can improve OCR readability when the image is noisy or low contrast.
+
+\section{Behavior-Driven Development and Gherkin}
+\label{sec:bdd_review}
+
+Behavior-Driven Development, or BDD, is a development practice where expected behavior is described using examples that can be understood by both technical and non-technical stakeholders. Gherkin is commonly used in BDD because it provides a simple structure based on \texttt{Feature}, \texttt{Scenario}, \texttt{Given}, \texttt{When}, and \texttt{Then}~\cite{gherkin_reference,bdd_cucumber_book}.
+
+This format is useful in the project because it gives the user a readable way to describe functional tests. However, Gherkin alone is not executable. The system must parse it, understand the meaning of each step, map it to an action, and execute it in the browser.
+
+\section{Browser Automation}
+\label{sec:browser_automation_review}
+
+Browser automation frameworks allow scripts to simulate user actions. Playwright is used in the project because it supports modern browsers, automatic waiting, screenshots, and reliable end-to-end interactions~\cite{playwright_docs}. It provides the execution engine of the system.
+
+However, Playwright still needs a way to locate elements. This is why \textbf{VisionTest-AI} generates several selector candidates and uses visual fallback when these candidates fail. The objective is not to remove Playwright, but to make its execution more adaptive.
+
+\section{Hybrid Intelligent Testing}
+\label{sec:hybrid_testing_review}
+
+The literature and existing tools show that no single technique is sufficient alone. NLP can understand test steps but cannot click a button. Playwright can execute actions but depends on selectors. YOLO can detect UI elements but may confuse visually similar objects. OCR can read labels but may fail on small or low-contrast text.
+
+The project therefore follows a hybrid approach:
+
+\begin{itemize}
+	\item NLP extracts the intention from the Gherkin step.
+	\item Semantic mapping transforms the intention into a browser action.
+	\item Playwright executes the action using selectors.
+	\item YOLO and OCR provide a fallback when selectors fail.
+	\item Reports store the execution evidence.
+\end{itemize}
+
+This combination is more realistic than relying on one technique. It also reflects how a human tester works: reading the scenario, understanding the expected behavior, observing the interface, performing the action, and checking the result.
+
+\section{Conclusion}
+\label{sec:ch2_conclusion}
+
+This chapter presented the main AI and Data concepts used in \textbf{VisionTest-AI}. It introduced Data Science, Machine Learning, Deep Learning, NLP, Computer Vision, object detection, OCR, BDD, Gherkin, and browser automation. These concepts form the scientific and technical foundation of the system. The next chapter focuses on the semantic intelligence module, where Gherkin scenarios are transformed into structured actions and Playwright-compatible mappings.

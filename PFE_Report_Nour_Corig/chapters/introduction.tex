@@ -1,0 +1,37 @@
+\chapter*{General Introduction}
+\addstarredchapter{General Introduction}
+
+Software systems are now delivered in short cycles. New features, design changes, and bug fixes are released frequently, especially in Agile and DevOps environments. This acceleration improves productivity, but it also increases the risk of regression. For this reason, functional testing is no longer a secondary activity. It is a necessary part of software quality because it verifies whether the application works correctly from the user's point of view.
+
+Traditional automated testing tools are powerful, but they often depend on technical selectors and page structure. This creates a maintenance problem. If a button changes its ID, if a CSS class is renamed, or if the DOM structure is refactored, the test can fail even when the application behavior is still correct. These failures reduce confidence in automation and create extra work for QA teams.
+
+Artificial Intelligence offers new possibilities for improving this process. Natural Language Processing can help transform readable test scenarios into structured actions. Computer Vision can help detect visible interface elements from screenshots. OCR can extract text displayed on the page. Browser automation can execute the actions, and reporting can keep execution evidence for analysis.
+
+This project, entitled \textbf{VisionTest-AI}, follows this direction. It proposes an intelligent functional testing agent that starts from Gherkin scenarios and generates executable actions. The agent first uses Playwright selectors to execute the test. If the selector strategy fails, it activates a visual fallback based on YOLOv8 and OCR. The final result is documented through JSON reports, HTML reports, screenshots, and execution metadata.
+
+The main objectives of the project are:
+
+\begin{itemize}
+	\item transform business-readable Gherkin scenarios into structured actions~\cite{gherkin_reference};
+	\item map natural language steps to Playwright-compatible actions;
+	\item execute functional tests automatically in a browser;
+	\item add visual perception using YOLOv8 and OCR~\cite{ultralytics_yolov8_docs,tesseract_docs};
+	\item generate JSON and HTML reports that explain the result of each execution;
+	\item study the limits of the prototype and propose realistic improvements.
+\end{itemize}
+
+The report is organized into five chapters:
+
+\begin{enumerate}
+	\item \textbf{Chapter 1: General Context, Requirements and Project Overview} presents the host organization, the project environment, the problem statement, existing testing solutions, the proposed solution, the main requirements, the global architecture, and the project methodology. This chapter merges the project context with the preparation phase in order to keep the report concise and avoid repetition.
+	
+	\item \textbf{Chapter 2: Literature Review: Data and Artificial Intelligence Foundations} introduces the scientific and technical background needed to understand the project. It explains Data Science, Machine Learning, Deep Learning, NLP, Computer Vision, object detection, OCR, BDD, Gherkin, and browser automation. This chapter provides the missing literature foundation requested by the supervisor.
+	
+	\item \textbf{Chapter 3: Semantic Intelligence: NLP and Mapping Module} describes how the system understands Gherkin scenarios. It presents parsing, intent classification, entity extraction, semantic mapping, selector candidate generation, API endpoints, generated JSON outputs, and Playwright script generation.
+	
+	\item \textbf{Chapter 4: Visual Perception and Self-Healing Execution} presents the vision layer of the project. It describes dataset preparation, the difficulties encountered during annotation, YOLOv8n training, OCR processing, the vision API, and the Plan A/Plan B self-healing execution strategy.
+	
+	\item \textbf{Chapter 5: Integration, Reporting, Deployment and Final Results} explains how all modules are connected in the final prototype. It presents the backend implementation, reporting system, Streamlit interface, deployment attempts, CI/CD perspective, validation results, limitations, and future improvements.
+\end{enumerate}
+
+The report ends with a general conclusion that summarizes the work, the main achievements, the difficulties encountered, and the possible perspectives for industrialization.

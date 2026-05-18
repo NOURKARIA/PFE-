@@ -1,0 +1,169 @@
+\begin{thebibliography}{10}
+
+\bibitem{applitools_platform}
+{Applitools}.
+\newblock Applitools visual ai testing platform.
+\newblock \url{https://applitools.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{trello_platform}
+{Atlassian}.
+\newblock Trello.
+\newblock \url{https://trello.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{opencv_library}
+Gary Bradski.
+\newblock The opencv library.
+\newblock {\em Dr. Dobb's Journal of Software Tools}, 2000.
+
+\bibitem{gherkin_reference}
+{Cucumber}.
+\newblock Gherkin reference.
+\newblock \url{https://cucumber.io/docs/gherkin/reference/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{cypress_docs}
+{Cypress}.
+\newblock Cypress documentation.
+\newblock \url{https://docs.cypress.io/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{bert_paper}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
+
+\bibitem{docker_docs}
+{Docker}.
+\newblock Docker documentation.
+\newblock \url{https://docs.docker.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{fastapi_docs}
+{FastAPI}.
+\newblock Fastapi documentation.
+\newblock \url{https://fastapi.tiangolo.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{functionize_platform}
+{Functionize}.
+\newblock Functionize ai-powered testing platform.
+\newblock \url{https://www.functionize.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{git_docs}
+{Git}.
+\newblock Git documentation.
+\newblock \url{https://git-scm.com/doc}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{mabl_platform}
+{Mabl}.
+\newblock Mabl ai-native test automation.
+\newblock \url{https://www.mabl.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{mermaid_docs}
+{Mermaid}.
+\newblock Mermaid documentation.
+\newblock \url{https://mermaid.js.org/}, 2026.
+\newblock Accessed: 2026-05-16.
+
+\bibitem{playwright_docs}
+{Microsoft}.
+\newblock Playwright documentation.
+\newblock \url{https://playwright.dev/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{vscode_docs}
+{Microsoft}.
+\newblock Visual studio code documentation.
+\newblock \url{https://code.visualstudio.com/docs}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{pydantic_docs}
+{Pydantic}.
+\newblock Pydantic documentation.
+\newblock \url{https://docs.pydantic.dev/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{qawolf_platform}
+{QA Wolf}.
+\newblock Qa wolf end-to-end test automation.
+\newblock \url{https://www.qawolf.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{railway_docs}
+{Railway}.
+\newblock Railway documentation.
+\newblock \url{https://docs.railway.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{yolo_original}
+Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi.
+\newblock You only look once: Unified, real-time object detection.
+\newblock {\em arXiv preprint arXiv:1506.02640}, 2015.
+
+\bibitem{roboflow_docs}
+{Roboflow}.
+\newblock Roboflow documentation.
+\newblock \url{https://docs.roboflow.com/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{distilbert_paper}
+Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf.
+\newblock Distilbert, a distilled version of bert: Smaller, faster, cheaper and
+  lighter.
+\newblock {\em arXiv preprint arXiv:1910.01108}, 2019.
+
+\bibitem{selenium_docs}
+{Selenium Project}.
+\newblock Selenium documentation.
+\newblock \url{https://www.selenium.dev/documentation/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{tesseract_paper}
+Ray Smith.
+\newblock An overview of the tesseract ocr engine.
+\newblock In {\em Proceedings of the Ninth International Conference on Document
+  Analysis and Recognition}, pages 629--633, 2007.
+
+\bibitem{streamlit_docs}
+{Streamlit}.
+\newblock Streamlit documentation.
+\newblock \url{https://docs.streamlit.io/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{tesseract_docs}
+{Tesseract OCR}.
+\newblock Tesseract ocr documentation.
+\newblock \url{https://tesseract-ocr.github.io/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{testim_platform}
+{Tricentis}.
+\newblock Testim test automation platform.
+\newblock \url{https://www.tricentis.com/products/testim}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{labelimg_repository}
+Tzutalin.
+\newblock Labelimg.
+\newblock \url{https://github.com/HumanSignal/labelImg}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{ultralytics_yolov8_docs}
+{Ultralytics}.
+\newblock Yolov8 documentation.
+\newblock \url{https://docs.ultralytics.com/models/yolov8/}, 2026.
+\newblock Accessed: 2026-05-15.
+
+\bibitem{bdd_cucumber_book}
+Matt Wynne, Aslak Hellesoy, and Steve Tooke.
+\newblock {\em The Cucumber Book: Behaviour-Driven Development for Testers and
+  Developers}.
+\newblock Pragmatic Bookshelf, 2nd edition, 2017.
+
+\end{thebibliography}

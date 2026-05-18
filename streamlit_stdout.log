@@ -1,0 +1,17 @@
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  URL: http://127.0.0.1:8501
+
+{"timestamp": "2026-05-15T17:53:38.273930", "level": "INFO", "message": "EntityExtractor: Loading LLM Token Classifier from trained_models/nlp/entity_extractor.pt...", "module": "entity_extractor", "funcName": "__init__"}
+{"timestamp": "2026-05-15T17:53:41.026410", "level": "INFO", "message": "EntityExtractor: LLM Model loaded successfully from state_dict.", "module": "entity_extractor", "funcName": "__init__"}
+{"timestamp": "2026-05-15T17:53:41.029407", "level": "INFO", "message": "IntentClassifier: Loading Custom PyTorch model from trained_models/nlp/intention_classifier.pt...", "module": "intent_classifier", "funcName": "__init__"}
+{"timestamp": "2026-05-15T17:53:43.387754", "level": "INFO", "message": "IntentClassifier: Custom Model loaded successfully from state_dict.", "module": "intent_classifier", "funcName": "__init__"}
+{"timestamp": "2026-05-15T17:53:43.801635", "level": "INFO", "message": "SegmentationService: Initialized.", "module": "segmentation_service", "funcName": "__init__"}
+{"timestamp": "2026-05-15T17:54:48.181291", "level": "INFO", "message": "NLPService: Starting pipeline...", "module": "nlp_service", "funcName": "process_feature"}
+{"timestamp": "2026-05-15T17:54:48.182291", "level": "INFO", "message": "GherkinParser: Parsing raw content...", "module": "gherkin_parser", "funcName": "parse_gherkin_text"}
+{"timestamp": "2026-05-15T17:54:48.364967", "level": "INFO", "message": "MappingService: Mapped NAVIGATION to navigate", "module": "mapping_service", "funcName": "map_to_action"}
+{"timestamp": "2026-05-15T17:54:48.409505", "level": "INFO", "message": "MappingService: Mapped VERIFICATION to assert", "module": "mapping_service", "funcName": "map_to_action"}

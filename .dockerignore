@@ -5,3 +5,6 @@ __pycache__/
 .ipynb_checkpoints/
 data/
 notebooks/
+reports/html/
+reports/json/
+reports/screenshots/

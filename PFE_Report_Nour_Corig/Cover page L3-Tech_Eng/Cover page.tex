@@ -1,0 +1,112 @@
+
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\graphicspath{ {./images/} }
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{setspace}
+
+\geometry{margin=2cm}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        % Header Section
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            
+            Private University\\
+Horizon School of Digital\\
+Technologies\\
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            Republic of Tunisia\\
+Ministry of Higher Education\\
+and Scientific Research
+        \end{minipage}
+        \vspace{1cm}
+
+        % Horizon Logo - Placeholder (replace 'horizon_logo' with your image file name)
+         \includegraphics[width=0.6\textwidth]{logo_horizon.png}
+        %\textbf{[LOGO HORIZON]} 
+
+        \vspace{0.7cm}
+
+    % --- Début du bloc avec image pleine largeur ---
+\begin{center}
+    \begin{tikzpicture}[remember picture, overlay]
+        % Cette commande place l'image au centre de la page par rapport à la largeur
+        % 'opacity' règle la transparence (0.15 est conseillé pour la lecture)
+        % 'width=\paperwidth' force l'image à prendre toute la largeur du papier
+        \node[opacity=0.5, inner sep=0pt, anchor=center] at (current page.center) {
+            \includegraphics[width=\paperwidth]{bg.png}
+        };
+    \end{tikzpicture}
+
+    {\Large \textbf{End Of Studies Project Report}} \\
+    \vspace{0.5cm}
+    {Presented in order to obtain the National \textbf{Bachelor’s Degree} in} \\
+    \vspace{0.3cm}
+    {\large  \textbf{Computer Science}} \\
+    \vspace{0.2cm}
+    {Major :{\large  \textbf{Software Engineering and \\ Information Systems}}}
+
+    \vspace{1.5cm}
+
+    % Titre Encadré
+    \begin{minipage}{0.8\textwidth}
+        \centering
+        \rule{\linewidth}{0.5pt} \\
+        \vspace{0.3cm}
+        \large \textbf{CONCEPTION ET RÉALISATION D’UNE APPLICATION (Title).............} \\
+        \vspace{0.3cm}
+        \rule{\linewidth}{0.5pt}
+    \end{minipage}
+\end{center}
+% --- Fin du bloc ---
+% --- End of Background Image Block ---
+
+        \vspace{1cm}
+
+        % Author
+        {\large By : \textbf{First Name \&  Last Name}}
+
+        \vfill
+
+        % Jury Table
+        \vspace{0.3cm}
+            {Defended on .. / .. / .... in front of the jury composed of :} \\
+            \vspace{0.8cm}
+            \begin{flushleft}
+            \begin{tabular}{ll}
+                Mr./Mme : ............................................\hspace{3.4cm} President \\
+                Mr./Mme : ............................................\hspace{3.4cm} Reviewer \\
+                Mr./Mme : ............................................ \hspace{3.4cm}Academic Supervisor \\
+                Mr./Mme : ............................................ \hspace{3.4cm}Professional Supervisor \\
+
+
+            \end{tabular}
+        \end{flushleft}
+
+        \vspace{0.5cm}
+        %%% in this position you update the logo of oyour campnay
+            \includegraphics[width=2.5cm]{orange.jpg}
+
+        \vspace{0.4cm}
+            \begin{center}
+                Réf : .......... \\
+                \vspace{0.6cm}
+        \rule{4cm}{0.5pt}   Année Universitaire : 2025 - 2026  \rule{4.5cm}{0.5pt}
+            \end{center}
+
+    \end{center}
+\end{titlepage}
+
+\end{document}

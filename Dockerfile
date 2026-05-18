@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bookworm
+FROM mcr.microsoft.com/playwright/python:v1.42.0-jammy
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -19,8 +19,6 @@ WORKDIR /app
 
 COPY requirements.backend.txt .
 RUN pip install --no-cache-dir -r requirements.backend.txt
-
-RUN playwright install --with-deps chromium
 
 COPY . .
 

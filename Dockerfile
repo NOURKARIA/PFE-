@@ -24,4 +24,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+streamlit run streamlit_app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true

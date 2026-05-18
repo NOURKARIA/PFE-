@@ -20,7 +20,14 @@ WORKDIR /app
 COPY requirements.backend.txt .
 RUN pip install --no-cache-dir -r requirements.backend.txt
 
-RUN playwright install --with-deps chromium
+# Install Debian-compatible font packages to work around missing Ubuntu fonts
+RUN apt-get update && \
+    apt-get install -y fonts-unifont fonts-freefont-ttf && \
+    rm -rf /var/lib/apt/lists/*
+# Install remaining Playwright system deps (allow failure for Ubuntu-only packages)
+RUN playwright install-deps chromium || true
+# Install the Chromium browser binary
+RUN playwright install chromium
 
 COPY . .
 

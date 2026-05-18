@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED=1
 ENV DISPLAY=:99
 ENV ENVIRONMENT=production
 ENV DISABLE_NLP_MODELS=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -24,4 +25,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "streamlit run streamlit_app.py --server.address 0.0.0.0 --server.port ${PORT:-8080} --server.headless true"]

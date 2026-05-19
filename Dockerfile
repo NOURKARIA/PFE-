@@ -23,6 +23,6 @@ RUN pip install --no-cache-dir -r requirements.backend.txt
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["sh", "-c", "streamlit run streamlit_app.py --server.address 0.0.0.0 --server.port ${PORT:-8080} --server.headless true"]
